@@ -18,7 +18,7 @@ export default function Navbar() {
         <div className="justify-self-start">
           <Link href="/" className="flex items-center gap-3 group">
             <Image
-              src="/growtech-logo.jpg"
+              src="/images/growtech-logo.jpg"
               width={45}
               height={45}
               priority
