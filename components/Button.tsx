@@ -32,7 +32,7 @@ export default function Button({
       "bg-transparent text-cyan-400 font-semibold border-2 border-cyan-400/80 hover:bg-cyan-400 hover:text-slate-950 hover:shadow-lg hover:shadow-cyan-400/30",
 
     ghost:
-      "bg-transparent text-slate-300 font-medium hover:text-cyan-400 hover:bg-slate-800/50",
+      "bg-transparent text-cyan-500 font-bold hover:text-cyan-400 hover:bg-slate-800",
   };
 
   const sizes = {

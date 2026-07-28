@@ -56,7 +56,7 @@ export default function DetailsSection() {
     },
   ];
   return (
-    <section className="w-full min-h-screen py-20">
+    <section className="w-full min-h-screen py-20 space-y-15">
       {details.map((detail, index) => {
         const isEven = index % 2 === 0;
         return (
@@ -79,7 +79,7 @@ export default function DetailsSection() {
               <h2 className="cabinet text-4xl font-bold gradient-text">
                 {detail.title}
               </h2>
-              <p className="garet">{detail.description}</p>
+              <p className="garet text-gray-400">{detail.description}</p>
               <Button href={detail.buttonLink} variant="outline">
                 {detail.buttonText}
                 <ArrowRight size={18} />

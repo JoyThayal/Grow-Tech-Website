@@ -72,6 +72,26 @@ body {
 .golden-tag {
   font-family: druk;
   letter-spacing: 0.1em;
-  color: #C9A86A;
+  color: #c9a86a;
   font-weight: bold;
+}
+
+/* ⬅️ ১ম রো: কোনো বিরতি ছাড়া একটানা বামে ঘুরবে */
+@keyframes scroll-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* ➡️ ২য় রো: কোনো বিরতি ছাড়া একটানা ডানে ঘুরবে */
+@keyframes scroll-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }
