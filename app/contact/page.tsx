@@ -29,7 +29,7 @@ export default function ContactSection(): React.ReactNode {
         </p>
 
         {/* Small Golden Divider Line */}
-        <div className="w-12 h-[2px] bg-[#c9a86a] mt-6 rounded-full" />
+        <div className="w-12 h-0.5 bg-[#c9a86a] mt-6 rounded-full" />
       </div>
 
       {/* 📬 3 Contact Cards Container */}
@@ -44,7 +44,7 @@ export default function ContactSection(): React.ReactNode {
             Email Inquiry
           </h3>
 
-          <p className="garet text-slate-400 text-xs leading-relaxed mb-8 min-h-[36px]">
+          <p className="garet text-slate-400 text-xs leading-relaxed mb-8 min-h-9">
             Drop us a line for project proposals and partnerships.
           </p>
 
@@ -67,7 +67,7 @@ export default function ContactSection(): React.ReactNode {
             Instant Support
           </h3>
 
-          <p className="garet text-slate-400 text-xs leading-relaxed mb-8 min-h-[36px]">
+          <p className="garet text-slate-400 text-xs leading-relaxed mb-8 min-h-9">
             Talk to us directly on WhatsApp for faster response.
           </p>
 
@@ -92,7 +92,7 @@ export default function ContactSection(): React.ReactNode {
             Voice Call
           </h3>
 
-          <p className="garet text-slate-400 text-xs leading-relaxed mb-8 min-h-[36px]">
+          <p className="garet text-slate-400 text-xs leading-relaxed mb-8 min-h-9">
             Call us during working hours for a quick consultation.
           </p>
 

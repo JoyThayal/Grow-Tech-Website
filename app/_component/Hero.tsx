@@ -3,32 +3,43 @@ import Button from "@/components/Button";
 
 export default function HeroSection() {
   return (
-    <section className="h-150 w-full relative">
+    <section className="relative min-h-[50vh] w-full overflow-hidden">
       <Image
         src="https://preview.cruip.com/neon/images/hero-illustration.svg"
-        fill={true}
+        fill
         priority
         alt="Hero Illustration"
-        className="object-cover"
+        className="
+          object-cover
+          object-[85%_center]
+          sm:object-[90%_center]
+          md:object-right
+          lg:object-cover
+        "
       />
 
-      <div className="relative w-250 px-30 py-20 z-10 space-y-6">
-        <h1 className="cabinet text-8xl font-black leading-[0.9] uppercase">
-          <span className="block gradient-text">SCALE YOUR</span>
-          <span className="block gradient-text">REVENUE WITH</span>
-          <span className="block gradient-text italic">GROW TECH</span>
+      <div className="absolute inset-0 bg-black/60 lg:bg-transparent z-1" />
+
+      <div className="relative z-10 w-full lg:w-250 px-6 sm:px-10 md:px-16 lg:px-30 py-14 sm:py-16 lg:py-20 space-y-6">
+        <h1 className="cabinet leading-[0.9] uppercase text-[2.5rem] gradient-text sm:text-6xl md:text-7xl lg:text-8xl">
+          SCALE YOUR <br />
+          REVENUE WITH <br />
+          <span className="italic pr-3">
+            GROW TECH
+          </span>
         </h1>
-        
-        <p className="garet text-lg">
+
+        <p className="garet max-w-xl text-base sm:text-lg mt-2">
           Stop losing clients to outdated systems. We build high-converting
           software and optimize your entire tech ecosystem to scale your
           business on autopilot.
         </p>
 
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <Button href="/contact" variant="primary" size="lg">
             Scale your business
           </Button>
+
           <Button href="/services" variant="secondary" size="lg">
             Explore services
           </Button>

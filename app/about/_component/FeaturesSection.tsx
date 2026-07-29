@@ -1,78 +1,79 @@
-import React from "react";
 import { ShieldCheck, Zap, Users } from "lucide-react";
 
-const FeaturesSection = () => {
-  const cards = [
-    {
-      icon: <ShieldCheck className="w-6 h-6 text-[#c9a86a]" />,
-      title: "Unmatched Reliability",
-      description:
-        "We build robust digital ecosystems that don't just work; they thrive under pressure. Your business success is our ultimate reputation.",
-    },
-    {
-      icon: <Zap className="w-6 h-6 text-[#c9a86a]" />,
-      title: "Agile Innovation",
-      description:
-        "As a young, high-energy team, we adapt to the latest tech stacks faster than industry standards, giving you a competitive edge.",
-    },
-    {
-      icon: <Users className="w-6 h-6 text-[#c9a86a]" />,
-      title: "Direct Founder Access",
-      description:
-        "No middlemen. You talk directly to Joy, Aman, Bijoy, or Biprajit to ensure your vision is perfectly translated into reality.",
-    },
-  ];
+const cards = [
+  {
+    title: "Unmatched Reliability",
+    description:
+      "We build robust digital ecosystems that don't just work—they thrive under pressure. Your business success is our greatest reputation.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Agile Innovation",
+    description:
+      "As a young, high-energy team, we adopt modern technologies faster than industry standards, giving your business a lasting competitive advantage.",
+    icon: Zap,
+  },
+  {
+    title: "Direct Founder Access",
+    description:
+      "No middlemen. Work directly with our founders to ensure every detail of your vision is transformed into reality.",
+    icon: Users,
+  },
+];
 
+export default function FeaturesSection() {
   return (
-    <section className="w-full px-15 py-16">
-      {/* Header Area */}
-      <div className="text-center mb-16">
-        {/* Golden Tag with Druk Font */}
-        <span className="golden-tag inline-block border border-[#c9a86a]/40 px-4 py-1.5 rounded-full mb-4">
-          OUR DNA
-        </span>
+    <section className="w-full px-5 py-16 sm:px-6 lg:px-10 lg:py-20 xl:px-16">
+      <div className="mx-auto max-w-7xl">
+        {/* Header */}
+        <div className="mx-auto mb-16 max-w-3xl text-center">
+          <span className="golden-tag">OUR DNA</span>
 
-        {/* Main Heading with Cabinet Font & Gradient Text */}
-        <h2 className="cabinet gradient-text text-4xl font-bold tracking-tight max-w-2xl mx-auto leading-tight">
-          Why Partners Choose Grow Tech
-        </h2>
-      </div>
+          <h2 className="cabinet mt-3 text-3xl font-extrabold leading-tight sm:text-4xl md:text-5xl">
+            <span className="gradient-text">Why Partners Choose Grow Tech</span>
+          </h2>
 
-      {/* Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {cards.map((card, index) => (
-          <div
-            key={index}
-            className="group relative bg-[#ffffff08] border border-[#ffffff14] rounded-3xl p-8 transition-all duration-300 hover:border-[#c9a86a]/50 hover:bg-[#161B2E] hover:shadow-[0_0_30px_rgba(201,168,106,0.15)] flex flex-col justify-between"
-          >
-            {/* Hover Badge / Active Dot (Top Right) */}
-            <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div className="w-6 h-6 rounded-full border border-[#c9a86a]/50 flex items-center justify-center bg-[#0B0E17]">
-                <div className="w-2 h-2 rounded-full bg-[#00E5FF] shadow-[0_0_8px_#00E5FF]"></div>
-              </div>
-            </div>
+          <p className="garet mx-auto mt-5 max-w-2xl text-sm leading-7 text-slate-400 md:text-base">
+            Every project we build is driven by innovation, reliability, and a
+            commitment to delivering technology that creates real business
+            impact.
+          </p>
+        </div>
 
-            <div>
-              {/* Icon Container */}
-              <div className="w-12 h-12 rounded-xl bg-slate-800/50 flex items-center justify-center mb-6 group-hover:bg-[#1E2538] transition-colors">
-                {card.icon}
+        {/* Cards */}
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {cards.map(({ title, description, icon: Icon }) => (
+            <article
+              key={title}
+              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 transition-all duration-500 hover:-translate-y-2 hover:border-[#C9A86A]/50 hover:bg-white/[0.07] hover:shadow-[0_20px_60px_rgba(201,168,106,0.12)]"
+            >
+              {/* Glow */}
+              <div className="absolute -right-12 -top-12 h-28 w-28 rounded-full bg-cyan-400/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+              {/* Badge */}
+              <div className="absolute right-6 top-6 flex h-7 w-7 items-center justify-center rounded-full border border-[#C9A86A]/40 bg-[#07111D] opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
+                <div className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee]" />
               </div>
 
-              {/* Title with Cabinet Font */}
-              <h3 className="cabinet text-xl font-bold text-white mb-3 tracking-wide">
-                {card.title}
-              </h3>
+              {/* Icon */}
+              <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-[#101827] text-[#C9A86A] transition-all duration-300 group-hover:scale-110 group-hover:border-[#C9A86A]/40 group-hover:bg-[#162033]">
+                <Icon size={26} strokeWidth={1.8} />
+              </div>
 
-              {/* Description with Garet Font */}
-              <p className="garet text-slate-400 text-sm leading-relaxed">
-                {card.description}
+              {/* Title */}
+              <h3 className="cabinet text-2xl font-bold text-white">{title}</h3>
+
+              {/* Description */}
+              <p className="garet mt-4 text-sm leading-7 text-slate-400 md:text-base">
+                {description}
               </p>
-            </div>
-          </div>
-        ))}
+
+              {/* Bottom Accent */}
+              <div className="mt-8 h-px w-0 bg-linear-to-r from-[#C9A86A] to-cyan-400 transition-all duration-500 group-hover:w-full" />
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
-};
-
-export default FeaturesSection;
+}

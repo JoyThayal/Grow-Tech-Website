@@ -54,26 +54,23 @@ body {
 }
 
 .gradient-text {
-  display: block;
+  display: inline;
 
-  background: linear-gradient(
-    to bottom,
-    #ffffff 0%,
-    #ffffff 25%,
-    #9f9f9f 65%,
-    #1e2022 100%
-  );
+  background-image: linear-gradient(to top, #363a3f, #ffffff 60%);
 
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 .golden-tag {
   font-family: druk;
-  letter-spacing: 0.1em;
   color: #c9a86a;
-  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 /* ⬅️ ১ম রো: কোনো বিরতি ছাড়া একটানা বামে ঘুরবে */

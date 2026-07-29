@@ -55,35 +55,46 @@ export default function DetailsSection() {
       buttonLink: "",
     },
   ];
+
   return (
-    <section className="w-full min-h-screen py-20 space-y-15">
+    <section className="w-full min-h-screen py-16 lg:py-20 space-y-20 lg:space-y-15">
       {details.map((detail, index) => {
         const isEven = index % 2 === 0;
+
         return (
           <div
             key={detail.id}
-            className={`flex flex-col md:flex-row items-center justify-center px-10 gap-10 ${
+            className={`flex flex-col md:flex-row items-center justify-center px-6 sm:px-8 lg:px-10 gap-8 lg:gap-10 ${
               isEven ? "md:flex-row" : "md:flex-row-reverse"
             }`}
           >
-            <div className="w-1/2">
+            {/* Image */}
+            <div className="w-full md:w-1/2">
               <Image
                 width={650}
                 height={550}
                 src={detail.image}
                 alt={detail.alt}
-                className="w-auto h-auto object-cover rounded-2xl"
+                className="w-full h-auto object-cover rounded-2xl"
               />
             </div>
-            <div className="w-1/2 space-y-4">
-              <h2 className="cabinet text-4xl font-bold gradient-text">
+
+            {/* Content */}
+            <div className="w-full md:w-1/2 space-y-4 text-center md:text-left">
+              <h2 className="cabinet text-[1.4rem] lg:text-4xl font-bold gradient-text">
                 {detail.title}
               </h2>
-              <p className="garet text-gray-400">{detail.description}</p>
-              <Button href={detail.buttonLink} variant="outline">
-                {detail.buttonText}
-                <ArrowRight size={18} />
-              </Button>
+
+              <p className="garet text-gray-400 text-sm lg:text-base">
+                {detail.description}
+              </p>
+
+              <div className="flex justify-center md:justify-start">
+                <Button href={detail.buttonLink} variant="outline">
+                  {detail.buttonText}
+                  <ArrowRight size={18} />
+                </Button>
+              </div>
             </div>
           </div>
         );

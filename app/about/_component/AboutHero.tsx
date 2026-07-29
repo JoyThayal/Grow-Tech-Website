@@ -1,56 +1,59 @@
 export default function AboutSection() {
   return (
-    <section className="relative w-full text-gray-300 py-16 px-6 md:px-12 overflow-hidden flex flex-col items-center justify-center text-center">
-      {/* ব্যাকগ্রাউন্ডের হালকা গোল্ডেন ডায়াগোনাল লাইন */}
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+    <section className="relative flex w-full overflow-hidden px-5 py-16 text-center text-gray-300 sm:px-6 lg:px-10 xl:px-16">
+      {/* Background Lines */}
+      <div className="pointer-events-none absolute inset-0 opacity-20">
+        <svg
+          className="h-full w-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
           <line
             x1="0"
-            y1="80%"
-            x2="100%"
-            y2="20%"
-            stroke="#c9a86a"
-            strokeWidth="1"
+            y1="80"
+            x2="100"
+            y2="20"
+            stroke="#C9A86A"
+            strokeWidth="0.4"
           />
+
           <line
             x1="0"
-            y1="60%"
-            x2="100%"
-            y2="0%"
-            stroke="#c9a86a"
-            strokeWidth="0.5"
+            y1="60"
+            x2="100"
+            y2="0"
+            stroke="#C9A86A"
+            strokeWidth="0.2"
           />
         </svg>
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10 space-y-6">
-        {/* হেডিং (তোমার .cabinet এবং .gradient-text ক্লাস ব্যবহার করা হয়েছে) */}
-        <h2 className="cabinet gradient-text text-4xl font-extrabold tracking-tight drop-shadow-md">
+      <div className="relative z-10 mx-auto max-w-5xl">
+        <h2 className="cabinet gradient-text mb-6 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-5xl">
           Crafting Digital Excellence: Where Friendship Meets Innovation!
         </h2>
 
-        {/* প্যারাগ্রাফ (তোমার .garet ক্লাস এবং গোল্ডেন/সায়ান কালার হাইলাইট) */}
-        <p className="garet text-sm md:text-base lg:text-lg leading-relaxed text-gray-400 font-normal">
+        <p className="garet text-sm leading-8 font-light text-gray-400 sm:text-base md:text-lg">
           We are a powerhouse team of four dedicated developers and tech
           experts—
-          <span className="text-[#c9a86a] font-medium">Joy Thayal</span>,{" "}
-          <span className="text-[#c9a86a] font-medium">Aman Shaw</span>,{" "}
-          <span className="text-[#c9a86a] font-medium">Bijoy Thayal</span>, and{" "}
-          <span className="text-[#c9a86a] font-medium">Biprajit Paul</span>. At{" "}
-          <span className="text-[#00f2fe] font-semibold">Grow Tech</span>, we
+          <span className="font-medium text-[#C9A86A]"> Joy Thayal</span>,
+          <span className="font-medium text-[#C9A86A]"> Aman Shaw</span>,
+          <span className="font-medium text-[#C9A86A]"> Bijoy Thayal</span>, and
+          <span className="font-medium text-[#C9A86A]"> Biprajit Paul</span>. At
+          <span className="font-semibold text-cyan-400"> Grow Tech</span>, we
           are passionate about building the next generation of digital
-          experiences. Our team specializes in turning complex ideas into
-          high-performance{" "}
-          <span className="text-[#00f2fe] font-semibold">Websites</span>,{" "}
-          <span className="text-[#00f2fe] font-semibold">Mobile Apps</span>,{" "}
-          <span className="text-[#00f2fe] font-semibold">Immersive Games</span>,
-          and{" "}
-          <span className="text-[#00f2fe] font-semibold">
+          experiences. Our team transforms complex ideas into
+          <span className="font-semibold text-cyan-400"> Websites</span>,
+          <span className="font-semibold text-cyan-400"> Mobile Apps</span>,
+          <span className="font-semibold text-cyan-400"> Immersive Games</span>,
+          and
+          <span className="font-semibold text-cyan-400">
+            {" "}
             Robust Hardware Solutions
           </span>
-          . With a perfect blend of youthful energy, technical expertise, and a
-          shared vision, we create scalable solutions that help your business
-          thrive in an ever-evolving digital world.
+          . By combining technical expertise, creativity, and a shared vision,
+          we deliver scalable digital solutions that help businesses thrive in
+          an ever-evolving world.
         </p>
       </div>
     </section>

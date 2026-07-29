@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { Plus, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Plus } from "lucide-react";
 import Button from "@/components/Button";
 
 interface FaqItem {
@@ -32,94 +32,92 @@ const faqs: FaqItem[] = [
   },
 ];
 
-export default function FaqSection(): React.ReactNode {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+export default function FaqSection() {
+  const [openIndex, setOpenIndex] = useState(0);
 
-  const toggleAccordion = (index: number): void => {
-    setOpenIndex(openIndex === index ? null : index);
+  const toggleAccordion = (index: number) => {
+    setOpenIndex((prev) => (prev === index ? -1 : index));
   };
 
   return (
-    <section className="w-full text-white py-20 px-6 lg:px-15 flex items-center justify-center overflow-hidden">
-      <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-        {/* ⬅️ Left Side: Heading & Contact Info (5 Columns) */}
-        <div className="lg:col-span-5 flex flex-col items-start gap-5">
+    <section className="w-full overflow-hidden px-5 py-16 text-white sm:px-6 lg:px-10 lg:py-20 xl:px-16">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+        {/* Left */}
+        <div className="flex flex-col items-start gap-5 lg:col-span-5">
           <span className="golden-tag">FAQ&apos;S</span>
 
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight cabinet">
-            <span className="gradient-text">Frequently Asked</span>
-            <span className="gradient-text">Questions.</span>
+          <h2 className="cabinet font-extrabold leading-tight tracking-tight">
+            <span className="gradient-text text-3xl sm:text-4xl md:text-5xl">
+              Frequently Asked
+            </span>
+
+            <br />
+
+            <span className="gradient-text text-3xl sm:text-4xl md:text-5xl">
+              Questions.
+            </span>
           </h2>
 
-          <p className="text-slate-400 text-sm md:text-base font-light leading-relaxed max-w-md garet">
+          <p className="garet max-w-md text-sm font-light leading-relaxed text-slate-400 md:text-base">
             Can&apos;t find the answer you&apos;re looking for? Reach out to our
             specialized team for a detailed consultation.
           </p>
 
-          <div className="pt-2">
-            <Button
-              href="/contact"
-              variant="glow"
-              className="flex items-center gap-2 font-bold"
-            >
-              Contact Support
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-          </div>
+          <Button
+            href="/contact"
+            variant="glow"
+            className="mt-2 flex items-center gap-2 font-bold"
+          >
+            Contact Support
+            <ArrowRight className="h-4 w-4" />
+          </Button>
         </div>
 
-        {/* ➡️ Right Side: Accordion Cards (7 Columns) */}
-        <div className="lg:col-span-7 flex flex-col gap-4">
-          {faqs.map((faq: FaqItem, index: number) => {
-            const isOpen: boolean = openIndex === index;
+        {/* Right */}
+        <div className="flex flex-col gap-4 lg:col-span-7">
+          {faqs.map(({ question, answer }, index) => {
+            const isOpen = openIndex === index;
 
             return (
-              <div
-                key={index}
-                className={`rounded-2xl transition-all duration-300 overflow-hidden cursor-pointer border ${
-                  isOpen
-                    ? "bg-[#ffffff0c] border-cyan-500/50 shadow-[0_0_25px_rgba(0,229,255,0.12)]"
-                    : "bg-[#ffffff08] border-[#ffffff14] hover:bg-[#ffffff0d] hover:border-slate-700"
-                }`}
+              <article
+                key={question}
                 onClick={() => toggleAccordion(index)}
+                className={`cursor-pointer overflow-hidden rounded-2xl border transition-all duration-300 ${
+                  isOpen
+                    ? "border-cyan-500/50 bg-white/10 shadow-[0_0_25px_rgba(0,229,255,0.12)]"
+                    : "border-white/10 bg-white/5 hover:border-slate-700 hover:bg-white/10"
+                }`}
               >
-                {/* Accordion Header */}
-                <div className="p-6 flex items-center justify-between gap-4">
+                <div className="flex items-center justify-between gap-4 p-6">
                   <h3
-                    className={`text-lg md:text-xl font-bold transition-colors duration-300 cabinet ${
+                    className={`cabinet text-lg font-bold transition-colors duration-300 md:text-xl ${
                       isOpen ? "text-cyan-400" : "text-slate-100"
                     }`}
                   >
-                    {faq.question}
+                    {question}
                   </h3>
 
-                  {/* Animated Plus Icon */}
-                  <div
-                    className={`transition-all duration-300 ease-in-out shrink-0 ${
-                      isOpen
-                        ? "rotate-45 text-cyan-400"
-                        : "rotate-0 text-[#c9a86a]"
+                  <Plus
+                    className={`h-6 w-6 shrink-0 transition-all duration-300 ${
+                      isOpen ? "rotate-45 text-cyan-400" : "text-[#C9A86A]"
                     }`}
-                  >
-                    <Plus className="w-6 h-6" />
-                  </div>
+                  />
                 </div>
 
-                {/* Accordion Content Body (CSS Grid Animation) */}
                 <div
-                  className={`grid transition-all duration-300 ease-in-out ${
+                  className={`grid transition-all duration-300 ${
                     isOpen
-                      ? "grid-rows-[1fr] opacity-100 pb-6 px-6"
-                      : "grid-rows-[0fr] opacity-0 pb-0 px-6"
+                      ? "grid-rows-[1fr] px-6 pb-6 opacity-100"
+                      : "grid-rows-[0fr] px-6 pb-0 opacity-0"
                   }`}
                 >
-                  <div className="overflow-hidden border-t border-[#ffffff14] pt-4">
-                    <p className="text-slate-300 text-sm md:text-base leading-relaxed font-light garet">
-                      {faq.answer}
+                  <div className="overflow-hidden border-t border-white/10 pt-4">
+                    <p className="garet text-sm font-light leading-relaxed text-slate-300 md:text-base">
+                      {answer}
                     </p>
                   </div>
                 </div>
-              </div>
+              </article>
             );
           })}
         </div>
