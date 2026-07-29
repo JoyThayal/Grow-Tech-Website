@@ -2,47 +2,48 @@ import Button from "@/components/Button";
 
 const HeroSection = () => {
   return (
-    <section className="relative w-full min-h-[85vh] flex items-center px-15 py-20 overflow-hidden">
+    <section className="relative flex min-h-screen w-full items-center overflow-hidden px-6 py-20 sm:px-8 lg:px-16">
       {/* Background Video */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover -z-20"
+        className="absolute inset-0 -z-20 h-full w-full object-cover"
       >
         <source src="/videos/luxery1.mp4" type="video/mp4" />
       </video>
 
-      {/* Content Grid */}
-      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        {/* Left Side Content */}
-        <div className="lg:col-span-7 flex flex-col items-start justify-center">
-          {/* Main Title with Cabinet & Gradient */}
-          <h1 className="cabinet text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
-            <span className="block gradient-text">Innovating</span>
-            <span className="block gradient-text">Tomorrow&apos;s</span>
-            <span className="block gradient-text">Technology, Today.</span>
+      {/* Content */}
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-16 lg:grid-cols-12">
+        {/* Left Content */}
+        <div className="lg:col-span-7">
+          <h1 className="cabinet mb-6 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl xl:text-7xl">
+            <span className="gradient-text">
+              Innovating <br />
+              Tomorrow&apos;s <br />
+              Technology, Today.
+            </span>
           </h1>
 
-          {/* Subtitle / Description */}
-          <p className="garet text-slate-300 text-base md:text-lg max-w-xl leading-relaxed mb-8">
+          <p className="garet mb-8 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
             Transforming complex challenges into high-performance digital
             solutions with Grow Tech&apos;s expert engineering.
           </p>
 
-          <Button href="/services" variant="primary" size="lg">Discover Solutions</Button>
+          <Button href="/services" variant="primary" size="lg">
+            Discover Solutions
+          </Button>
         </div>
 
-        {/* Right Side Glassmorphism Box */}
-        <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
-          {/* Glass Card */}
-          <div className="border border-[#c9a86a33] backdrop-blur-md rounded-3xl p-8 sm:p-10 max-w-md w-full shadow-2xl">
-            <p className="garet text-slate-200 text-sm sm:text-base leading-relaxed">
-              At <span className="font-bold text-[#c9a86a]">Grow Tech</span>, we
-              don&apos;t just build software; we engineer excellence. Our team
-              delivers bespoke Websites, Mobile Applications, Immersive Games,
-              and Hardware Infrastructure designed to scale your vision.
+        {/* Right Content */}
+        <div className="flex justify-center lg:col-span-5 lg:justify-end">
+          <div className="w-full max-w-md rounded-3xl border border-[#c9a86a33] bg-white/5 p-8 backdrop-blur-xl sm:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
+            <p className="garet text-sm leading-7 text-slate-200 sm:text-base">
+              At <span className="font-semibold text-[#c9a86a]">Grow Tech</span>
+              , we don&apos;t just build software—we engineer excellence. Our
+              team delivers bespoke Websites, Mobile Applications, Immersive
+              Games, and Hardware Infrastructure designed to scale your vision.
             </p>
           </div>
         </div>

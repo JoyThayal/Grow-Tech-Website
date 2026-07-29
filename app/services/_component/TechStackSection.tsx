@@ -2,14 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import {
-  Code2, // React / Web
-  Smartphone, // Flutter / Mobile App
-  Server, // Node.js / Backend
-  Gamepad2, // Unity / Game Dev
-  Zap, // Firebase / Database
-  Layers, // Tech Ecosystem
-} from "lucide-react";
+import { Code2, Smartphone, Server, Gamepad2, Zap, Layers } from "lucide-react";
 
 interface TechItem {
   name: string;
@@ -25,65 +18,70 @@ const techStack: TechItem[] = [
   { name: "Tech Ecosystem", IconComponent: Layers },
 ];
 
-const TechStackSection: React.FC = () => {
+const TechStackSection = () => {
   return (
-    <section className="w-full px-15 py-20 flex flex-col items-center justify-center overflow-hidden">
-      {/* Pulse Animation Style Inject */}
+    <section className="flex w-full flex-col items-center justify-center overflow-hidden px-6 py-20 sm:px-8 lg:px-16">
       <style jsx>{`
         @keyframes gtPulse {
           0% {
-            transform: scale(0.35); /* একদম মাঝখানের GT ইমেজের কাছে ছোট থাকবে */
+            transform: scale(0.35);
             opacity: 0.9;
           }
+
           50% {
-            transform: scale(1.15); /* বাইরের দিকে বড় হয়ে ছড়াবে */
+            transform: scale(1.15);
             opacity: 0.2;
           }
+
           100% {
             transform: scale(0.35);
             opacity: 0.9;
           }
         }
+
         .gt-pulse-circle {
           animation: gtPulse 3.5s ease-in-out infinite;
         }
       `}</style>
 
-      {/* Header Area */}
-      <div className="text-center mb-16">
+      {/* Header */}
+      <div className="mb-14 text-center">
         <span className="golden-tag">OUR POWERHOUSE</span>
 
-        <h2 className="cabinet gradient-text text-4xl font-bold tracking-tight max-w-2xl mx-auto leading-tight mt-2">
-          Tech We Use to Build
+        <h2 className="cabinet mx-auto mt-3 max-w-2xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-5xl">
+          <span className="gradient-text">Tech We Use to Build</span>
         </h2>
       </div>
 
-      {/* Orbit Container */}
-      <div className="relative w-[320px] h-[320px] sm:w-[400px] sm:h-[400px] flex items-center justify-center">
-        {/* Animated Smooth Expanding Pulse Circle (Gt অব্দি ছোট থেকে বড় হবে) */}
-        <div className="gt-pulse-circle absolute inset-0 rounded-full border border-cyan-400/50 shadow-[0_0_25px_rgba(0,229,255,0.3)] pointer-events-none" />
+      {/* Orbit */}
+      <div className="relative flex h-70 w-70 items-center justify-center sm:h-95 sm:w-95 md:h-107.5 md:w-107.5">
+        {/* Pulse */}
+        <div className="gt-pulse-circle pointer-events-none absolute inset-0 rounded-full border border-cyan-400/50 shadow-[0_0_25px_rgba(0,229,255,0.3)]" />
 
-        {/* Fixed Orbit Line Ring */}
-        <div className="absolute inset-2 rounded-full border border-slate-800/80 pointer-events-none" />
+        {/* Ring */}
+        <div className="pointer-events-none absolute inset-2 rounded-full border border-slate-800/80" />
 
-        {/* Center GT Logo Image */}
+        {/* Logo */}
         <div className="relative z-10 flex items-center justify-center">
           <Image
-            src="/images/gt.png" // তোমার GT লোগো ইমেজের ফাইল পাথ এখানে দেবে
+            src="/images/gt.png"
             alt="Grow Tech Logo"
             width={100}
             height={100}
             priority
-            className="w-auto h-auto object-contain drop-shadow-[0_0_20px_rgba(201,168,106,0.5)]"
+            className="h-auto w-auto object-contain drop-shadow-[0_0_20px_rgba(201,168,106,0.5)] sm:w-27.5"
           />
         </div>
 
-        {/* Circular Tech Icons */}
+        {/* Tech Items */}
         {techStack.map((tech, index) => {
-          // 60 deg apart for 6 items
           const angle =
             (index * (360 / techStack.length) - 90) * (Math.PI / 180);
-          const radius = 180; // Circle radius
+
+          const radius =
+            typeof window !== "undefined" && window.innerWidth < 640
+              ? 125
+              : 185;
 
           const x = Math.cos(angle) * radius;
           const y = Math.sin(angle) * radius;
@@ -96,15 +94,13 @@ const TechStackSection: React.FC = () => {
               style={{
                 transform: `translate(${x}px, ${y}px)`,
               }}
-              className="absolute group flex flex-col items-center justify-center cursor-pointer transition-transform duration-300 hover:scale-110 z-20"
+              className="group absolute z-20 flex cursor-pointer flex-col items-center justify-center transition-transform duration-300 hover:scale-110"
             >
-              {/* Icon Box */}
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#ffffff08] border border-[#ffffff14] flex items-center justify-center transition-all duration-300 group-hover:bg-[#00e5ff10] group-hover:border-cyan-400 group-hover:shadow-[0_0_20px_rgba(0,229,255,0.4)]">
-                <Icon className="w-7 h-7 text-[#c9a86a] transition-colors duration-300 group-hover:text-cyan-400" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#ffffff14] bg-[#ffffff08] transition-all duration-300 group-hover:border-cyan-400 group-hover:bg-[#00e5ff10] group-hover:shadow-[0_0_20px_rgba(0,229,255,0.4)] sm:h-16 sm:w-16">
+                <Icon className="h-6 w-6 text-[#c9a86a] transition-colors duration-300 group-hover:text-cyan-400 sm:h-7 sm:w-7" />
               </div>
 
-              {/* Hover Name Label */}
-              <span className="garet absolute -bottom-7 text-xs font-semibold text-cyan-400 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap tracking-wider">
+              <span className="garet absolute -bottom-7 whitespace-nowrap text-xs font-semibold tracking-wider text-cyan-400 opacity-0 transition-all duration-300 group-hover:opacity-100">
                 {tech.name}
               </span>
             </div>
