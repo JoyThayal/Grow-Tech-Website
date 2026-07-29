@@ -5,7 +5,7 @@ export default function HeroSection() {
   return (
     <section className="relative min-h-[50vh] w-full overflow-hidden">
       <Image
-        src="https://preview.cruip.com/neon/images/hero-illustration.svg"
+        src="/images/hero-illustration.svg"
         fill
         priority
         alt="Hero Illustration"
@@ -24,9 +24,7 @@ export default function HeroSection() {
         <h1 className="cabinet leading-[0.9] uppercase text-[2.5rem] gradient-text sm:text-6xl md:text-7xl lg:text-8xl">
           SCALE YOUR <br />
           REVENUE WITH <br />
-          <span className="italic pr-3">
-            GROW TECH
-          </span>
+          <span className="italic pr-3">GROW TECH</span>
         </h1>
 
         <p className="garet max-w-xl text-base sm:text-lg mt-2">
