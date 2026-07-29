@@ -20,7 +20,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="relative sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
       <nav className="mx-auto flex h-20 items-center justify-between px-6 lg:px-15">
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-3">
@@ -93,7 +93,7 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <div
         className={`absolute left-0 top-20 z-40 w-full overflow-hidden transition-all duration-500 md:hidden ${
-          isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+          isOpen ? "max-h-125 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="border-t border-white/10 bg-slate-950/95 px-6 py-6 backdrop-blur-xl">
