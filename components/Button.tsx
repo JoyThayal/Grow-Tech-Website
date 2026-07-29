@@ -4,7 +4,7 @@ import React from "react";
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   href?: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
   variant?: "primary" | "secondary" | "outline" | "glow" | "ghost";
   size?: "sm" | "md" | "lg";
   className?: string;
@@ -45,7 +45,11 @@ export default function Button({
 
   if (href) {
     return (
-      <Link href={href} className={baseClasses}>
+      <Link
+        href={href}
+        className={baseClasses}
+        onClick={onClick as React.MouseEventHandler<HTMLAnchorElement>}
+      >
         {children}
       </Link>
     );

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Button from "./Button";
 
@@ -19,21 +19,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
-  // Lock background scroll when mobile menu opens
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isOpen]);
-
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
+    <header className="relative sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
       <nav className="mx-auto flex h-20 items-center justify-between px-6 lg:px-15">
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-3">
@@ -52,7 +39,7 @@ export default function Navbar() {
           </h2>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Nav */}
         <div className="garet hidden items-center gap-8 text-sm font-medium tracking-wide md:flex">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
@@ -80,10 +67,10 @@ export default function Navbar() {
           </Button>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="relative z-[60] flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition hover:bg-white/10 md:hidden"
+          className="relative z-50 flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition hover:bg-white/10 md:hidden"
         >
           <Menu
             className={`absolute h-6 w-6 transition-all duration-300 ${
@@ -105,7 +92,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed left-0 right-0 top-20 z-40 overflow-hidden transition-all duration-500 md:hidden ${
+        className={`absolute left-0 top-20 z-40 w-full overflow-hidden transition-all duration-500 md:hidden ${
           isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
@@ -130,20 +117,17 @@ export default function Navbar() {
               );
             })}
 
-            <Button href="/contact" variant="glow" size="md">
+            <Button
+              href="/contact"
+              variant="glow"
+              size="md"
+              onClick={() => setIsOpen(false)}
+            >
               Let&apos;s Talk
             </Button>
           </div>
         </div>
       </div>
-
-      {/* Mobile Overlay */}
-      {isOpen && (
-        <div
-          onClick={() => setIsOpen(false)}
-          className="fixed inset-0 top-20 z-30 bg-black/40 md:hidden"
-        />
-      )}
     </header>
   );
 }
