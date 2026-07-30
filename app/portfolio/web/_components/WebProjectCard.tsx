@@ -27,11 +27,11 @@ export default function WebProjectCard({
           className={`
             relative w-full transition-transform ease-in-out
             duration-500
-            md:group-hover:duration-[5000ms]
+            md:group-hover:duration-5000
             md:group-hover:-translate-y-[calc(100%-320px)]
             ${
               isOpen
-                ? "-translate-y-[calc(100%-320px)] duration-[5000ms]"
+                ? "-translate-y-[calc(100%-320px)] duration-5000"
                 : "translate-y-0"
             }
           `}
