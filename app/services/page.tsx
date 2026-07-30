@@ -1,8 +1,8 @@
-import HeroSection from "./_component/HeroSection";
-import ExpertiseSection from "./_component/ExpertiseSection";
-import TechStackSection from "./_component/TechStackSection"
-import SustainabilitySection from "./_component/SustainabilitySection";
-import FaqSection from "../_component/FaqSection";
+import HeroSection from "./_components/HeroSection";
+import ExpertiseSection from "./_components/ExpertiseSection";
+import TechStackSection from "./_components/TechStackSection"
+import SustainabilitySection from "./_components/SustainabilitySection";
+import FaqSection from "../_components/FaqSection";
 
 export default function ServicesPage() {
   return (

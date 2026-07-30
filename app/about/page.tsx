@@ -1,10 +1,10 @@
-import AboutHeroSection from "./_component/AboutHero";
-import OurVisionSection from "./_component/OurVisionSection";
-import TeamSection from "./_component/TeamSection";
-import OurGrowthSection from "./_component/OurGrowthSection";
-import DevelopmentLifecycle from "./_component/DevelopmentLifecycle";
-import FeaturesSection from "./_component/FeaturesSection";
-import CTASection from "./_component/CTASection";
+import AboutHeroSection from "./_components/AboutHero";
+import OurVisionSection from "./_components/OurVisionSection";
+import TeamSection from "./_components/TeamSection";
+import OurGrowthSection from "./_components/OurGrowthSection";
+import DevelopmentLifecycle from "./_components/DevelopmentLifecycle";
+import FeaturesSection from "./_components/FeaturesSection";
+import CTASection from "./_components/CTASection";
 
 export default function AboutSection() {
   return (

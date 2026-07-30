@@ -1,7 +1,7 @@
-import CreativeUniverseSection from "./_component/CreativeUniverseSection";
-import TechnologiesMasterSection from "./_component/TechnologiesMasterSection";
-import GrowthRealTimeSection from "./_component/GrowthRealTimeSection";
-import MeetVisionariesSection from "./_component/MeetVisionariesSection";
+import CreativeUniverseSection from "./_components/CreativeUniverseSection";
+import TechnologiesMasterSection from "./_components/TechnologiesMasterSection";
+import GrowthRealTimeSection from "./_components/GrowthRealTimeSection";
+import MeetVisionariesSection from "./_components/MeetVisionariesSection";
 
 export default function PortfolioPage() {
   return (

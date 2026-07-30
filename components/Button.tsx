@@ -21,7 +21,7 @@ export default function Button({
 }: ButtonProps) {
   const variants = {
     primary:
-      "bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.02] border border-cyan-400/30",
+      "bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:bg-gradient-to-br hover:from-cyan-600 hover:to-blue-700 border border-cyan-400/30",
 
     glow: "bg-slate-900 text-cyan-400 font-semibold border border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:bg-slate-800/80 hover:border-cyan-400",
 

@@ -42,7 +42,10 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div className="garet hidden items-center gap-8 text-sm font-medium tracking-wide md:flex">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            // ✨ আপডেট করা লজিক: সাব-রুটেও পোর্টফোলিওকে অ্যাক্টিভ রাখবে
+            const isActive =
+              pathname === link.href ||
+              (link.href !== "/" && pathname.startsWith(link.href));
 
             return (
               <Link
@@ -99,7 +102,10 @@ export default function Navbar() {
         <div className="border-t border-white/10 bg-slate-950/95 px-6 py-6 backdrop-blur-xl">
           <div className="flex flex-col gap-6">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              // ✨ মোবাইল মেনুর জন্যও একই লজিক
+              const isActive =
+                pathname === link.href ||
+                (link.href !== "/" && pathname.startsWith(link.href));
 
               return (
                 <Link
@@ -108,7 +114,7 @@ export default function Navbar() {
                   onClick={() => setIsOpen(false)}
                   className={`text-lg transition ${
                     isActive
-                      ? "text-cyan-400"
+                      ? "text-cyan-400 font-semibold"
                       : "text-slate-300 hover:text-cyan-400"
                   }`}
                 >

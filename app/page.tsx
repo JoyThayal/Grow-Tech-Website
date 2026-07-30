@@ -1,10 +1,10 @@
-import HeroSection from "./_component/Hero";
-import SolutionsSection from "./_component/Solutions";
-import DetailsSection from "./_component/Details";
-import FearuresSection from "./_component/Features";
-import HeroEcosystemSection from "./_component/HeroEcosystem";
-import TechSection from "./_component/TechSection";
-import FaqSection from "./_component/FaqSection";
+import HeroSection from "./_components/Hero";
+import SolutionsSection from "./_components/Solutions";
+import DetailsSection from "./_components/Details";
+import FearuresSection from "./_components/Features";
+import HeroEcosystemSection from "./_components/HeroEcosystem";
+import TechSection from "./_components/TechSection";
+import FaqSection from "./_components/FaqSection";
 
 export default function Page() {
   return (
