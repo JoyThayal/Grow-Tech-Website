@@ -120,7 +120,7 @@ export default function ContactSection(): React.ReactNode {
       </div>
 
       {/* 🔮 Bottom Magic Portfolio Banner (Dashed Border Card) */}
-      <div className="w-full max-w-5xl rounded-3xl border border-dashed border-[#c9a86a]/40 bg-[#101426]/50 p-10 sm:p-14 flex flex-col items-center text-center gap-4">
+      <div className="w-full max-w-5xl rounded-3xl border border-dashed border-[#c9a86a] bg-[#ffffff08] p-10 sm:p-14 flex flex-col items-center text-center gap-4">
         <h2 className="cabinet text-3xl sm:text-4xl font-extrabold text-white tracking-wide">
           Ready to see our magic?
         </h2>

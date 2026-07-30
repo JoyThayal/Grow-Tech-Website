@@ -49,7 +49,7 @@ export default function SolutionsSection() {
       </div>
 
       {/* Cards */}
-      <div className="w-full lg:h-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-stretch gap-6 lg:gap-10 px-6 lg:px-10">
+      <div className="w-full h-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-stretch gap-6 lg:gap-10 px-6 lg:px-10">
         {solutions.map((solution) => (
           <div
             key={solution.id}

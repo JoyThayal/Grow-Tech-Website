@@ -86,7 +86,7 @@ export default function AppCard({
         {/* Title */}
         <h3 className="cabinet text-xl font-bold text-white mb-4">
           {project.title}{" "}
-          <span className="text-amber-400 font-extrabold">
+          <span className={`${project.highlightColor} font-extrabold`}>
             {project.highlightTitle}
           </span>
         </h3>

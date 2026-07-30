@@ -6,7 +6,7 @@ export default function DetailsSection() {
   const details = [
     {
       id: 1,
-      image: "/images/website-development.png",
+      image: "/images/web.png",
       alt: "Website Development",
       title: "Modern Web Development",
       description:
@@ -16,7 +16,7 @@ export default function DetailsSection() {
     },
     {
       id: 2,
-      image: "/images/app-development.png",
+      image: "/images/app.png",
       alt: "App Development",
       title: "Custom Mobile Apps",
       description:
@@ -26,7 +26,7 @@ export default function DetailsSection() {
     },
     {
       id: 3,
-      image: "/images/game-development.png",
+      image: "/images/game.png",
       alt: "Game Development",
       title: "Immersive Game Development",
       description:
@@ -36,7 +36,7 @@ export default function DetailsSection() {
     },
     {
       id: 4,
-      image: "/images/comuter-repairing.png",
+      image: "/images/computer.png",
       alt: "Computer Repairing",
       title: "Expert Computer Repairing",
       description:

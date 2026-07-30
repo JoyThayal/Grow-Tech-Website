@@ -30,7 +30,7 @@ export default function Navbar() {
             height={45}
             priority
             alt="Grow Tech Logo"
-            className="rounded-xl shadow-lg shadow-cyan-500/30 transition duration-300 group-hover:scale-110 group-hover:rotate-6"
+            className="w-auto h-auto rounded-xl shadow-lg shadow-cyan-500/30 transition duration-300 group-hover:scale-110 group-hover:rotate-6"
           />
 
           <h2 className="cabinet text-xl font-extrabold tracking-wide text-white sm:text-2xl">
