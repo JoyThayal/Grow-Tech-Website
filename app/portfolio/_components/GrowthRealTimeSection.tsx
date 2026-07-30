@@ -33,8 +33,8 @@ export default function GrowthRealTimeSection(): React.ReactNode {
       <div className="text-center flex flex-col items-center mb-16">
         <span className="golden-tag mb-3">OUR DIGITAL FOOTPRINT</span>
 
-        <h2 className="cabinet gradient-text text-4xl font-bold tracking-tight leading-tight">
-          Growth In Real Time
+        <h2 className="cabinet text-4xl font-bold tracking-tight leading-tight">
+          <span className="gradient-text">Growth In Real Time</span>
         </h2>
 
         {/* Small Golden Divider Line */}

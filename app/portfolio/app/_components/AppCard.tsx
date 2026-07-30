@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Play, Download } from "lucide-react";
 import { AppProject } from "../data";
@@ -10,24 +10,58 @@ interface AppCardProps {
   onViewLive: (videoUrl: string) => void;
 }
 
-export default function AppCard({ project, onViewLive }: AppCardProps) {
+export default function AppCard({
+  project,
+  onViewLive,
+}: AppCardProps): React.ReactNode {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="rounded-3xl bg-[#ffffff08] border border-[#ffffff14] p-5 flex flex-col justify-between transition-all duration-300 hover:border-cyan-500/40 hover:shadow-[0_0_30px_rgba(0,229,255,0.1)] group">
+    <div
+      onClick={() => setIsOpen((prev) => !prev)}
+      className="rounded-3xl bg-[#ffffff08] border border-[#ffffff14] p-5 flex flex-col justify-between transition-all duration-300 hover:border-cyan-500/40 hover:shadow-[0_0_30px_rgba(0,229,255,0.1)] group cursor-pointer"
+    >
       <div>
         {/* Image Box */}
-        <div className="relative w-full h-56 rounded-2xl overflow-hidden bg-slate-900 mb-5 group">
+        <div className="relative w-full h-56 rounded-2xl overflow-hidden bg-slate-900 mb-5">
           <Image
             src={`/app-images/${project.imageSrc}`}
             alt={project.title}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`
+              object-cover transition-transform duration-500
+              md:group-hover:scale-105
+              ${isOpen ? "scale-105" : "scale-100"}
+            `}
           />
 
-          {/* Hover Buttons */}
-          <div className="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm flex items-center justify-center gap-3 p-4">
+          {/* Overlay */}
+          <div
+            className={`
+              absolute inset-0
+              bg-slate-950/70
+              backdrop-blur-sm
+              flex items-center justify-center gap-3 p-4
+              transition-opacity duration-300
+
+              ${
+                isOpen
+                  ? "opacity-100 pointer-events-auto"
+                  : "opacity-0 pointer-events-none"
+              }
+
+              md:opacity-0
+              md:pointer-events-none
+              md:group-hover:opacity-100
+              md:group-hover:pointer-events-auto
+            `}
+          >
             {project.videoUrl && (
               <button
-                onClick={() => onViewLive(project.videoUrl!)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onViewLive(project.videoUrl!);
+                }}
                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-400 text-slate-950 font-bold text-xs hover:bg-cyan-300 transition-all shadow-lg cursor-pointer"
               >
                 <Play className="w-3.5 h-3.5 fill-slate-950" />
@@ -39,6 +73,7 @@ export default function AppCard({ project, onViewLive }: AppCardProps) {
               <a
                 href={project.apkUrl}
                 download
+                onClick={(e) => e.stopPropagation()}
                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800 border border-white/20 text-white font-bold text-xs hover:bg-slate-700 transition-all shadow-lg cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5" />

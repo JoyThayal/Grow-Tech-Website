@@ -24,6 +24,15 @@ export const gameProjects: GameProject[] = [
   },
   {
     id: "g2",
+    title: "Open World Zombie Shooter",
+    tags: ["Unity", "C#", "Open World"],
+    description:
+      "An upcoming open-world 3D zombie survival shooter where players explore a dangerous world, battle endless zombie hordes, gather resources, and fight to survive. Currently in active development.",
+    imageSrc: "zombie-zone.png",
+    isComingSoon: true,
+  },
+  {
+    id: "g3",
     title: "Game Coming Soon",
     description: "More games coming soon, stay tuned for the latest updates.",
     imageSrc: "game-coming-soon.png",

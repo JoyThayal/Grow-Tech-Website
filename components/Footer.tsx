@@ -82,7 +82,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="space-y-5 md:col-span-3">
-            <h3 className="cabinet text-sm font-bold uppercase tracking-[0.15em] text-amber-200/90">
+            <h3 className="cabinet text-sm font-bold uppercase tracking-[0.15em] text-[#c9a86a]">
               Quick Links
             </h3>
 
@@ -102,7 +102,7 @@ export default function Footer() {
 
           {/* Social */}
           <div className="space-y-5 md:col-span-4">
-            <h3 className="cabinet text-sm font-bold uppercase tracking-[0.15em] text-amber-200/90">
+            <h3 className="cabinet text-sm font-bold uppercase tracking-[0.15em] text-[#c9a86a]">
               Connect With Us
             </h3>
 

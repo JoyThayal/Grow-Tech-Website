@@ -44,6 +44,26 @@ export default function Button({
   const baseClasses = `inline-flex items-center justify-center tracking-wide select-none transition-all ease-out active:scale-95 disabled:opacity-50 disabled:pointer-events-none ${variants[variant]} ${sizes[size]} ${className}`;
 
   if (href) {
+    const isExternal =
+      href.startsWith("http") ||
+      href.startsWith("https") ||
+      href.startsWith("mailto:") ||
+      href.startsWith("tel:");
+
+    if (isExternal) {
+      return (
+        <a
+          href={href}
+          className={baseClasses}
+          onClick={onClick as React.MouseEventHandler<HTMLAnchorElement>}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {children}
+        </a>
+      );
+    }
+
     return (
       <Link
         href={href}

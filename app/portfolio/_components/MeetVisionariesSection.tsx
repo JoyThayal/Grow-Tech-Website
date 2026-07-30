@@ -1,12 +1,8 @@
 "use client";
 
 import React from "react";
-import {
-  Code2,
-  Smartphone,
-  Gamepad2,
-  Wrench,
-} from "lucide-react";
+import { Code2, Smartphone, Gamepad2, Wrench } from "lucide-react";
+import { RiInstagramFill, RiFacebookCircleFill } from "react-icons/ri";
 
 interface Visionary {
   name: string;
@@ -73,8 +69,8 @@ export default function MeetVisionariesSection(): React.ReactNode {
       <div className="text-center flex flex-col items-center mb-16">
         <span className="golden-tag mb-3">THE MINDS BEHIND GROW TECH</span>
 
-        <h2 className="cabinet gradient-text text-4xl font-bold tracking-tight leading-tight">
-          Meet The Visionaries
+        <h2 className="cabinet text-4xl font-bold tracking-tight leading-tight">
+          <span className="gradient-text">Meet The Visionaries</span>
         </h2>
 
         {/* Small Golden Divider Line */}
@@ -126,17 +122,22 @@ export default function MeetVisionariesSection(): React.ReactNode {
                         href={member.socials.facebook}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:scale-125 transition-transform duration-300"
+                        className="rounded-full bg-white/20 p-2 transition-all duration-300 hover:scale-110 hover:bg-white/30"
+                        aria-label={`${member.name} Facebook`}
                       >
+                        <RiFacebookCircleFill className="w-8 h-8" />
                       </a>
                     )}
+
                     {member.socials.instagram && (
                       <a
                         href={member.socials.instagram}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:scale-125 transition-transform duration-300"
+                        className="rounded-full bg-white/20 p-2 transition-all duration-300 hover:scale-110 hover:bg-white/30"
+                        aria-label={`${member.name} Instagram`}
                       >
+                        <RiInstagramFill className="w-8 h-8" />
                       </a>
                     )}
                   </div>

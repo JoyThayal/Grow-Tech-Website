@@ -5,15 +5,21 @@ import OurGrowthSection from "./_components/OurGrowthSection";
 import DevelopmentLifecycle from "./_components/DevelopmentLifecycle";
 import FeaturesSection from "./_components/FeaturesSection";
 import CTASection from "./_components/CTASection";
+import ElasticDivider from "@/components/ElasticDivider";
 
 export default function AboutSection() {
   return (
     <main>
       <AboutHeroSection />
+      <ElasticDivider />
       <OurVisionSection />
+      <ElasticDivider />
       <TeamSection />
+      <ElasticDivider />
       <OurGrowthSection />
+      <ElasticDivider />
       <DevelopmentLifecycle />
+      <ElasticDivider />
       <FeaturesSection />
       <CTASection />
     </main>

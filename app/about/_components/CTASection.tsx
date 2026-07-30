@@ -36,7 +36,7 @@ export default function CTASection() {
                 </Button>
 
                 <Button
-                  href="https://wa.me/918800888888"
+                  href="https://wa.me/+918902709631?text=Hi%20Grow%20Tech,%20I%20want%20to%20discuss%20a%20project."
                   variant="secondary"
                   className="flex items-center justify-center gap-2"
                 >

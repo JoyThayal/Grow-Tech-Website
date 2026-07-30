@@ -40,13 +40,12 @@ const techMasterData: TechMasterItem[] = [
 export default function TechnologiesMasterSection(): React.ReactNode {
   return (
     <section className="w-full text-white py-20 px-6 lg:px-15 flex flex-col items-center justify-center overflow-hidden">
-      
       {/* 🌟 Header Area */}
       <div className="text-center flex flex-col items-center mb-14">
         <span className="golden-tag mb-3">OUR POWERHOUSE</span>
 
-        <h2 className="cabinet gradient-text text-4xl font-bold tracking-tight leading-tight">
-          Technologies We Master
+        <h2 className="cabinet text-4xl font-bold tracking-tight leading-tight">
+          <span className="gradient-text">Technologies We Master</span>
         </h2>
 
         {/* Small Golden Divider Line */}
@@ -86,7 +85,6 @@ export default function TechnologiesMasterSection(): React.ReactNode {
           );
         })}
       </div>
-
     </section>
   );
 }

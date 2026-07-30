@@ -12,7 +12,7 @@ export default function DetailsSection() {
       description:
         "Elevate your brand with high-performance, SEO-optimized, and fully responsive websites. Led by Joy Thayal, we specialize in React, Next.js, and Full-Stack solutions to ensure your business stays ahead in the digital era.",
       buttonText: "Start Developing",
-      buttonLink: "",
+      buttonLink: "/portfolio/web",
     },
     {
       id: 2,
@@ -22,7 +22,7 @@ export default function DetailsSection() {
       description:
         "Our app team, led by CEO Aman Shaw, builds intuitive and powerful Android applications. We focus on seamless user interfaces (UI) and robust performance to connect you with your customers on the go.",
       buttonText: "Build Your App",
-      buttonLink: "",
+      buttonLink: "/portfolio/app",
     },
     {
       id: 3,
@@ -32,7 +32,7 @@ export default function DetailsSection() {
       description:
         "Bijoy Thayal leads our gaming division, creating high-quality 2D and 3D games. From concept to deployment, we deliver engaging gameplay and stunning graphics that keep players hooked and entertained.",
       buttonText: "Level Up Now",
-      buttonLink: "",
+      buttonLink: "/portfolio/game",
     },
     {
       id: 4,
@@ -42,7 +42,7 @@ export default function DetailsSection() {
       description:
         "Technical glitch? Biprajit Paul and his team are here to help. From hardware diagnostics to complex repairs, we ensure your devices are back in top shape with our professional and reliable repairing services.",
       buttonText: "Fix My Device",
-      buttonLink: "",
+      buttonLink: "/contact",
     },
     {
       id: 5,
@@ -52,7 +52,7 @@ export default function DetailsSection() {
       description:
         "We don't just build; we maintain. Our dedicated support team ensures your digital platforms run without a glitch. We provide 24/7 maintenance, server management, and troubleshooting to protect your digital investment.",
       buttonText: "Get Support",
-      buttonLink: "",
+      buttonLink: "/contact",
     },
   ];
 

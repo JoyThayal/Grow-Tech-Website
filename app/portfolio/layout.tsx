@@ -7,9 +7,11 @@ export default function PortfolioLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen text-white py-12 px-4 sm:px-6 lg:px-12">
+    <div className="min-h-screen text-white">
       <div className="max-w-7xl mx-auto">
-        <PortfolioTabs />
+        <div className="pt-10 px-5 sm:px-6 lg:px-12">
+          <PortfolioTabs />
+        </div>
 
         {children}
       </div>

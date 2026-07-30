@@ -31,7 +31,7 @@ const HeroSection = () => {
             solutions with Grow Tech&apos;s expert engineering.
           </p>
 
-          <Button href="/services" variant="primary" size="lg">
+          <Button href="/contact" variant="primary" size="lg">
             Discover Solutions
           </Button>
         </div>

@@ -64,8 +64,8 @@ export default function CreativeUniverseSection(): React.ReactNode {
       <div className="text-center flex flex-col items-center mb-14">
         <span className="golden-tag mb-3">EXPERTISE REDEFINED</span>
 
-        <h2 className="cabinet gradient-text text-4xl font-bold tracking-tight leading-tight">
-          Our Creative Universe
+        <h2 className="cabinet text-4xl font-bold tracking-tight leading-tight">
+          <span className="gradient-text">Our Creative Universe</span>
         </h2>
 
         {/* Small Golden Divider Line */}

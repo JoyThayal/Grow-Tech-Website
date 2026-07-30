@@ -7,7 +7,7 @@ export default function GameHeader() {
         Level Up Your Experience
       </span>
       <h1 className="cabinet text-4xl sm:text-5xl font-bold tracking-tight">
-        Game Universe
+        <span className="gradient-text">Game Universe</span>
       </h1>
       <div className="w-14 h-0.5 bg-[#c9a86a] mt-5 rounded-full" />
     </div>

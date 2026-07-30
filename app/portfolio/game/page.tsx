@@ -10,7 +10,7 @@ export default function GameUniversePage() {
   const [selectedTrailer, setSelectedTrailer] = useState<string | null>(null);
 
   return (
-    <div className="w-full text-white py-8">
+    <div className="w-full text-white py-8 px-5 sm:px-6 lg:px-10 xl:px-12">
       {/* 🌟 Header */}
       <GameHeader />
 

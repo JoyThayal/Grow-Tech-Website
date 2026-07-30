@@ -70,7 +70,7 @@ export default function SolutionsSection() {
         ))}
       </div>
 
-      <Button href="/contact" variant="primary" size="lg">
+      <Button href="/services" variant="primary" size="lg">
         EXPLORE SERVICES
         <ArrowRight size={18} />
       </Button>

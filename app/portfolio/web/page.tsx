@@ -5,13 +5,11 @@ import { webProjectsData } from "./data";
 
 export default function WebUniversePage(): React.ReactNode {
   return (
-    <main className="min-h-screen text-white py-20 px-4 sm:px-6 lg:px-12">
-      <div className="max-w-7xl mx-auto">
-        {/* 🌟 Clean Header */}
+    <main className="min-h-screen px-4 py-16 text-white sm:px-6 lg:px-10 xl:px-12">
+      <div className="mx-auto max-w-7xl">
         <WebHeader />
 
-        {/* 💻 Minimal Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid gap-6 sm:gap-8 md:grid-cols-2 xl:grid-cols-3">
           {webProjectsData.map((project) => (
             <WebProjectCard key={project.id} project={project} />
           ))}

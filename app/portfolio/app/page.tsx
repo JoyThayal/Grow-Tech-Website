@@ -11,7 +11,7 @@ export default function AppUniversePage() {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   return (
-    <div className="w-full text-white py-8">
+    <div className="w-full text-white py-8 px-5 sm:px-6 lg:px-10 xl:px-12">
       {/* 🌟 Top Header */}
       <AppHeader />
 

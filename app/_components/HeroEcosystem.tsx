@@ -60,7 +60,11 @@ export default function HeroEcosystemSection() {
         scale your vision.
       </p>
 
-      <Button href="/contact" size="lg" variant="primary">
+      <Button
+        href="https://wa.me/+918902709631?text=Hi%20Grow%20Tech,%20I%20want%20to%20discuss%20a%20project."
+        size="lg"
+        variant="primary"
+      >
         LET&apos;S DISCUSS YOUR PROJECT
       </Button>
     </section>
