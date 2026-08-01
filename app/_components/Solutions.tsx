@@ -1,5 +1,5 @@
 import { Globe, Smartphone, Gamepad2, Cpu, ArrowRight } from "lucide-react";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 
 export default function SolutionsSection() {
   const solutions = [

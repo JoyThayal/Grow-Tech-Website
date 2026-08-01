@@ -16,17 +16,21 @@ export default function GameCard({
 }: GameCardProps): React.ReactNode {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Coming Soon Card
+  // 🚀 Coming Soon Card
   if (project.isComingSoon) {
     return (
       <div className="rounded-3xl bg-[#ffffff08] border border-[#ffffff14] p-5 flex flex-col justify-between transition-all duration-300">
         <div>
           <div className="relative w-full h-56 rounded-2xl overflow-hidden bg-slate-900 mb-5">
+            {/* ⚡ SKELETON LOADER */}
+            <div className="absolute inset-0 bg-[#ffffff10] animate-pulse z-0" />
+
             <Image
               src={`/game-images/${project.imageSrc}`}
               alt={project.title}
               fill
-              className="object-cover"
+              className="object-cover z-10"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
 
@@ -44,29 +48,34 @@ export default function GameCard({
     );
   }
 
+  // 🎮 Regular Game Card
   return (
     <div
       onClick={() => setIsOpen((prev) => !prev)}
       className="rounded-3xl bg-[#ffffff08] border border-purple-500/60 p-5 flex flex-col justify-between shadow-[0_0_25px_rgba(168,85,247,0.15)] transition-all duration-300 hover:shadow-[0_0_35px_rgba(168,85,247,0.3)] hover:border-purple-400 group cursor-pointer"
     >
       <div>
-        {/* Image */}
+        {/* Image Box */}
         <div className="relative w-full h-56 rounded-2xl overflow-hidden bg-slate-900 mb-5">
+          {/* ⚡ SKELETON LOADER (লোডিং-এর সময় ফাঁকা ভাব রোধ করতে) */}
+          <div className="absolute inset-0 bg-[#ffffff10] animate-pulse z-0" />
+
           <Image
             src={`/game-images/${project.imageSrc}`}
             alt={project.title}
             fill
             className={`
-              object-cover transition-transform duration-500
+              object-cover transition-transform duration-500 z-10
               md:group-hover:scale-105
               ${isOpen ? "scale-105" : "scale-100"}
             `}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
 
-          {/* Overlay */}
+          {/* Overlay (Trailer & Download) */}
           <div
             className={`
-              absolute inset-0
+              absolute inset-0 z-20
               bg-slate-950/75
               backdrop-blur-sm
               flex flex-col items-center justify-center gap-3 p-4
@@ -89,6 +98,7 @@ export default function GameCard({
                 onClick={(e) => {
                   e.stopPropagation();
                   onViewTrailer(project.trailerUrl!);
+                  setIsOpen(false); // মোবাইলে ট্রেইলার চালু হওয়ার পর ওভারলে অফ
                 }}
                 className="w-full max-w-50 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-cyan-400 text-slate-950 font-bold text-xs hover:bg-cyan-300 transition-all shadow-lg cursor-pointer"
               >
@@ -101,7 +111,10 @@ export default function GameCard({
               <a
                 href={project.downloadUrl}
                 download
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setTimeout(() => setIsOpen(false), 500); // ডাউনলোড ক্লিকের পর মোবাইলে ওভারলে অফ
+                }}
                 className="w-full max-w-50 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-purple-950/80 border border-purple-500/50 text-purple-300 font-bold text-xs hover:bg-purple-900/80 transition-all shadow-lg cursor-pointer"
               >
                 <Download className="w-4 h-4" />

@@ -39,7 +39,7 @@ const techMasterData: TechMasterItem[] = [
 
 export default function TechnologiesMasterSection(): React.ReactNode {
   return (
-    <section className="w-full text-white py-20 px-6 lg:px-15 flex flex-col items-center justify-center overflow-hidden">
+    <section className="w-full text-white py-10 lg:py-20 px-6 lg:px-15 flex flex-col items-center justify-center overflow-hidden">
       {/* 🌟 Header Area */}
       <div className="text-center flex flex-col items-center mb-14">
         <span className="golden-tag mb-3">OUR POWERHOUSE</span>

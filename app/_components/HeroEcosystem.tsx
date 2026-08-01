@@ -1,5 +1,5 @@
 import { Code, Layers, Wrench, Gamepad2, Shield, Globe } from "lucide-react";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 
 const iconClass =
   "w-4 h-4 sm:w-5 sm:h-5 text-slate-400 transition-colors duration-300 hover:text-cyan-400 cursor-pointer";

@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 
 interface UniverseCardProps {
   title: string;
@@ -62,7 +62,7 @@ export default function CreativeUniverseSection(): React.ReactNode {
     <section className="w-full text-white py-20 px-6 lg:px-15 flex flex-col items-center justify-center overflow-hidden">
       {/* 🌟 Header Area */}
       <div className="text-center flex flex-col items-center mb-14">
-        <span className="golden-tag mb-3">EXPERTISE REDEFINED</span>
+        <span className="golden-tag">EXPERTISE REDEFINED</span>
 
         <h2 className="cabinet text-4xl font-bold tracking-tight leading-tight">
           <span className="gradient-text">Our Creative Universe</span>

@@ -3,7 +3,7 @@ import React from "react";
 export default function WebHeader(): React.ReactNode {
   return (
     <div className="text-center flex flex-col items-center mb-16 relative z-10">
-      <span className="golden-tag mb-3">
+      <span className="golden-tag">
         OUR DIGITAL MASTERPIECES
       </span>
 

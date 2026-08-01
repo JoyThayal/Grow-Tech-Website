@@ -5,7 +5,7 @@ import OurGrowthSection from "./_components/OurGrowthSection";
 import DevelopmentLifecycle from "./_components/DevelopmentLifecycle";
 import FeaturesSection from "./_components/FeaturesSection";
 import CTASection from "./_components/CTASection";
-import ElasticDivider from "@/components/ElasticDivider";
+import ElasticDivider from "@/components/ui/ElasticDivider";
 
 export default function AboutSection() {
   return (

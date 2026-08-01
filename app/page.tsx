@@ -5,7 +5,7 @@ import FeaturesSection from "./_components/Features";
 import HeroEcosystemSection from "./_components/HeroEcosystem";
 import TechSection from "./_components/TechSection";
 import FaqSection from "./_components/FaqSection";
-import ElasticDivider from "@/components/ElasticDivider";
+import ElasticDivider from "@/components/ui/ElasticDivider";
 
 export default function Page() {
   return (

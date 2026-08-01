@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import Button from "./Button";
+import Button from "../ui/Button";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -22,7 +22,6 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
       <nav className="mx-auto flex h-20 items-center justify-between px-6 lg:px-15">
-        {/* Logo */}
         <Link href="/" className="group flex items-center gap-3">
           <Image
             src="/images/growtech-logo.jpg"
@@ -42,7 +41,6 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div className="garet hidden items-center gap-8 text-sm font-medium tracking-wide md:flex">
           {navLinks.map((link) => {
-            // ✨ আপডেট করা লজিক: সাব-রুটেও পোর্টফোলিওকে অ্যাক্টিভ রাখবে
             const isActive =
               pathname === link.href ||
               (link.href !== "/" && pathname.startsWith(link.href));

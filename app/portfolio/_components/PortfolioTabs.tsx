@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 const tabs = [
   { name: "All Works", href: "/portfolio" },
   { name: "Web Universe", href: "/portfolio/web" },
-  { name: "App Development", href: "/portfolio/app" },
-  { name: "Game Production", href: "/portfolio/game" },
+  { name: "App Creation", href: "/portfolio/app" },
+  { name: "Game Craft", href: "/portfolio/game" },
 ];
 
 export default function PortfolioTabs() {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ArrowRight, Plus } from "lucide-react";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 
 interface FaqItem {
   question: string;

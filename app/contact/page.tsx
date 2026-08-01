@@ -14,13 +14,13 @@ import {
 
 export default function ContactSection(): React.ReactNode {
   return (
-    <section className="w-full text-white py-20 px-6 sm:px-12 lg:px-15 flex flex-col items-center justify-center overflow-hidden">
+    <section className="w-full text-white py-10 lg:py-20 px-5 sm:px-12 lg:px-15 flex flex-col items-center justify-center overflow-hidden">
       {/* 🌟 Header Area */}
       <div className="text-center flex flex-col items-center mb-14">
         <span className="golden-tag mb-3">GET IN TOUCH</span>
 
-        <h2 className="cabinet gradient-text text-4xl sm:text-5xl font-bold tracking-tight leading-tight">
-          Connect With Expertise
+        <h2 className="cabinet text-4xl sm:text-5xl font-bold tracking-tight leading-tight">
+          <span className="gradient-text">Connect With Expertise</span>
         </h2>
 
         <p className="garet text-slate-400 text-sm sm:text-base font-light max-w-xl mt-4 leading-relaxed">
@@ -126,7 +126,8 @@ export default function ContactSection(): React.ReactNode {
         </h2>
 
         <p className="garet text-slate-400 text-sm max-w-lg mb-4">
-          Explore our portfolio to see how we&apos;ve helped other businesses scale.
+          Explore our portfolio to see how we&apos;ve helped other businesses
+          scale.
         </p>
 
         <Link

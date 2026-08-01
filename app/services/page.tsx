@@ -1,9 +1,9 @@
 import HeroSection from "./_components/HeroSection";
 import ExpertiseSection from "./_components/ExpertiseSection";
-import TechStackSection from "./_components/TechStackSection"
+import TechStackSection from "./_components/TechStackSection";
 import SustainabilitySection from "./_components/SustainabilitySection";
 import FaqSection from "../_components/FaqSection";
-import ElasticDivider from "@/components/ElasticDivider";
+import ElasticDivider from "@/components/ui/ElasticDivider";
 
 export default function ServicesPage() {
   return (

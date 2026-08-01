@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Globe, Smartphone, Gamepad2, Plus, ArrowRight } from "lucide-react";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 
 interface ServiceItem {
   id: string;

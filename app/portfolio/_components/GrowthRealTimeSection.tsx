@@ -28,7 +28,7 @@ const statsData: StatItem[] = [
 
 export default function GrowthRealTimeSection(): React.ReactNode {
   return (
-    <section className="w-full text-white py-20 px-6 lg:px-15 flex flex-col items-center justify-center overflow-hidden">
+    <section className="w-full text-white py-10 lg:py-20 px-6 lg:px-15 flex flex-col items-center justify-center overflow-hidden">
       {/* 🌟 Header Area */}
       <div className="text-center flex flex-col items-center mb-16">
         <span className="golden-tag mb-3">OUR DIGITAL FOOTPRINT</span>

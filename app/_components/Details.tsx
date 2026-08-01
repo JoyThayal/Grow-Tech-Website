@@ -1,12 +1,12 @@
 import Image from "next/image";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 import { ArrowRight } from "lucide-react";
 
 export default function DetailsSection() {
   const details = [
     {
       id: 1,
-      image: "/images/web.png",
+      image: "/images/web-development.png",
       alt: "Website Development",
       title: "Modern Web Development",
       description:
@@ -16,7 +16,7 @@ export default function DetailsSection() {
     },
     {
       id: 2,
-      image: "/images/app.png",
+      image: "/images/app-development.png",
       alt: "App Development",
       title: "Custom Mobile Apps",
       description:
@@ -26,7 +26,7 @@ export default function DetailsSection() {
     },
     {
       id: 3,
-      image: "/images/game.png",
+      image: "/images/game-development.png",
       alt: "Game Development",
       title: "Immersive Game Development",
       description:
@@ -36,7 +36,7 @@ export default function DetailsSection() {
     },
     {
       id: 4,
-      image: "/images/computer.png",
+      image: "/images/computer-repairing.png",
       alt: "Computer Repairing",
       title: "Expert Computer Repairing",
       description:
@@ -46,7 +46,7 @@ export default function DetailsSection() {
     },
     {
       id: 5,
-      image: "/images/tech-support.png",
+      image: "/images/support.png",
       alt: "Tech Support",
       title: "24/7 Tech Support",
       description:
