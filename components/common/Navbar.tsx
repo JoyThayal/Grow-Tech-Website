@@ -24,18 +24,13 @@ export default function Navbar() {
       <nav className="mx-auto flex h-20 items-center justify-between px-6 lg:px-15">
         <Link href="/" className="group flex items-center gap-3">
           <Image
-            src="/images/growtech-logo.jpg"
-            width={45}
-            height={45}
+            src="/images/growtech-logo.png"
+            width={120}
+            height={120}
             priority
             alt="Grow Tech Logo"
-            className="w-auto h-auto rounded-xl shadow-lg shadow-cyan-500/30 transition duration-300 group-hover:scale-110 group-hover:rotate-6"
+            className="w-40 h-auto"
           />
-
-          <h2 className="cabinet text-xl font-extrabold tracking-wide text-white sm:text-2xl">
-            Grow
-            <span className="text-cyan-400">Tech</span>
-          </h2>
         </Link>
 
         {/* Desktop Nav */}

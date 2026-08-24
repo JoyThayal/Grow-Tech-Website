@@ -6,6 +6,7 @@ import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import ClickParticles from "@/components/ui/ClickParticles";
 import Image from "next/image";
+import TopGradientLoader from "@/components/ui/TopGradientLoader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
+        {/* 👇 পুরোনো Script রিপ্লেস করে এই অংশটি বসাও */}
         <Script
           id="meta-pixel"
           strategy="afterInteractive"
@@ -65,6 +67,7 @@ export default function RootLayout({
         </noscript>
       </head>
       <body className="min-h-full flex flex-col">
+        <TopGradientLoader />
         <Navbar />
         <ClickParticles />
         {children}
