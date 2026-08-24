@@ -36,7 +36,6 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        {/* 👇 পুরোনো Script রিপ্লেস করে এই অংশটি বসাও */}
         <Script
           id="meta-pixel"
           strategy="afterInteractive"
