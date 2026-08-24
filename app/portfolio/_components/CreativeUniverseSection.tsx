@@ -59,7 +59,7 @@ const universeData: UniverseCardProps[] = [
 
 export default function CreativeUniverseSection(): React.ReactNode {
   return (
-    <section className="w-full text-white py-20 px-6 lg:px-15 flex flex-col items-center justify-center overflow-hidden">
+    <section className="w-full text-white  px-4 py-16 sm:px-6 lg:px-10 xl:px-12 flex flex-col items-center justify-center overflow-hidden">
       {/* 🌟 Header Area */}
       <div className="text-center flex flex-col items-center mb-14">
         <span className="golden-tag">EXPERTISE REDEFINED</span>

@@ -19,6 +19,24 @@ export const webProjectsData: WebProject[] = [
   },
   {
     id: "02",
+    title: "Gym Website",
+    description:
+      "Dynamic and modern fitness platform featuring interactive client reviews, articles, and training plans.",
+    imageSrc: "gym-website.png",
+    techStack: ["TYPESCRIPT", "TAILWIND", "NEXT.JS"],
+    liveUrl: "https://gym-power-website.vercel.app/",
+  },
+  {
+    id: "03",
+    title: "Restaurant Website",
+    description:
+      "Elegant culinary experience showcase with interactive menus, online reservations, and brand story.",
+    imageSrc: "restaurant-website.png",
+    techStack: ["TYPESCRIPT", "TAILWIND", "NEXT.JS"],
+    liveUrl: "https://saradin-restaurant.vercel.app/",
+  },
+  {
+    id: "04",
     title: "Let's ABC Website",
     description:
       "A UK based Production Company crafted with clean typography and dark aesthetics.",
@@ -27,7 +45,7 @@ export const webProjectsData: WebProject[] = [
     liveUrl: "https://lets-abc.vercel.app/",
   },
   {
-    id: "03",
+    id: "05",
     title: "Netpro IT Systems",
     description:
       "Robust, enterprise-grade web architecture designed for hardware and network infrastructure security.",
@@ -36,7 +54,7 @@ export const webProjectsData: WebProject[] = [
     liveUrl: "https://netpro-it.netlify.app/",
   },
   {
-    id: "04",
+    id: "06",
     title: "Infinity Maths Academy",
     description:
       "Interactive and modern educational platform designed for seamless online learning.",

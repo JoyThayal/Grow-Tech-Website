@@ -80,7 +80,7 @@ export default function DetailsSection() {
             </div>
 
             {/* Content */}
-            <div className="w-full md:w-1/2 space-y-4 text-center md:text-left">
+            <div className="w-full md:w-1/2 flex flex-col lg:gap-5 gap-2 text-center md:text-left">
               <h2 className="cabinet text-[1.4rem] lg:text-4xl font-bold gradient-text">
                 {detail.title}
               </h2>

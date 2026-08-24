@@ -78,7 +78,7 @@ export default function TechnologiesMasterSection(): React.ReactNode {
               </p>
 
               {/* Bottom Golden Pill Badge (Not a button) */}
-              <div className="mt-auto px-4 py-1.5 rounded-full bg-[#c9a86a] text-[#0a0d17] font-extrabold text-[10px] tracking-widest uppercase select-none">
+              <div className="mt-auto px-4 py-1.5 rounded-md bg-[#c9a86a]/15 text-[#c9a86a] border border-[#c9a86a] font-extrabold text-[10px] tracking-widest uppercase select-none">
                 {item.category}
               </div>
             </div>

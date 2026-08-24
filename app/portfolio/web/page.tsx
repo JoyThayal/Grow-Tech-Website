@@ -5,7 +5,7 @@ import { webProjectsData } from "./data";
 
 export default function WebUniversePage(): React.ReactNode {
   return (
-    <main className="min-h-screen px-4 py-16 text-white sm:px-6 lg:px-10 xl:px-12">
+    <main className="min-h-screen text-white px-4 py-16 sm:px-6 lg:px-10 xl:px-12">
       <div className="mx-auto max-w-7xl">
         <WebHeader />
 
