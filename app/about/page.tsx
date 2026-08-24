@@ -9,7 +9,7 @@ import ElasticDivider from "@/components/ui/ElasticDivider";
 
 export default function AboutSection() {
   return (
-    <main>
+    <main className="w-full overflow-x-hidden">
       <AboutHeroSection />
       <ElasticDivider />
       <OurVisionSection />

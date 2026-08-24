@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import ClickParticles from "@/components/ui/ClickParticles";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
+        {/* 👇 পুরোনো Script রিপ্লেস করে এই অংশটি বসাও */}
         <Script
           id="meta-pixel"
           strategy="afterInteractive"
@@ -53,6 +55,15 @@ export default function RootLayout({
             `,
           }}
         />
+        <noscript>
+          <Image
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src="https://www.facebook.com/tr?id=1068834595843761&ev=PageView&noscript=1"
+            alt=""
+          />
+        </noscript>
       </head>
       <body className="min-h-full flex flex-col">
         <Navbar />
