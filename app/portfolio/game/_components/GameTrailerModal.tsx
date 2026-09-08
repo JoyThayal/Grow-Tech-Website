@@ -54,6 +54,8 @@ export default function GameTrailerModal({
           src={`/videos/${trailerUrl}`}
           autoPlay
           playsInline
+          controls
+          controlsList="nodownload"
           onCanPlay={() => setIsLoading(false)}
           className="relative z-10 w-full h-full object-contain bg-black"
         />

@@ -13,17 +13,17 @@ export interface GameProject {
 export const gameProjects: GameProject[] = [
   {
     id: "g1",
-    title: "Farmer Runner",
-    rating: "4.9",
-    tags: ["Unity", "C#", "Blender"],
+    title: "Flappy Adventurer",
+    rating: "4.8",
+    tags: ["Unity", "C#", "2D Arcade", "Endless Runner"],
     description:
-      "A 2D platformer game where you play as a farmer trying to escape a zombie apocalypse.",
-    imageSrc: "farmer-runner.png",
-    trailerUrl: "farmer-runner.mp4",
-    downloadUrl: "/game-apks/Farmer Runner.apk",
+      "Tap to flap and dodge challenging obstacles! Test your reflexes and set unbeatable high scores in this addictive 2D endless adventure.",
+    imageSrc: "flappy-adventurer.png",
+    trailerUrl: "flappy-bird.mp4",
+    downloadUrl: "/game-apks/Flappy-Adventurer.apk",
   },
   {
-    id: "g2",
+    id: "g3",
     title: "Open World Zombie Shooter",
     tags: ["Unity", "C#", "Open World"],
     description:
@@ -32,7 +32,7 @@ export const gameProjects: GameProject[] = [
     isComingSoon: true,
   },
   {
-    id: "g3",
+    id: "g4",
     title: "Game Coming Soon",
     description: "More games coming soon, stay tuned for the latest updates.",
     imageSrc: "game-coming-soon.png",

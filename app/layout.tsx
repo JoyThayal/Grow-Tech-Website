@@ -7,6 +7,7 @@ import Footer from "@/components/common/Footer";
 import ClickParticles from "@/components/ui/ClickParticles";
 import Image from "next/image";
 import TopGradientLoader from "@/components/ui/TopGradientLoader";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +38,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        {/* 👇 পুরোনো Script রিপ্লেস করে এই অংশটি বসাও */}
+        {/* Meta Pixel */}
         <Script
           id="meta-pixel"
           strategy="afterInteractive"
@@ -65,6 +66,17 @@ export default function RootLayout({
             alt=""
           />
         </noscript>
+
+        {/* 🎥 Microsoft Clarity Tracking */}
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+          {`
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "yf3pe5gano");
+          `}
+        </Script>
       </head>
       <body className="min-h-full flex flex-col">
         <TopGradientLoader />
@@ -72,6 +84,9 @@ export default function RootLayout({
         <ClickParticles />
         {children}
         <Footer />
+
+        {/* 📊 Google Analytics 4 */}
+        <GoogleAnalytics gaId="G-YMNT3DLTS1" />
       </body>
     </html>
   );
