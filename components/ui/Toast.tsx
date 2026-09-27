@@ -37,7 +37,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       const id = Math.random().toString(36).substring(2, 9);
       setToasts((prev) => [...prev, { id, title, description, type }]);
 
-      // ৪ সেকেন্ড পর নিজে থেকেই স্মুথলি ভ্যানিশ হয়ে যাবে
+      // ৪ সেকেন্ড পর নিজে থেকেই স্মুথলি ভ্যানিশ হয়ে যাবে
       setTimeout(() => {
         removeToast(id);
       }, 4000);
@@ -75,19 +75,20 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     <ToastContext.Provider value={{ showToast }}>
       {children}
 
-      {/* 🚀 ফিক্সড স্ক্রিন কনটেইনার */}
-      <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0">
+      {/* 🚀 রেসপনসিভ ফিক্সড স্ক্রিন কনটেইনার */}
+      {/* মোবাইলে ওপরে সেন্টারে, আর ট্যাবলেট/ডেস্কটপে নিচে ডানপাশে */}
+      <div className="fixed top-4 left-1/2 -translate-x-1/2 sm:top-auto sm:left-auto sm:translate-x-0 sm:bottom-5 sm:right-5 z-50 flex flex-col gap-2.5 w-[calc(100%-2rem)] sm:w-auto sm:max-w-sm pointer-events-none">
         <AnimatePresence mode="popLayout">
           {toasts.map((toast) => (
             <motion.div
               key={toast.id}
               layout
-              initial={{ opacity: 0, y: 30, scale: 0.9, filter: "blur(4px)" }}
+              initial={{ opacity: 0, y: -20, scale: 0.95, filter: "blur(4px)" }}
               animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               exit={{
                 opacity: 0,
                 scale: 0.9,
-                y: 10,
+                y: -15,
                 filter: "blur(4px)",
                 transition: { duration: 0.2 },
               }}
@@ -96,21 +97,21 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                 stiffness: 450,
                 damping: 30,
               }}
-              className={`pointer-events-auto relative overflow-hidden flex items-start justify-between gap-3 p-3.5 rounded-2xl bg-[#090d16]/90 backdrop-blur-xl border ${getBorderGlow(
+              className={`pointer-events-auto relative overflow-hidden flex items-start justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-[#090d16]/95 backdrop-blur-xl border ${getBorderGlow(
                 toast.type,
-              )} text-left`}
+              )} text-left w-full shadow-2xl`}
             >
               {/* ব্যাকগ্রাউন্ড হালকা আভা */}
-              <div className="absolute top-0 right-0 w-24 h-24 bg-white/2 rounded-full blur-xl pointer-events-none" />
+              <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full blur-xl pointer-events-none" />
 
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3 min-w-0 flex-1">
                 <div className="mt-0.5">{getIcon(toast.type)}</div>
-                <div className="space-y-0.5">
-                  <h4 className="text-xs font-semibold text-zinc-100 tracking-tight">
+                <div className="space-y-0.5 min-w-0 flex-1 pr-1">
+                  <h4 className="text-xs sm:text-sm font-semibold text-zinc-100 tracking-tight break-words">
                     {toast.title}
                   </h4>
                   {toast.description && (
-                    <p className="text-[11px] text-zinc-400 leading-snug">
+                    <p className="text-[11px] sm:text-xs text-zinc-400 leading-snug break-words">
                       {toast.description}
                     </p>
                   )}
@@ -120,10 +121,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               {/* ক্লোজ বাটন */}
               <button
                 type="button"
+                aria-label="Close Toast"
                 onClick={() => removeToast(toast.id)}
-                className="text-zinc-500 hover:text-zinc-300 p-0.5 rounded-md transition-colors cursor-pointer"
+                className="text-zinc-500 hover:text-zinc-300 p-1 rounded-md transition-colors cursor-pointer shrink-0"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-4 h-4" />
               </button>
             </motion.div>
           ))}
