@@ -6,10 +6,13 @@ import HeroEcosystemSection from "./_components/HeroEcosystem";
 import TechSection from "./_components/TechSection";
 import FaqSection from "./_components/FaqSection";
 import ElasticDivider from "@/components/ui/ElasticDivider";
+// import LoginModal from "@/components/LoginModal";
 
 export default function Page() {
   return (
     <main>
+      {/* <LoginModal /> */}
+
       <HeroSection />
       <ElasticDivider />
 

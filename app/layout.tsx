@@ -8,6 +8,7 @@ import ClickParticles from "@/components/ui/ClickParticles";
 import Image from "next/image";
 import TopGradientLoader from "@/components/ui/TopGradientLoader";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { ToastProvider } from "@/components/ui/Toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -82,7 +83,7 @@ export default function RootLayout({
         <TopGradientLoader />
         <Navbar />
         <ClickParticles />
-        {children}
+        <ToastProvider>{children}</ToastProvider>
         <Footer />
 
         {/* 📊 Google Analytics 4 */}

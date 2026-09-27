@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { CheckCircle2, Sparkles } from "lucide-react";
-import { completedAppProjects, demoAppProjects } from "./data";
+import { CheckCircle2 } from "lucide-react";
+import { completedAppProjects } from "./data";
 import AppHeader from "./_components/AppHeader";
 import AppCard from "./_components/AppCard";
 import VideoModal from "./_components/VideoModal";
@@ -36,7 +36,7 @@ export default function AppUniversePage() {
       </div>
 
       {/* 🚀 Demo Works */}
-      <div>
+      {/* <div>
         <div className="flex items-center gap-2.5 mb-8 text-amber-400">
           <Sparkles className="w-6 h-6 stroke-[2.5]" />
           <h2 className="cabinet text-2xl font-bold text-white tracking-wide">
@@ -53,7 +53,7 @@ export default function AppUniversePage() {
             />
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* 🎬 Video Popup Modal */}
       <VideoModal
