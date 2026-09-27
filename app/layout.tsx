@@ -9,6 +9,7 @@ import Image from "next/image";
 import TopGradientLoader from "@/components/ui/TopGradientLoader";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { ToastProvider } from "@/components/ui/Toast";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -83,7 +84,9 @@ export default function RootLayout({
         <TopGradientLoader />
         <Navbar />
         <ClickParticles />
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider>
+          <Suspense fallback={null}>{children}</Suspense>
+        </ToastProvider>
         <Footer />
 
         {/* 📊 Google Analytics 4 */}
