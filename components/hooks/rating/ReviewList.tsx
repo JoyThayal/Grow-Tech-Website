@@ -21,7 +21,7 @@ export function ReviewList({ reviews, currentUserId, onDeleteReview }: Props) {
         </span>
       </div>
 
-      <div className="space-y-2.5 max-h-48 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+      <div className="space-y-2.5 max-h-48 overflow-y-auto scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {reviews.length === 0 ? (
           <p className="text-center py-6 text-xs text-zinc-600">
             No reviews yet. Be the first to rate!
