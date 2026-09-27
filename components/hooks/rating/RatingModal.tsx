@@ -43,27 +43,31 @@ export default function RatingModal(props: RatingModalProps) {
       role="dialog"
       aria-modal="true"
       onClick={props.onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md transition-all duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#040814]/80 backdrop-blur-md transition-all duration-200"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-xl bg-zinc-950 border border-zinc-800/90 rounded-2xl p-6 sm:p-7 shadow-2xl text-left overflow-hidden antialiased"
+        className="relative w-full max-w-xl bg-[#0a1128] border border-[#1c2d66] rounded-2xl p-6 sm:p-7 shadow-[0_20px_60px_rgba(0,0,0,0.7)] text-left overflow-hidden antialiased"
       >
+        {/* 🌌 ব্যাকগ্রাউন্ড অরোরা আভা */}
+        <div className="absolute top-0 right-0 w-64 h-32 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        {/* ❌ ক্লোজ বাটন */}
         <button
           type="button"
           onClick={props.onClose}
-          className="absolute top-5 right-5 p-1.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-colors cursor-pointer"
+          className="absolute top-5 right-5 p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-[#121f48] border border-transparent hover:border-[#243982] transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
 
-        {/* হেডার */}
+        {/* 🏷️ হেডার */}
         <div className="mb-6 pr-8">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300 text-[11px] font-medium tracking-wide">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-300 text-[11px] font-mono tracking-wide">
             <Sparkles className="w-3 h-3 text-amber-400" />
             <span>Reviews & Feedback</span>
           </div>
-          <h3 className="text-xl font-semibold text-zinc-100 mt-2 tracking-tight">
+          <h3 className="text-xl font-semibold text-white mt-2 tracking-tight">
             {props.projectTitle}
           </h3>
         </div>

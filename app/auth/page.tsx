@@ -9,7 +9,6 @@ import { supabase } from "@/lib/supabase/client";
 
 function AuthForm(): React.ReactNode {
   const searchParams = useSearchParams();
-  // যদি কোনো next প্যারামিটার না থাকে তবে ডিফল্ট হিসেবে হোমপেজে ("/") পাঠাবে
   const nextUrl = searchParams.get("next") || "/";
 
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
@@ -40,7 +39,6 @@ function AuthForm(): React.ReactNode {
       setGoogleLoading(true);
       setOauthError(null);
 
-      // লোকাল ও প্রোডাকশনের জন্য সঠিক বেস ইউআরএল নির্ধারণ
       const redirectBase =
         typeof window !== "undefined" &&
         window.location.hostname === "localhost"
@@ -50,7 +48,6 @@ function AuthForm(): React.ReactNode {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          // কলব্যাক রাউটে next URL টা পাঠিয়ে দিচ্ছি
           redirectTo: `${redirectBase}/auth/callback?next=${encodeURIComponent(nextUrl)}`,
         },
       });
@@ -64,35 +61,38 @@ function AuthForm(): React.ReactNode {
   };
 
   return (
-    <div className="relative w-full max-w-100 border border-zinc-800/80 bg-zinc-900/40 backdrop-blur-xl rounded-2xl p-6 sm:p-8 shadow-2xl">
+    <div className="relative w-full max-w-100 border border-[#1c2d66] bg-[#0e1838]/85 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.55)]">
+      {/* 🌌 ব্যাকগ্রাউন্ড অরোরা গ্লো */}
+      <div className="absolute top-0 right-0 w-64 h-32 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+
       {/* ব্র্যান্ড হেডার */}
       <div className="mb-6 text-center">
-        <h1 className="text-xl font-semibold text-white tracking-tight">
+        <h1 className="text-xl font-bold text-white tracking-tight">
           {activeTab === "login" ? "Welcome to Grow Tech" : "Create an account"}
         </h1>
-        <p className="text-xs text-zinc-400 mt-1">
+        <p className="text-xs text-slate-300/80 mt-1">
           {activeTab === "login"
             ? "Sign in to manage and review projects"
             : "Start reviewing and interacting today"}
         </p>
       </div>
 
-      {/* 🔀 মিনিমাল ট্যাব সুইচার */}
-      <div className="relative flex p-1 rounded-xl bg-zinc-950/80 border border-zinc-800 mb-6">
+      {/* 🔀 সফট ব্লু ট্যাব সুইচার (কালো কালো ভাব দূর করা হয়েছে) */}
+      <div className="relative flex p-1 rounded-xl bg-[#132247]/60 border border-[#273e7d] mb-6">
         <button
           type="button"
           onClick={() => setActiveTab("login")}
           className={`relative flex-1 py-1.5 text-xs font-medium transition-colors z-10 cursor-pointer ${
             activeTab === "login"
-              ? "text-white"
-              : "text-zinc-400 hover:text-zinc-200"
+              ? "text-white font-semibold"
+              : "text-slate-400 hover:text-slate-200"
           }`}
         >
           {activeTab === "login" && (
             <motion.div
               layoutId="authTab"
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="absolute inset-0 bg-zinc-800 rounded-lg shadow-sm"
+              className="absolute inset-0 bg-[#1c2f62] border border-[#3b59a8] rounded-lg shadow-sm"
             />
           )}
           <span className="relative z-10">Sign in</span>
@@ -103,30 +103,30 @@ function AuthForm(): React.ReactNode {
           onClick={() => setActiveTab("signup")}
           className={`relative flex-1 py-1.5 text-xs font-medium transition-colors z-10 cursor-pointer ${
             activeTab === "signup"
-              ? "text-white"
-              : "text-zinc-400 hover:text-zinc-200"
+              ? "text-white font-semibold"
+              : "text-slate-400 hover:text-slate-200"
           }`}
         >
           {activeTab === "signup" && (
             <motion.div
               layoutId="authTab"
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="absolute inset-0 bg-zinc-800 rounded-lg shadow-sm"
+              className="absolute inset-0 bg-[#1c2f62] border border-[#3b59a8] rounded-lg shadow-sm"
             />
           )}
           <span className="relative z-10">Sign up</span>
         </button>
       </div>
 
-      {/* Google Authentication Button */}
+      {/* 🌐 Google Authentication Button (ম্যাচিং সফট ব্লু ব্যাকগ্রাউন্ড) */}
       <button
         type="button"
         disabled={googleLoading}
         onClick={handleGoogleAuth}
-        className="w-full flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl bg-zinc-950 hover:bg-zinc-800/80 border border-zinc-800 text-zinc-200 text-xs font-medium transition-all duration-200 cursor-pointer shadow-sm active:scale-[0.99] disabled:opacity-50"
+        className="w-full flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl bg-[#132247]/60 hover:bg-[#1a2d5c]/80 border border-[#273e7d] hover:border-[#3b59a8] text-slate-100 text-xs font-medium transition-all duration-200 cursor-pointer shadow-sm active:scale-[0.99] disabled:opacity-50"
       >
         {googleLoading ? (
-          <span className="w-4 h-4 border-2 border-zinc-400 border-t-transparent rounded-full animate-spin" />
+          <span className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
         ) : (
           <>
             <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
@@ -158,11 +158,11 @@ function AuthForm(): React.ReactNode {
 
       {/* সেপারেটর */}
       <div className="flex items-center my-5 gap-3">
-        <div className="flex-1 h-px bg-zinc-800" />
-        <span className="text-[11px] text-zinc-500 uppercase tracking-wider font-mono">
+        <div className="flex-1 h-px bg-[#1c2d66]" />
+        <span className="text-[11px] text-slate-400/80 uppercase tracking-wider font-mono">
           or
         </span>
-        <div className="flex-1 h-px bg-zinc-800" />
+        <div className="flex-1 h-px bg-[#1c2d66]" />
       </div>
 
       {/* ফর্ম কনটেইনার ও স্লাইড অ্যানিমেশন */}
@@ -182,7 +182,7 @@ function AuthForm(): React.ReactNode {
       </div>
 
       {/* টার্মস ও প্রাইভেসি টেক্সট */}
-      <p className="text-center text-[11px] text-zinc-500 mt-6 leading-relaxed">
+      <p className="text-center text-[11px] text-slate-400/70 mt-6 leading-relaxed">
         By continuing, you agree to our Terms of Service and Privacy Policy.
       </p>
     </div>
@@ -191,14 +191,18 @@ function AuthForm(): React.ReactNode {
 
 export default function AuthPage(): React.ReactNode {
   return (
-    <main className="min-h-screen w-full flex items-center justify-center bg-[#09090b] text-zinc-100 p-4 sm:p-10 antialiased relative selection:bg-zinc-700 selection:text-white">
-      {/* অত্যন্ত পরিচ্ছন্ন ও সাবটল ব্যাকগ্রাউন্ড গ্রিড */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
+    <main className="min-h-screen w-full flex items-center justify-center bg-[#0a1128] text-slate-100 p-4 sm:p-10 antialiased relative selection:bg-cyan-500/30 selection:text-white">
+      {/* 🌌 সাবটল নেভি গ্রিড ও অরোরা ব্যাকগ্রাউন্ড */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff06_1px,transparent_1px),linear-gradient(to_bottom,#ffffff06_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00e5ff]/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-[140px] pointer-events-none" />
 
       {/* useSearchParams এর জন্য Suspense বাউন্ডারি */}
       <Suspense
         fallback={
-          <div className="text-xs text-zinc-500">Loading portal...</div>
+          <div className="text-xs text-slate-400 font-mono">
+            Loading portal...
+          </div>
         }
       >
         <AuthForm />

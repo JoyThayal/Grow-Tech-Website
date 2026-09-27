@@ -57,8 +57,9 @@ export default function SignupForm() {
         </div>
       )}
 
+      {/* Name Input */}
       <div>
-        <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+        <label className="block text-xs font-medium text-slate-300 mb-1.5">
           Full name
         </label>
         <div className="relative">
@@ -68,14 +69,15 @@ export default function SignupForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Joy Thayal"
-            className="w-full text-sm text-zinc-100 bg-zinc-950/60 border border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-500 transition-all placeholder:text-zinc-600"
+            className="w-full text-sm text-slate-100 bg-[#132247]/60 border border-[#273e7d] rounded-xl pl-10 pr-4 py-2.5 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder:text-slate-400/60"
           />
-          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-cyan-300/60" />
         </div>
       </div>
 
+      {/* Email Input */}
       <div>
-        <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+        <label className="block text-xs font-medium text-slate-300 mb-1.5">
           Email address
         </label>
         <div className="relative">
@@ -84,15 +86,16 @@ export default function SignupForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="name@work-email.com"
-            className="w-full text-sm text-zinc-100 bg-zinc-950/60 border border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-500 transition-all placeholder:text-zinc-600"
+            placeholder="name@growtech.com"
+            className="w-full text-sm text-slate-100 bg-[#132247]/60 border border-[#273e7d] rounded-xl pl-10 pr-4 py-2.5 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder:text-slate-400/60"
           />
-          <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+          <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-cyan-300/60" />
         </div>
       </div>
 
+      {/* Password Input */}
       <div>
-        <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+        <label className="block text-xs font-medium text-slate-300 mb-1.5">
           Create password
         </label>
         <div className="relative">
@@ -103,13 +106,13 @@ export default function SignupForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="At least 6 characters"
-            className="w-full text-sm text-zinc-100 bg-zinc-950/60 border border-zinc-800 rounded-xl pl-10 pr-10 py-2.5 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-500 transition-all placeholder:text-zinc-600"
+            className="w-full text-sm text-slate-100 bg-[#132247]/60 border border-[#273e7d] rounded-xl pl-10 pr-10 py-2.5 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder:text-slate-400/60"
           />
-          <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+          <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-cyan-300/60" />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 cursor-pointer"
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 cursor-pointer"
           >
             {showPassword ? (
               <EyeOff className="w-4 h-4" />
@@ -120,17 +123,18 @@ export default function SignupForm() {
         </div>
       </div>
 
+      {/* Submit Button */}
       <button
         type="submit"
         disabled={loading}
-        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-medium text-sm transition-all duration-200 disabled:opacity-50 cursor-pointer shadow-sm active:scale-[0.99]"
+        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold text-sm transition-all duration-200 disabled:opacity-50 cursor-pointer shadow-[0_0_20px_rgba(0,229,255,0.25)] active:scale-[0.99]"
       >
         {loading ? (
-          <span className="w-4 h-4 border-2 border-zinc-950 border-t-transparent rounded-full animate-spin" />
+          <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
         ) : (
           <>
             <span>Create account</span>
-            <ArrowRight className="w-4 h-4 stroke-2" />
+            <ArrowRight className="w-4 h-4 stroke-[2.5]" />
           </>
         )}
       </button>

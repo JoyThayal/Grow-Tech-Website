@@ -64,18 +64,18 @@ export function RatingForm({
   };
 
   return (
-    <div className="mb-5 p-4 rounded-xl bg-zinc-900/30 border border-zinc-800/70">
+    <div className="mb-5 p-4 rounded-xl bg-[#0a1128]/90 border border-[#1c2d66]/80 shadow-inner">
       {!isLoggedIn ? (
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-1">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300">
+            <div className="p-2 rounded-lg bg-[#121f48] border border-[#243982] text-cyan-300">
               <MessageSquare className="w-4 h-4" />
             </div>
             <div>
-              <h5 className="text-xs font-medium text-zinc-200">
+              <h5 className="text-xs font-medium text-slate-200">
                 Want to leave a review?
               </h5>
-              <p className="text-[11px] text-zinc-500">
+              <p className="text-[11px] text-slate-400">
                 Sign in to share your score and comments.
               </p>
             </div>
@@ -83,7 +83,7 @@ export function RatingForm({
           <button
             type="button"
             onClick={onLoginClick}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-zinc-100 hover:bg-white text-zinc-950 text-xs font-medium transition-all shrink-0 cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-semibold transition-all shrink-0 cursor-pointer shadow-sm active:scale-95"
           >
             <LogIn className="w-3.5 h-3.5" />
             <span>Sign In</span>
@@ -99,7 +99,7 @@ export function RatingForm({
               <h5 className="text-xs font-medium text-amber-300">
                 Download Required
               </h5>
-              <p className="text-[11px] text-zinc-400">
+              <p className="text-[11px] text-slate-400">
                 Please download and try the project first.
               </p>
             </div>
@@ -108,7 +108,7 @@ export function RatingForm({
             <button
               type="button"
               onClick={onDownloadClick}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-semibold transition-all shrink-0 cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#00e5ff] hover:bg-cyan-300 text-slate-950 text-xs font-semibold transition-all shrink-0 cursor-pointer shadow-sm active:scale-95"
             >
               <DownloadCloud className="w-3.5 h-3.5" />
               <span>Download Now</span>
@@ -125,7 +125,7 @@ export function RatingForm({
               <h5 className="text-xs font-medium text-[#c9a86a]">
                 Visit Required
               </h5>
-              <p className="text-[11px] text-zinc-400">
+              <p className="text-[11px] text-slate-400">
                 Please explore the live website first.
               </p>
             </div>
@@ -134,7 +134,7 @@ export function RatingForm({
             <button
               type="button"
               onClick={onVisitClick}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#c9a86a] hover:bg-[#dfbd7e] text-slate-950 text-xs font-semibold transition-all shrink-0 cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#c9a86a] hover:bg-[#dfbd7e] text-slate-950 text-xs font-semibold transition-all shrink-0 cursor-pointer shadow-sm active:scale-95"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               <span>Visit Site</span>
@@ -144,7 +144,7 @@ export function RatingForm({
       ) : (
         <form onSubmit={handleSubmit} className="space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-zinc-300">
+            <span className="text-xs font-medium text-slate-300">
               Select rating:
             </span>
             <div className="flex items-center gap-1">
@@ -161,7 +161,7 @@ export function RatingForm({
                     className={`w-4 h-4 transition-colors ${
                       star <= (hoverRating || userRating)
                         ? "fill-amber-400 text-amber-400"
-                        : "text-zinc-700 hover:text-zinc-500"
+                        : "text-slate-600 hover:text-slate-400"
                     }`}
                   />
                 </button>
@@ -174,14 +174,14 @@ export function RatingForm({
             value={userComment}
             onChange={(e) => setUserComment(e.target.value)}
             placeholder="Leave a short comment (optional)..."
-            className="w-full text-xs text-zinc-200 bg-zinc-950/80 border border-zinc-800 rounded-lg p-2.5 focus:outline-none focus:border-zinc-500 placeholder:text-zinc-600 resize-none transition-all"
+            className="w-full text-xs text-slate-200 bg-[#080d1f] border border-[#1c2d66] rounded-xl p-2.5 focus:outline-none focus:border-cyan-400/60 focus:ring-1 focus:ring-cyan-400/60 placeholder:text-slate-500 resize-none transition-all shadow-inner"
           />
 
           <div className="flex justify-end">
             <button
               type="submit"
               disabled={userRating === 0}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-white text-zinc-950 font-medium text-xs disabled:opacity-40 transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold text-xs disabled:opacity-40 transition-all cursor-pointer shadow-sm active:scale-95"
             >
               <Send className="w-3 h-3" />
               <span>Submit</span>
