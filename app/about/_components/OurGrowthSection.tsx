@@ -1,11 +1,10 @@
 import Image from "next/image";
-import { Cpu, Atom, Smartphone, Gamepad2 } from "lucide-react";
+import { Atom, Smartphone, Gamepad2 } from "lucide-react";
 
 const orbitIcons = [
-  { icon: Cpu, angle: -90 },
   { icon: Atom, angle: 0 },
-  { icon: Smartphone, angle: 90 },
-  { icon: Gamepad2, angle: 180 },
+  { icon: Smartphone, angle: 120 },
+  { icon: Gamepad2, angle: 240 },
 ];
 
 export default function OurGrowthSection() {
@@ -33,26 +32,23 @@ export default function OurGrowthSection() {
               />
             </div>
 
-            {/* Orbit Ring */}
+            {/* 🔄 Orbit Ring (যেটি ঘুরবে) */}
             <div className="relative h-72 w-72 animate-[spin_25s_linear_infinite] rounded-full border-2 border-dashed border-gray-600/60">
               {orbitIcons.map(({ icon: Icon, angle }) => (
                 <div
                   key={angle}
                   className="absolute left-1/2 top-1/2"
                   style={{
-                    transform: `
-                      translate(-50%, -50%)
-                      rotate(${angle}deg)
-                      translateY(-144px)
-                    `,
+                    transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(-144px)`,
                   }}
                 >
+                  {/* 🎯 এখানে রোটেশনকে ফিক্স রেখে ভেতরের আইকনকে কাউন্টার স্পিন করানো হচ্ছে */}
                   <div
                     style={{
                       transform: `rotate(${-angle}deg)`,
                     }}
                   >
-                    <div className="animate-[spin_25s_linear_infinite_reverse]">
+                    <div className="animate-[spin_25s_linear_infinite_reverse] flex items-center justify-center">
                       <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-cyan-400 bg-[#0A1128] text-cyan-400 shadow-[0_0_12px_rgba(0,242,254,0.35)] transition-transform duration-300 hover:scale-110">
                         <Icon size={20} />
                       </div>
@@ -69,7 +65,9 @@ export default function OurGrowthSection() {
           <span className="golden-tag">OUR GROWTH</span>
 
           <h2 className="cabinet mt-3 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-5xl">
-            <span className="gradient-text">Driven by Passion, Built for Impact</span>
+            <span className="gradient-text">
+              Driven by Passion, Built for Impact
+            </span>
           </h2>
 
           <div className="garet mt-6 space-y-5 text-sm leading-relaxed text-gray-400 sm:text-base md:text-lg">
@@ -84,9 +82,10 @@ export default function OurGrowthSection() {
 
             <p>
               Today, we bridge the gap between imagination and reality,
-              delivering high-performance software and expert hardware solutions
-              with a commitment to quality that only a dedicated team like ours
-              can provide.
+              delivering ultra-responsive web platforms, scalable mobile
+              applications, and immersive gaming experiences with a commitment
+              to engineering excellence that only a dedicated team like ours can
+              provide.
             </p>
           </div>
 
@@ -108,7 +107,7 @@ export default function OurGrowthSection() {
               </h3>
 
               <p className="garet mt-1 text-xs font-medium tracking-wide text-gray-400">
-                Technical Support
+                Agile Support
               </p>
             </div>
           </div>

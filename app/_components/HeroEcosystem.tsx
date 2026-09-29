@@ -1,4 +1,11 @@
-import { Code, Layers, Wrench, Gamepad2, Shield, Globe } from "lucide-react";
+import {
+  Code,
+  Layers,
+  Smartphone,
+  Gamepad2,
+  Shield,
+  Globe,
+} from "lucide-react";
 import Button from "@/components/ui/Button";
 
 const iconClass =
@@ -12,7 +19,7 @@ export default function HeroEcosystemSection() {
         <div className="flex items-center gap-4 rounded-full border border-white/10 bg-white/5 px-5 py-3 backdrop-blur-md shadow-2xl sm:gap-6 sm:px-8 sm:py-3.5">
           <Code className={iconClass} />
           <Layers className={iconClass} />
-          <Wrench className={iconClass} />
+          <Smartphone className={iconClass} />
 
           {/* Active Indicator */}
           <div className="relative flex items-center justify-center">
@@ -52,12 +59,12 @@ export default function HeroEcosystemSection() {
         </div>
       </div>
 
-      {/* Description */}
+      {/* Description (হার্ডওয়্যার সরিয়ে সফটওয়্যার ইকোসিস্টেমে ফোকাস) */}
       <p className="garet mb-8 max-w-2xl px-2 text-center text-sm font-light leading-relaxed text-slate-400 sm:text-base md:text-lg lg:mb-10">
-        At Grow Tech, we bridge the gap between hardware and software. Whether
-        it&apos;s launching a full-stack web app, developing a 3D game, or
-        maintaining complex hardware infrastructure—our ecosystem is built to
-        scale your vision.
+        At Grow Tech, we build high-impact digital experiences. Whether
+        it&apos;s launching a scalable full-stack web app, crafting an engaging
+        mobile application, or developing interactive 3D games—our ecosystem is
+        engineered to scale your vision.
       </p>
 
       <Button

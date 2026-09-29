@@ -107,11 +107,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               <div className="flex items-start gap-3 min-w-0 flex-1">
                 <div className="mt-0.5">{getIcon(toast.type)}</div>
                 <div className="space-y-0.5 min-w-0 flex-1 pr-1">
-                  <h4 className="text-xs sm:text-sm font-semibold text-zinc-100 tracking-tight break-words">
+                  <h4 className="text-xs sm:text-sm font-semibold text-zinc-100 tracking-tight wrap-break-word">
                     {toast.title}
                   </h4>
                   {toast.description && (
-                    <p className="text-[11px] sm:text-xs text-zinc-400 leading-snug break-words">
+                    <p className="text-[11px] sm:text-xs text-zinc-400 leading-snug wrap-break-word">
                       {toast.description}
                     </p>
                   )}

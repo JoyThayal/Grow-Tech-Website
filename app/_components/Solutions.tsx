@@ -1,4 +1,4 @@
-import { Globe, Smartphone, Gamepad2, Cpu, ArrowRight } from "lucide-react";
+import { Globe, Smartphone, Gamepad2, ArrowRight } from "lucide-react";
 import Button from "@/components/ui/Button";
 
 export default function SolutionsSection() {
@@ -9,6 +9,8 @@ export default function SolutionsSection() {
       title: "Web Development",
       description:
         "Most websites are slow, clunky brochures that lose users. We engineer custom, ultra-fast, animated modern platforms that grab attention instantly and convert casual visitors into high-paying clients.",
+      cta: "Build Website",
+      href: "/portfolio/web",
     },
     {
       id: 2,
@@ -16,6 +18,8 @@ export default function SolutionsSection() {
       title: "App Development",
       description:
         "Tired of buggy apps that crash under pressure? We build scalable, rock-solid mobile applications designed for flawless performance, keeping your users hooked and driving revenue straight from their pockets.",
+      cta: "Explore Apps",
+      href: "/portfolio/app",
     },
     {
       id: 3,
@@ -23,13 +27,8 @@ export default function SolutionsSection() {
       title: "Game Development",
       description:
         "Stop wasting thousands on high user-acquisition costs. Our engaging, interactive, hyper-casual games build massive user engagement and viral loops, turning ordinary players into fanatical brand advocates.",
-    },
-    {
-      id: 4,
-      icon: Cpu,
-      title: "Hardware Repairing",
-      description:
-        "A crashed system means lost data, broken workflows, and lost money. Our expert hardware diagnostics and rapid servicing eliminate technical bottlenecks instantly, keeping your daily business operations running at peak performance.",
+      cta: "Play Games",
+      href: "/portfolio/game",
     },
   ];
 
@@ -48,32 +47,42 @@ export default function SolutionsSection() {
         <div className="w-20 h-1 bg-linear-to-r from-cyan-500 to-blue-600 rounded-full" />
       </div>
 
-      {/* Cards */}
-      <div className="w-full h-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-stretch gap-6 lg:gap-10 px-6 lg:px-10">
+      {/* 🚀 ৩ কলাম কার্ড গ্রিড */}
+      <div className="w-full max-w-7xl h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch gap-6 lg:gap-8 px-6 lg:px-10">
         {solutions.map((solution) => (
           <div
             key={solution.id}
-            className="h-full flex flex-col items-center gap-5 bg-[#ffffff08] border border-[#ffffff1a] p-5 rounded-3xl hover:border-[#C9A86A] hover:shadow-lg hover:shadow-black transition group relative overflow-hidden before:absolute before:top-[-20%] before:-left-full before:h-[140%] before:w-[40%] before:rotate-25 before:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent)] before:transition-all before:duration-800 before:ease-in-out hover:before:left-[140%]"
+            className="h-full flex flex-col justify-between items-center gap-6 bg-[#ffffff08] border border-[#ffffff1a] p-6 sm:p-7 rounded-3xl hover:border-[#C9A86A] hover:shadow-lg hover:shadow-black transition group relative overflow-hidden before:absolute before:top-[-20%] before:-left-full before:h-[140%] before:w-[40%] before:rotate-25 before:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent)] before:transition-all before:duration-800 before:ease-in-out hover:before:left-[140%]"
           >
-            <div className="w-18 h-18 lg:w-20 lg:h-20 bg-[#c9a86a14] border border-[#c9a86a33] rounded-full flex justify-center items-center">
-              <solution.icon className="w-8 h-8 lg:w-10 lg:h-10 text-[#C9A86A]" />
+            <div className="flex flex-col items-center gap-5 w-full">
+              <div className="w-18 h-18 lg:w-20 lg:h-20 bg-[#c9a86a14] border border-[#c9a86a33] rounded-full flex justify-center items-center group-hover:scale-110 transition-transform duration-300">
+                <solution.icon className="w-8 h-8 lg:w-10 lg:h-10 text-[#C9A86A]" />
+              </div>
+
+              <h3 className="cabinet text-xl lg:text-2xl font-bold gradient-text text-center">
+                {solution.title}
+              </h3>
+
+              <p className="garet text-sm lg:text-md text-center text-gray-400 leading-relaxed">
+                {solution.description}
+              </p>
             </div>
 
-            <h3 className="cabinet text-xl lg:text-2xl font-bold gradient-text text-center">
-              {solution.title}
-            </h3>
-
-            <p className="garet text-sm lg:text-md text-center text-gray-400">
-              {solution.description}
-            </p>
+            {/* 🎯 প্রতিটির জন্য আলাদা অ্যাকশন বাটন */}
+            <div className="w-full pt-4 mt-auto">
+              <Button
+                href={solution.href}
+                variant="secondary"
+                size="md"
+                className="w-full justify-center text-center text-xs sm:text-sm font-semibold"
+              >
+                <span>{solution.cta}</span>
+                <ArrowRight size={16} />
+              </Button>
+            </div>
           </div>
         ))}
       </div>
-
-      <Button href="/services" variant="primary" size="lg">
-        EXPLORE SERVICES
-        <ArrowRight size={18} />
-      </Button>
     </section>
   );
 }

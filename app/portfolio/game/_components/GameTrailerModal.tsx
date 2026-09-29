@@ -14,10 +14,18 @@ export default function GameTrailerModal({
   onClose,
   trailerUrl,
 }: GameTrailerModalProps) {
-  // ⚡ ভিডিও লোড হচ্ছে কিনা তা ট্র্যাক করার জন্য স্টেট
   const [isLoading, setIsLoading] = useState(true);
 
   if (!isOpen) return null;
+
+  // ⚡ URL যদি 'http' দিয়ে শুরু হয় (যেমন Cloudinary), তবে সরাসরি বসবে, নাহলে লোকাল পাথ নেবে
+  const finalVideoSrc = trailerUrl.startsWith("http")
+    ? trailerUrl
+    : `/videos/${trailerUrl}`;
+
+  const handleStopLoading = () => {
+    setIsLoading(false);
+  };
 
   return (
     // Backdrop Overlay
@@ -39,9 +47,9 @@ export default function GameTrailerModal({
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl border-2 border-purple-500/60 shadow-[0_0_50px_rgba(168,85,247,0.3)] overflow-hidden flex items-center justify-center"
       >
-        {/* 🌀 LOADER SPINNER & SKELETON (ভিডিও প্লে হওয়ার আগ পর্যন্ত দেখাবে) */}
+        {/* 🌀 LOADER SPINNER & SKELETON */}
         {isLoading && (
-          <div className="absolute inset-0 bg-slate-950 flex flex-col items-center justify-center gap-3 z-20">
+          <div className="absolute inset-0 bg-slate-950 flex flex-col items-center justify-center gap-3 z-20 pointer-events-none">
             <Loader2 className="w-10 h-10 text-purple-500 animate-spin" />
             <span className="text-purple-300 text-xs font-mono tracking-widest uppercase animate-pulse">
               Loading Trailer...
@@ -51,12 +59,17 @@ export default function GameTrailerModal({
 
         {/* Video Player */}
         <video
-          src={`/videos/${trailerUrl}`}
+          key={finalVideoSrc}
+          src={finalVideoSrc}
           autoPlay
           playsInline
           controls
           controlsList="nodownload"
-          onCanPlay={() => setIsLoading(false)}
+          preload="auto"
+          onLoadedData={handleStopLoading}
+          onCanPlay={handleStopLoading}
+          onPlaying={handleStopLoading}
+          onError={handleStopLoading}
           className="relative z-10 w-full h-full object-contain bg-black"
         />
       </div>

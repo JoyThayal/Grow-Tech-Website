@@ -5,16 +5,16 @@ import {
   Layout,
   Server,
   Database,
-  Cpu,
   Layers,
   Gamepad2,
-  Wrench,
-  Monitor,
-  ShieldCheck,
-  Zap,
   Sparkles,
+  Zap,
   Terminal,
-  Headphones,
+  Palette,
+  ShieldCheck,
+  Cpu,
+  MonitorSmartphone,
+  Flame,
 } from "lucide-react";
 
 export default function Feature1() {
@@ -25,23 +25,33 @@ export default function Feature1() {
     { icon: Layout },
     { icon: Server },
     { icon: Database },
-    { icon: Cpu },
     { icon: Layers },
+    { icon: MonitorSmartphone },
   ];
 
   const bottomRowIcons = [
     { icon: Gamepad2 },
-    { icon: Wrench },
-    { icon: Monitor },
+    { icon: Palette },
+    { icon: Terminal },
     { icon: ShieldCheck },
     { icon: Zap },
     { icon: Sparkles },
-    { icon: Terminal },
-    { icon: Headphones },
+    { icon: Flame },
+    { icon: Cpu },
   ];
 
-  const topDuplicated = [...topRowIcons, ...topRowIcons, ...topRowIcons, ...topRowIcons];
-  const bottomDuplicated = [...bottomRowIcons, ...bottomRowIcons, ...bottomRowIcons, ...bottomRowIcons];
+  const topDuplicated = [
+    ...topRowIcons,
+    ...topRowIcons,
+    ...topRowIcons,
+    ...topRowIcons,
+  ];
+  const bottomDuplicated = [
+    ...bottomRowIcons,
+    ...bottomRowIcons,
+    ...bottomRowIcons,
+    ...bottomRowIcons,
+  ];
 
   return (
     <div className="bg-[#ffffff08] border border-[#ffffff14] p-6 lg:p-10 space-y-5 rounded-2xl">
@@ -65,7 +75,7 @@ export default function Feature1() {
             {topDuplicated.map((item, index) => (
               <span
                 key={index}
-                className="bg-[#ffffff0d] border border-[#ffffff1a] p-3 lg:p-5 rounded-lg shrink-0 mr-3 lg:mr-5"
+                className="bg-[#ffffff0d] border border-[#ffffff1a] p-3 lg:p-5 rounded-lg shrink-0 mr-3 lg:mr-5 text-cyan-400"
               >
                 <item.icon className="w-5 h-5 lg:w-6 lg:h-6" />
               </span>
@@ -79,7 +89,7 @@ export default function Feature1() {
             {bottomDuplicated.map((item, index) => (
               <span
                 key={index}
-                className="bg-[#ffffff0d] border border-[#ffffff1a] p-3 lg:p-5 rounded-lg shrink-0 mr-3 lg:mr-5"
+                className="bg-[#ffffff0d] border border-[#ffffff1a] p-3 lg:p-5 rounded-lg shrink-0 mr-3 lg:mr-5 text-[#c9a86a]"
               >
                 <item.icon className="w-5 h-5 lg:w-6 lg:h-6" />
               </span>

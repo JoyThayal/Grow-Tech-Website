@@ -2,16 +2,20 @@ import Button from "@/components/ui/Button";
 
 const HeroSection = () => {
   return (
-    <section className="relative flex min-h-screen w-full items-center overflow-hidden px-6 py-20 sm:px-8 lg:px-16">
+    <section className="relative flex min-h-[85vh] w-full items-center overflow-hidden px-6 py-20 sm:px-8 lg:px-16">
       {/* Background Video */}
       <video
         autoPlay
         loop
         muted
         playsInline
+        preload="auto"
         className="absolute inset-0 -z-20 h-full w-full object-cover"
       >
-        <source src="/videos/luxery1.mp4" type="video/mp4" />
+        <source
+          src="https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1790685698/luxery1.mp4"
+          type="video/mp4"
+        />
       </video>
 
       {/* Content */}

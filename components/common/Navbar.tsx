@@ -4,15 +4,44 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Menu, X, User as UserIcon } from "lucide-react";
+import {
+  Menu,
+  X,
+  User as UserIcon,
+  ChevronDown,
+  Globe,
+  Smartphone,
+  Gamepad2,
+  ArrowRight,
+} from "lucide-react";
 import Button from "../ui/Button";
 import { supabase } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
-const navLinks = [
+const services = [
+  {
+    name: "Web Development",
+    desc: "Next.js & modern platforms",
+    href: "/services/web",
+    icon: Globe,
+  },
+  {
+    name: "App Development",
+    desc: "Scalable mobile apps",
+    href: "/services/app",
+    icon: Smartphone,
+  },
+  {
+    name: "Game Development",
+    desc: "Interactive 2D/3D games",
+    href: "/services/game",
+    icon: Gamepad2,
+  },
+];
+
+const links = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
-  { name: "Services", href: "/services" },
   { name: "Portfolio", href: "/portfolio" },
   { name: "Contact", href: "/contact" },
 ];
@@ -21,77 +50,123 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [authLoading, setAuthLoading] = useState(true); // 🛡️ গ্লিচ আটকানোর গার্ড
+  const [servicesOpen, setServicesOpen] = useState(false);
 
-  // 🔐 ইউজারের লগইন অবস্থা চেক
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      setAuthLoading(false);
     });
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange((_, session) => {
       setUser(session?.user ?? null);
+      setAuthLoading(false);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  const userAvatar = user?.user_metadata?.avatar_url;
-
   return (
-    <header className="sticky top-0 z-50 border-b border-[#1c2d66] bg-[#0a1128]/80 backdrop-blur-xl transition-all">
-      <nav className="mx-auto flex h-16 md:h-20 items-center justify-between px-4 sm:px-6 lg:px-12">
-        {/* 🌟 লোগো */}
-        <Link href="/" className="group flex items-center">
+    <header className="sticky top-0 z-50 border-b border-[#1c2d66] bg-[#0a1128]/85 backdrop-blur-xl">
+      <nav className="relative mx-auto flex h-16 md:h-20 items-center justify-between px-4 sm:px-6 lg:px-12">
+        {/* লোগো */}
+        <Link href="/" className="shrink-0">
           <Image
             src="/images/growtech-logo.png"
             width={140}
             height={40}
             priority
-            alt="Grow Tech Logo"
-            className="w-28 sm:w-32 md:w-36 h-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            alt="Logo"
+            className="w-28 sm:w-32 md:w-36 h-auto"
           />
         </Link>
 
-        {/* 💻 Desktop Nav Links */}
-        <div className="garet hidden items-center gap-7 lg:gap-8 text-sm font-medium tracking-wide md:flex">
-          {navLinks.map((link) => {
-            const isActive =
-              pathname === link.href ||
-              (link.href !== "/" && pathname.startsWith(link.href));
+        {/* 💻 Desktop Links */}
+        <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-7 text-sm font-medium">
+          <Link
+            href="/"
+            className={`py-1 transition-colors ${pathname === "/" ? "text-cyan-400 font-semibold" : "text-slate-300 hover:text-cyan-400"}`}
+          >
+            Home
+          </Link>
+          <Link
+            href="/about"
+            className={`py-1 transition-colors ${pathname === "/about" ? "text-cyan-400 font-semibold" : "text-slate-300 hover:text-cyan-400"}`}
+          >
+            About
+          </Link>
 
-            return (
+          {/* Services Hover Dropdown */}
+          <div
+            className="relative group py-5"
+            onMouseEnter={() => setServicesOpen(true)}
+            onMouseLeave={() => setServicesOpen(false)}
+          >
+            <div className="flex items-center gap-1 cursor-pointer text-slate-300 group-hover:text-cyan-400">
               <Link
-                key={link.name}
-                href={link.href}
-                className={`relative py-1 transition-colors duration-300 ${
-                  isActive
-                    ? "font-semibold text-cyan-400 after:w-full"
-                    : "text-slate-300 hover:text-cyan-400 after:w-0 hover:after:w-full"
-                } after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:bg-cyan-400 after:transition-all after:duration-300`}
+                href="/services"
+                className={
+                  pathname.startsWith("/services")
+                    ? "text-cyan-400 font-semibold"
+                    : ""
+                }
               >
-                {link.name}
+                Services
               </Link>
-            );
-          })}
+              <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
+            </div>
+
+            {servicesOpen && (
+              <div className="absolute top-14 -left-10 w-72 rounded-2xl border border-[#1c2d66] bg-[#0e1838] p-3 shadow-2xl backdrop-blur-2xl">
+                {services.map(({ name, desc, href, icon: Icon }) => (
+                  <Link
+                    key={name}
+                    href={href}
+                    className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#132247]/70 text-slate-300 hover:text-white transition-all"
+                  >
+                    <div className="p-2 rounded-lg bg-[#121f48] text-cyan-400">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold">{name}</p>
+                      <p className="text-[10px] text-slate-400">{desc}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <Link
+            href="/portfolio"
+            className={`py-1 transition-colors ${pathname.startsWith("/portfolio") ? "text-cyan-400 font-semibold" : "text-slate-300 hover:text-cyan-400"}`}
+          >
+            Portfolio
+          </Link>
+          <Link
+            href="/contact"
+            className={`py-1 transition-colors ${pathname === "/contact" ? "text-cyan-400 font-semibold" : "text-slate-300 hover:text-cyan-400"}`}
+          >
+            Contact
+          </Link>
         </div>
 
-        {/* 💻 Desktop Actions (Profile + Let's Talk) */}
-        <div className="hidden md:flex items-center gap-4">
-          {user ? (
+        {/* 💻 Desktop Actions */}
+        <div className="hidden md:flex items-center gap-4 shrink-0">
+          {authLoading ? (
+            <div className="w-20 h-8 rounded-full bg-[#132247]/40 animate-pulse" />
+          ) : user ? (
             <Link
               href="/profile"
-              className={`relative flex items-center gap-2 p-1.5 pr-3 rounded-full border transition-all duration-300 ${
-                pathname === "/profile"
-                  ? "border-cyan-400 bg-cyan-400/10 text-cyan-300 shadow-[0_0_15px_rgba(0,229,255,0.25)]"
-                  : "border-[#1c2d66] bg-[#132247]/60 text-slate-300 hover:border-cyan-400/50 hover:text-white"
-              }`}
+              className="flex items-center gap-2 p-1.5 pr-3 rounded-full border border-[#1c2d66] bg-[#132247]/60 text-slate-300 hover:text-white"
             >
-              <div className="relative w-8 h-8 rounded-full overflow-hidden bg-[#1c2f62] border border-[#273e7d] flex items-center justify-center">
-                {userAvatar ? (
+              <div className="relative w-7 h-7 rounded-full overflow-hidden bg-[#1c2f62] flex items-center justify-center">
+                {user.user_metadata?.avatar_url ? (
                   <Image
-                    src={userAvatar}
+                    src={user.user_metadata.avatar_url}
                     alt="Profile"
                     fill
                     className="object-cover"
@@ -105,7 +180,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/auth"
-              className="text-xs font-medium text-slate-300 hover:text-cyan-400 transition-colors px-3 py-1.5"
+              className="text-xs font-medium text-slate-300 hover:text-cyan-400 px-3"
             >
               Sign In
             </Link>
@@ -116,118 +191,95 @@ export default function Navbar() {
           </Button>
         </div>
 
-        {/* 📱 Mobile Hamburger Button */}
-        <button
-          type="button"
-          aria-label="Toggle navigation menu"
-          onClick={() => setIsOpen(!isOpen)}
-          className="relative z-50 flex h-10 w-10 items-center justify-center rounded-xl border border-[#1c2d66] bg-[#132247]/60 text-white transition-all hover:bg-[#1a2d5c] active:scale-95 md:hidden cursor-pointer"
-        >
-          <Menu
-            className={`absolute h-5 w-5 transition-all duration-300 ${
-              isOpen
-                ? "rotate-90 scale-0 opacity-0"
-                : "rotate-0 scale-100 opacity-100"
-            }`}
-          />
+        {/* 📱 Mobile Actions */}
+        <div className="flex items-center gap-2 md:hidden">
+          {!authLoading &&
+            (user ? (
+              <Link
+                href="/profile"
+                className="relative w-8 h-8 rounded-full overflow-hidden border border-[#1c2d66] flex items-center justify-center"
+              >
+                {user.user_metadata?.avatar_url ? (
+                  <Image
+                    src={user.user_metadata.avatar_url}
+                    alt="Profile"
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <UserIcon className="w-4 h-4 text-cyan-300" />
+                )}
+              </Link>
+            ) : (
+              <Link
+                href="/auth"
+                className="text-xs px-2 py-1 rounded-lg border border-[#1c2d66] bg-[#132247]/50 text-slate-300"
+              >
+                Sign In
+              </Link>
+            ))}
 
-          <X
-            className={`absolute h-5 w-5 transition-all duration-300 ${
-              isOpen
-                ? "rotate-0 scale-100 opacity-100"
-                : "-rotate-90 scale-0 opacity-0"
-            }`}
-          />
-        </button>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="p-2 rounded-xl border border-[#1c2d66] bg-[#132247]/60 text-white"
+          >
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </nav>
 
       {/* 📱 Mobile Menu Dropdown */}
-      <div
-        className={`absolute left-0 top-16 md:top-20 z-40 w-full overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
-          isOpen
-            ? "max-h-112 opacity-100 shadow-2xl"
-            : "max-h-0 opacity-0 pointer-events-none"
-        }`}
-      >
-        <div className="border-b border-[#1c2d66] bg-[#0a1128]/95 px-6 py-6 backdrop-blur-2xl">
-          <div className="flex flex-col gap-4">
-            {navLinks.map((link) => {
-              const isActive =
-                pathname === link.href ||
-                (link.href !== "/" && pathname.startsWith(link.href));
+      {isOpen && (
+        <div className="border-b border-[#1c2d66] bg-[#0a1128]/95 px-6 py-5 md:hidden space-y-3">
+          <Link
+            href="/"
+            onClick={() => setIsOpen(false)}
+            className="block py-1 text-slate-300"
+          >
+            Home
+          </Link>
+          <Link
+            href="/about"
+            onClick={() => setIsOpen(false)}
+            className="block py-1 text-slate-300"
+          >
+            About
+          </Link>
 
-              return (
+          <div className="py-1">
+            <span className="text-xs text-slate-500 font-mono uppercase">
+              Services
+            </span>
+            <div className="pl-2 mt-1 space-y-1">
+              {services.map(({ name, href }) => (
                 <Link
-                  key={link.name}
-                  href={link.href}
+                  key={name}
+                  href={href}
                   onClick={() => setIsOpen(false)}
-                  className={`text-base font-medium transition-colors ${
-                    isActive
-                      ? "text-cyan-400 font-semibold"
-                      : "text-slate-300 hover:text-cyan-400"
-                  }`}
+                  className="block py-1 text-sm text-cyan-400"
                 >
-                  {link.name}
+                  {name}
                 </Link>
-              );
-            })}
-
-            {/* 📱 Mobile Profile / Auth Link */}
-            <div className="pt-2 border-t border-[#1c2d66]/80 flex flex-col gap-3">
-              {user ? (
-                <Link
-                  href="/profile"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-3 p-2.5 rounded-xl border transition-all ${
-                    pathname === "/profile"
-                      ? "border-cyan-400 bg-cyan-400/10 text-cyan-300"
-                      : "border-[#1c2d66] bg-[#132247]/60 text-slate-300 hover:text-white"
-                  }`}
-                >
-                  <div className="relative w-8 h-8 rounded-full overflow-hidden bg-[#1c2f62] border border-[#273e7d] flex items-center justify-center">
-                    {userAvatar ? (
-                      <Image
-                        src={userAvatar}
-                        alt="Profile"
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <UserIcon className="w-4 h-4 text-cyan-300" />
-                    )}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-medium text-white">
-                      My Profile
-                    </span>
-                    <span className="text-[11px] text-slate-400">
-                      View reviews & downloads
-                    </span>
-                  </div>
-                </Link>
-              ) : (
-                <Link
-                  href="/auth"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center py-2.5 rounded-xl bg-[#132247]/60 border border-[#273e7d] text-sm font-medium text-slate-200 hover:text-cyan-300 transition-colors"
-                >
-                  Sign In / Register
-                </Link>
-              )}
-
-              <Button
-                href="/contact"
-                variant="glow"
-                size="md"
-                className="w-full justify-center text-center mt-1"
-                onClick={() => setIsOpen(false)}
-              >
-                Let&apos;s Talk
-              </Button>
+              ))}
             </div>
           </div>
+
+          <Link
+            href="/portfolio"
+            onClick={() => setIsOpen(false)}
+            className="block py-1 text-slate-300"
+          >
+            Portfolio
+          </Link>
+          <Link
+            href="/contact"
+            onClick={() => setIsOpen(false)}
+            className="block py-1 text-slate-300"
+          >
+            Contact
+          </Link>
         </div>
-      </div>
+      )}
     </header>
   );
 }

@@ -35,16 +35,6 @@ export default function DetailsSection() {
       buttonLink: "/portfolio/game",
     },
     {
-      id: 4,
-      image: "/images/computer-repairing.png",
-      alt: "Computer Repairing",
-      title: "Expert Computer Repairing",
-      description:
-        "Technical glitch? Biprajit Paul and his team are here to help. From hardware diagnostics to complex repairs, we ensure your devices are back in top shape with our professional and reliable repairing services.",
-      buttonText: "Fix My Device",
-      buttonLink: "/contact",
-    },
-    {
       id: 5,
       image: "/images/support.png",
       alt: "Tech Support",
@@ -90,7 +80,7 @@ export default function DetailsSection() {
               </p>
 
               <div className="flex justify-center md:justify-start">
-                <Button href={detail.buttonLink} variant="outline">
+                <Button href={detail.buttonLink} variant="ghost">
                   {detail.buttonText}
                   <ArrowRight size={18} />
                 </Button>

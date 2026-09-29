@@ -40,13 +40,6 @@ const teamMembers: TeamMember[] = [
       "Pushing the boundaries of imagination by creating immersive, high-quality 2D/3D gaming experiences.",
     icon: GamepadIcon,
   },
-  {
-    name: "Biprajit Paul",
-    role: "HARDWARE EXPERT",
-    description:
-      "Ensuring technical stability through expert hardware diagnostics, precision repairs, and infrastructure maintenance.",
-    icon: CpuIcon,
-  },
 ];
 
 // একটিমাত্র রিয়ুজেবল কার্ড কম্পোনেন্ট
@@ -81,7 +74,7 @@ function MemberCard({ member }: { member: TeamMember }) {
 
 export default function TeamSection() {
   return (
-    <section className="w-full px-5 py-16 text-center sm:px-6 lg:px-10 lg:py-20 xl:px-16">
+    <section className="max-w-7xl mx-auto w-full px-5 py-16 text-center sm:px-6 lg:px-10 lg:py-20 xl:px-16">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-12">
@@ -93,7 +86,7 @@ export default function TeamSection() {
         </div>
 
         {/* Team Cards */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 xl:grid-cols-3">
           {teamMembers.map((member) => (
             <MemberCard key={member.name} member={member} />
           ))}

@@ -14,16 +14,18 @@ export const completedAppProjects: AppProject[] = [
     id: "c1",
     title: "Advanced",
     highlightTitle: "Task Manager",
-    highlightColor: "bg-gradient-to-r from-orange-500 to-green-500 bg-clip-text text-transparent",
+    highlightColor:
+      "bg-gradient-to-r from-orange-500 to-green-500 bg-clip-text text-transparent",
     imageSrc: "task-manager.png",
-    videoUrl: "/videos/task-manager.mp4",
+    videoUrl: "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1790686267/task-manager.mp4",
     features: [
       "Task Creation & Management",
       "Goals Creation & Tracking",
       "Important Notes Creation",
       "List Creation & Management",
     ],
-    apkUrl: "/app-apks/task-manager.apk",
+    apkUrl:
+      "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/task-manager.apk",
   },
 ];
 

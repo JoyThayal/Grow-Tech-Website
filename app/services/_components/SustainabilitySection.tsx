@@ -6,7 +6,7 @@ import {
   TrendingUp,
   ShieldCheck,
   ArrowUpCircle,
-  Wrench,
+  Server,
 } from "lucide-react";
 
 const SustainabilitySection = () => {
@@ -20,8 +20,8 @@ const SustainabilitySection = () => {
       title: "Regular Feature Updates",
     },
     {
-      icon: Wrench,
-      title: "Hardware & Server Maintenance",
+      icon: Server,
+      title: "Cloud & Database Optimization",
     },
   ];
 

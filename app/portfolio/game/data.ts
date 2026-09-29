@@ -19,7 +19,8 @@ export const gameProjects: GameProject[] = [
     description:
       "Tap to flap and dodge challenging obstacles! Test your reflexes and set unbeatable high scores in this addictive 2D endless adventure.",
     imageSrc: "flappy-adventurer.png",
-    trailerUrl: "flappy-bird.mp4",
+    trailerUrl:
+      "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1790686273/flappy-bird.mp4",
     downloadUrl: "/game-apks/Flappy-Adventurer.apk",
   },
   // {

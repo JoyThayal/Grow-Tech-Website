@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Play, Download, Star } from "lucide-react";
 import { GameProject } from "../data";
-import LikeSection from "@/components/common/LikeSection";
 import RatingModal, {
   RatingReview,
 } from "@/components/hooks/rating/RatingModal";
@@ -27,7 +26,7 @@ export default function GameCard({
   const projectSlug =
     project.slug || project.title.toLowerCase().replace(/\s+/g, "-") + "-game";
 
-  // ⚡ একই কাস্টম হুক দিয়ে ডাউনলোড ও রেটিং লজিক হ্যান্ডেল করা হচ্ছে
+  // ⚡ একই কাস্টম হুক দিয়ে ডাউনলোড ও রেটিং লজিক হ্যান্ডেল করা হচ্ছে
   const {
     isModalOpen,
     setIsModalOpen,
@@ -42,18 +41,24 @@ export default function GameCard({
     handleDeleteReview,
   } = useProjectReviews(projectSlug, project.reviews, project.downloadUrl);
 
+  // 🖼️ লোকাল বা Cloudinary লিংক হ্যান্ডলার
+  const finalImageSrc = project.imageSrc.startsWith("http")
+    ? project.imageSrc
+    : `/game-images/${project.imageSrc}`;
+
   // 🚀 Coming Soon Card
   if (project.isComingSoon) {
     return (
       <div className="rounded-3xl bg-[#ffffff08] border border-[#ffffff14] p-5 flex flex-col justify-between transition-all duration-300">
         <div>
-          <div className="relative w-full h-56 rounded-2xl overflow-hidden bg-slate-900 mb-5">
+          {/* 🎯 পারফেক্ট 16:9 থাম্বনেইল কন্টেইনার */}
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-900 border border-purple-500/20 mb-5">
             <div className="absolute inset-0 bg-[#ffffff10] animate-pulse z-0" />
             <Image
-              src={`/game-images/${project.imageSrc}`}
+              src={finalImageSrc}
               alt={project.title}
               fill
-              className="object-cover z-10"
+              className="object-cover z-10 transition-transform duration-500 hover:scale-105"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
@@ -80,12 +85,12 @@ export default function GameCard({
         className="rounded-3xl bg-[#ffffff08] border border-purple-500/60 p-5 flex flex-col justify-between shadow-[0_0_25px_rgba(168,85,247,0.15)] transition-all duration-300 hover:shadow-[0_0_35px_rgba(168,85,247,0.3)] hover:border-purple-400 group cursor-pointer"
       >
         <div>
-          {/* Image Box */}
-          <div className="relative w-full h-56 rounded-2xl overflow-hidden bg-slate-900 mb-5">
+          {/* 🎯 পারফেক্ট 16:9 থাম্বনেইল বক্স */}
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-900 border border-purple-500/30 mb-5">
             <div className="absolute inset-0 bg-[#ffffff10] animate-pulse z-0" />
 
             <Image
-              src={`/game-images/${project.imageSrc}`}
+              src={finalImageSrc}
               alt={project.title}
               fill
               className={`
@@ -137,7 +142,7 @@ export default function GameCard({
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleDownload(); // ট্র্যাকিং এবং ফাইল ডাউনলোড
+                    handleDownload();
                     setTimeout(() => setIsOpen(false), 500);
                   }}
                   className="w-full max-w-50 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-purple-950/80 border border-purple-500/50 text-purple-300 font-bold text-xs hover:bg-purple-900/80 transition-all shadow-lg cursor-pointer"
@@ -155,7 +160,7 @@ export default function GameCard({
               <span className="gradient-text">{project.title}</span>
             </h3>
 
-            {/* ⭐ Rating Button (মডাল খোলার জন্য) */}
+            {/* ⭐ Rating Button */}
             <button
               type="button"
               onClick={(e) => {
@@ -192,11 +197,6 @@ export default function GameCard({
           <p className="text-slate-300 text-xs leading-relaxed">
             {project.description}
           </p>
-
-          <div className="space-y-3 mt-5">
-            <div className="w-full h-px bg-purple-500/20"></div>
-            <LikeSection />
-          </div>
         </div>
       </div>
 
@@ -210,7 +210,7 @@ export default function GameCard({
         reviews={reviewsList}
         isLoggedIn={!!user}
         currentUserId={user?.id}
-        requireDownload={true} // 👈 গেমের ক্ষেত্রেও ডাউনলোড বাধ্যতামূলক
+        requireDownload={true}
         hasDownloaded={hasDownloaded}
         onDownloadClick={handleDownload}
         onLoginClick={handleLoginRedirect}

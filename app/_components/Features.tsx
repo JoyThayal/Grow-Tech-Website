@@ -32,21 +32,18 @@ export default function FeaturesSection() {
               your brand.
             </p>
 
-            <div className="grid grid-cols-2 gap-3">
-              <span className="bg-[#ffffff0a] border border-[#ffffff1a] p-2 lg:p-3 rounded-lg text-center">
-                Web
+            {/* 🚀 ৩টি কোর সার্ভিস ট্যাগ (Web, App, Game) */}
+            <div className="grid grid-cols-3 gap-3">
+              <span className="bg-[#ffffff0a] border border-[#ffffff1a] p-2.5 lg:p-3 rounded-xl text-center text-xs lg:text-sm font-medium text-cyan-300">
+                Web Development
               </span>
 
-              <span className="bg-[#ffffff0a] border border-[#ffffff1a] p-2 lg:p-3 rounded-lg text-center">
-                App
+              <span className="bg-[#ffffff0a] border border-[#ffffff1a] p-2.5 lg:p-3 rounded-xl text-center text-xs lg:text-sm font-medium text-white">
+                App Engineering
               </span>
 
-              <span className="bg-[#ffffff0a] border border-[#ffffff1a] p-2 lg:p-3 rounded-lg text-center">
-                Game
-              </span>
-
-              <span className="bg-[#ffffff0a] border border-[#ffffff1a] p-2 lg:p-3 rounded-lg text-center">
-                Hardware
+              <span className="bg-[#ffffff0a] border border-[#ffffff1a] p-2.5 lg:p-3 rounded-xl text-center text-xs lg:text-sm font-medium text-[#c9a86a]">
+                Game Creation
               </span>
             </div>
           </div>
@@ -54,7 +51,7 @@ export default function FeaturesSection() {
 
         {/* Right Column */}
         <div className="bg-[#ffffff08] border border-[#ffffff14] rounded-2xl p-6 lg:p-10 flex flex-col justify-between min-h-auto lg:min-h-100 gap-6">
-          <span className="bg-[#ffffff0a] border border-[#ffffff1a] px-3 py-2 lg:px-4 rounded-full text-center w-fit">
+          <span className="bg-[#ffffff0a] border border-[#ffffff1a] px-3 py-2 lg:px-4 rounded-full text-center w-fit text-xs font-mono text-cyan-300">
             ⌘ + S
           </span>
 
@@ -63,12 +60,12 @@ export default function FeaturesSection() {
               Why Choose Grow Tech?
             </h3>
 
-            <p className="garet text-gray-400">
-              Led by a team of four specialized experts, we bring a 360-degree
-              approach to technology. Whether it&apos;s Joy&apos;s full-stack
-              expertise, Aman&apos;s app management, Bijoy&apos;s gaming vision,
-              or Biprajit&apos;s hardware precision—we ensure your digital
-              journey is seamless and successful.
+            <p className="garet text-gray-400 leading-relaxed">
+              We bring an agile and future-proof approach to digital products.
+              Whether it&apos;s architecting fast, responsive web systems,
+              engineering scalable mobile platforms, or designing captivating
+              interactive games—our collective engineering focus ensures your
+              digital journey is seamless and impactful.
             </p>
           </div>
 
@@ -76,8 +73,8 @@ export default function FeaturesSection() {
             src="/images/all.png"
             width={600}
             height={100}
-            alt=""
-            className="w-full h-auto rounded-2xl"
+            alt="Grow Tech capabilities"
+            className="w-full h-auto rounded-2xl object-cover"
           />
         </div>
       </div>

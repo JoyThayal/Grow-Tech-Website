@@ -4,7 +4,7 @@ import {
   Code2,
   Gamepad2,
   Server,
-  Cpu,
+  Layers,
   Database,
   Flame,
 } from "lucide-react";
@@ -41,10 +41,10 @@ const techCards = [
     icon: Server,
   },
   {
-    title: "Hardware Precision",
+    title: "Serverless Architecture",
     description:
-      "Expert-level diagnostics and repair solutions for advanced computing and networking hardware.",
-    icon: Cpu,
+      "Building serverless applications with ease, scalability, and cost-effectiveness.",
+    icon: Layers,
   },
   {
     title: "Modern Databases",

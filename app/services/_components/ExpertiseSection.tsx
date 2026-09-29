@@ -51,17 +51,6 @@ const services: ServiceItem[] = [
       "Game Environment Design",
     ],
   },
-  {
-    id: "hardware",
-    title: "Hardware Support",
-    IconComponent: Plus,
-    features: [
-      "Hardware Diagnosis",
-      "Component Repair",
-      "IT Infrastructure Setup",
-      "Maintenance & Updates",
-    ],
-  },
 ];
 
 const ExpertiseSection = () => {

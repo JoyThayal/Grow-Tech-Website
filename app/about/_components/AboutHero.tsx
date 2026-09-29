@@ -34,26 +34,22 @@ export default function AboutSection() {
         </h2>
 
         <p className="garet text-sm leading-8 font-light text-gray-400 sm:text-base md:text-lg">
-          We are a powerhouse team of four dedicated developers and tech
-          experts—
+          We are a powerhouse team of dedicated developers and tech experts—
           <span className="font-medium text-[#C9A86A]"> Joy Thayal</span>,
           <span className="font-medium text-[#C9A86A]"> Aman Shaw</span>,
           <span className="font-medium text-[#C9A86A]"> Bijoy Thayal</span>, and
           <span className="font-medium text-[#C9A86A]"> Biprajit Paul</span>. At
           <span className="font-semibold text-cyan-400"> Grow Tech</span>, we
           are passionate about building the next generation of digital
-          experiences. Our team transforms complex ideas into
+          experiences. Our team transforms complex ideas into high-performance
           <span className="font-semibold text-cyan-400"> Websites</span>,
-          <span className="font-semibold text-cyan-400"> Mobile Apps</span>,
-          <span className="font-semibold text-cyan-400"> Immersive Games</span>,
-          and
-          <span className="font-semibold text-cyan-400">
-            {" "}
-            Robust Hardware Solutions
-          </span>
-          . By combining technical expertise, creativity, and a shared vision,
-          we deliver scalable digital solutions that help businesses thrive in
-          an ever-evolving world.
+          scalable
+          <span className="font-semibold text-cyan-400"> Mobile Apps</span>, and
+          captivating
+          <span className="font-semibold text-cyan-400"> Immersive Games</span>.
+          By combining technical expertise, creativity, and a shared vision, we
+          deliver scalable digital solutions that help businesses thrive in an
+          ever-evolving world.
         </p>
       </div>
     </section>

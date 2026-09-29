@@ -37,15 +37,20 @@ export default function OurVisionSection() {
 
             <p>
               We bridge the gap between imagination and execution. By
-              integrating{" "}
-              <span className="font-semibold text-cyan-400">Web</span>,{" "}
-              <span className="font-semibold text-cyan-400">Mobile</span>,{" "}
-              <span className="font-semibold text-cyan-400">Gaming</span>, and{" "}
+              integrating modern{" "}
               <span className="font-semibold text-cyan-400">
-                Hardware Solutions
+                Web Architecture
               </span>
-              , we provide a 360-degree tech ecosystem designed to scale your
-              business and deliver technical precision to every project.
+              ,{" "}
+              <span className="font-semibold text-cyan-400">
+                Native Mobile Apps
+              </span>
+              , and{" "}
+              <span className="font-semibold text-cyan-400">
+                Interactive 3D Gaming
+              </span>
+              , we provide a unified tech ecosystem designed to scale your
+              business and bring technical precision to every project.
             </p>
           </div>
 
@@ -62,7 +67,7 @@ export default function OurVisionSection() {
           </div>
         </div>
 
-        {/* ২. ডানপাশের লোগো সেকশন (গ্লোয়িং ফ্রেম সহ) */}
+        {/* ২. ডানপাশের লোগো সেকশন (গ্লোয়িং ফ্রেম সহ) */}
         <div className="flex w-full justify-center lg:w-2/5">
           <div className="group relative flex items-center justify-center">
             {/* ব্যাকগ্রাউন্ড অরা সার্কেল অ্যানিমেশন */}
@@ -71,7 +76,7 @@ export default function OurVisionSection() {
             {/* মেইন ইমেজ কন্টেইনার */}
             <div className="relative aspect-square w-64 sm:w-80 md:w-96 lg:w-105 rounded-3xl border border-white/10 bg-linear-to-b from-white/5 to-transparent p-6 shadow-2xl backdrop-blur-md transition-transform duration-500 group-hover:scale-[1.02]">
               <Image
-                src="/images/gt.png"
+                src="/images/growtech.png"
                 alt="Grow Tech Logo"
                 fill
                 priority

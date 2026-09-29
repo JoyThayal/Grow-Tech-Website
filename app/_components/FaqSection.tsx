@@ -13,22 +13,22 @@ const faqs: FaqItem[] = [
   {
     question: "What services does Grow Tech specialize in?",
     answer:
-      "Grow Tech is a multi-disciplinary agency. We excel in Full-Stack Web Development, Native & Cross-Platform Mobile Apps, and Immersive Game Development. We also provide dedicated Computer Repairing and Technical Support services.",
+      "Grow Tech specializes in end-to-end digital engineering. We focus on modern Full-Stack Web Development, Native & Cross-Platform Mobile Applications, and Interactive 2D/3D Game Development tailored for scalable business growth.",
   },
   {
     question: "How do you handle project management?",
     answer:
-      "We follow an agile development methodology with clear milestones, regular progress updates, and complete transparency using modern collaboration tools.",
+      "We follow an agile development workflow with defined milestones, continuous integration, transparent sprint tracking, and clear communication throughout the project lifecycle.",
   },
   {
-    question: "Do you offer hardware and maintenance support?",
+    question: "Do you offer post-launch support and maintenance?",
     answer:
-      "Yes! Our dedicated hardware department handles everything from advanced system diagnostics and component repairs to full IT infrastructure setup.",
+      "Yes! We provide ongoing software maintenance, security updates, database monitoring, and feature enhancements to ensure your digital platforms run smoothly with zero downtime.",
   },
   {
     question: "Can you build custom games for brands?",
     answer:
-      "Absolutely! We design and develop custom 2D/3D interactive games optimized for mobile, web, and desktop platforms tailored to your brand's vision.",
+      "Absolutely! We design and develop custom 2D/3D interactive games optimized for mobile, web, and desktop platforms tailored to amplify your brand's engagement and user retention.",
   },
 ];
 
@@ -60,7 +60,7 @@ export default function FaqSection() {
 
           <p className="garet max-w-md text-sm font-light leading-relaxed text-slate-400 md:text-base">
             Can&apos;t find the answer you&apos;re looking for? Reach out to our
-            specialized team for a detailed consultation.
+            team for a detailed consultation on your upcoming project.
           </p>
 
           <Button
@@ -84,8 +84,8 @@ export default function FaqSection() {
                 onClick={() => toggleAccordion(index)}
                 className={`cursor-pointer overflow-hidden rounded-2xl border transition-all duration-300 ${
                   isOpen
-                    ? "border-cyan-500/50 bg-white/10 shadow-[0_0_25px_rgba(0,229,255,0.12)]"
-                    : "border-white/10 bg-white/5 hover:border-slate-700 hover:bg-white/10"
+                    ? "border-cyan-500/50 bg-[#132247]/60 shadow-[0_0_25px_rgba(0,229,255,0.12)]"
+                    : "border-[#1c2d66] bg-[#0e1838]/70 hover:border-cyan-500/30 hover:bg-[#132247]/40"
                 }`}
               >
                 <div className="flex items-center justify-between gap-4 p-6">
@@ -111,7 +111,7 @@ export default function FaqSection() {
                       : "grid-rows-[0fr] px-6 pb-0 opacity-0"
                   }`}
                 >
-                  <div className="overflow-hidden border-t border-white/10 pt-4">
+                  <div className="overflow-hidden border-t border-[#1c2d66]/60 pt-4">
                     <p className="garet text-sm font-light leading-relaxed text-slate-300 md:text-base">
                       {answer}
                     </p>

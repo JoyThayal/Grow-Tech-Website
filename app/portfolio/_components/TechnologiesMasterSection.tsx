@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Atom, Smartphone, Gamepad2, Cpu } from "lucide-react";
+import { Atom, Smartphone, Gamepad2 } from "lucide-react";
 
 interface TechMasterItem {
   title: string;
@@ -13,27 +13,21 @@ interface TechMasterItem {
 const techMasterData: TechMasterItem[] = [
   {
     title: "Web Architecture",
-    description: "React, Next.js, Node.js & Cloud",
+    description: "React, Next.js, TypeScript, Tailwind & Cloud",
     category: "WEB DEVELOPMENT",
     IconComponent: Atom,
   },
   {
     title: "App Ecosystem",
-    description: "Flutter, Firebase & Native Android",
+    description: "Flutter, React Native, Firebase & Android",
     category: "MOBILE SOLUTIONS",
     IconComponent: Smartphone,
   },
   {
     title: "Game Engine",
-    description: "Unity 3D, C# & Immersive Tech",
+    description: "Unity 3D, C#, Physics & Immersive Worlds",
     category: "GAME DEVELOPMENT",
     IconComponent: Gamepad2,
-  },
-  {
-    title: "Core Systems",
-    description: "Hardware, OS & Cyber Security",
-    category: "IT INFRASTRUCTURE",
-    IconComponent: Cpu,
   },
 ];
 
@@ -52,8 +46,8 @@ export default function TechnologiesMasterSection(): React.ReactNode {
         <div className="w-12 h-0.5 bg-[#c9a86a] mt-6 rounded-full" />
       </div>
 
-      {/* 💻 4 Master Tech Cards Grid */}
-      <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* 💻 3 Master Tech Cards Grid (lg:grid-cols-3) */}
+      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
         {techMasterData.map((item, index) => {
           const Icon = item.IconComponent;
 
@@ -77,7 +71,7 @@ export default function TechnologiesMasterSection(): React.ReactNode {
                 {item.description}
               </p>
 
-              {/* Bottom Golden Pill Badge (Not a button) */}
+              {/* Bottom Golden Pill Badge */}
               <div className="mt-auto px-4 py-1.5 rounded-md bg-[#c9a86a]/15 text-[#c9a86a] border border-[#c9a86a] font-extrabold text-[10px] tracking-widest uppercase select-none">
                 {item.category}
               </div>
