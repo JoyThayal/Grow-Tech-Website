@@ -81,7 +81,7 @@ export default function WebProjectCard({
             `}
           >
             <Image
-              src={`/website-images/${project.imageSrc}`}
+              src={project.imageSrc}
               alt={project.title}
               width={800}
               height={2400}
