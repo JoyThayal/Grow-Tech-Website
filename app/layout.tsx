@@ -4,12 +4,12 @@ import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
-import ClickParticles from "@/components/ui/ClickParticles";
 import Image from "next/image";
 import TopGradientLoader from "@/components/ui/TopGradientLoader";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { ToastProvider } from "@/components/ui/Toast";
 import { Suspense } from "react";
+import GlobalClickSpark from "@/components/ui/GlobalClickSpark";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -81,9 +81,15 @@ export default function RootLayout({
         </Script>
       </head>
       <body className="min-h-full flex flex-col">
+        <GlobalClickSpark
+          sparkColors={["#00e5ff", "#67e8f9", "#e0f2fe", "#93c5fd"]}
+          sparkCount={8}
+          sparkRadius={20}
+          sparkSize={8}
+          duration={400}
+        />
         <TopGradientLoader />
         <Navbar />
-        <ClickParticles />
         <ToastProvider>
           <Suspense fallback={null}>{children}</Suspense>
         </ToastProvider>
