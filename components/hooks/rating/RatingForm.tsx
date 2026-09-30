@@ -21,6 +21,15 @@ interface Props {
   onSubmit: (rating: number, comment?: string) => void;
 }
 
+// ⭐ প্রতিটি স্টারের লেবেল ও ইমোজি
+const ratingLabels: Record<number, { label: string; emoji: string }> = {
+  1: { label: "Poor", emoji: "😞" },
+  2: { label: "Fair", emoji: "😐" },
+  3: { label: "Good", emoji: "🙂" },
+  4: { label: "Very Good", emoji: "😃" },
+  5: { label: "Masterpiece!", emoji: "🔥" },
+};
+
 export function RatingForm({
   isLoggedIn,
   requireDownload,
@@ -142,29 +151,45 @@ export function RatingForm({
           )}
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <div className="flex items-center justify-between">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex items-center justify-between pt-1">
             <span className="text-xs font-medium text-slate-300">
               Select rating:
             </span>
-            <div className="flex items-center gap-1">
+
+            {/* ⭐ স্টার বাটন তালিকা (মাথার ওপর ফ্ল্যাটিং পপআপ সহ) */}
+            <div className="flex items-center gap-1.5">
               {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  key={star}
-                  type="button"
-                  onClick={() => setUserRating(star)}
-                  onMouseEnter={() => setHoverRating(star)}
-                  onMouseLeave={() => setHoverRating(0)}
-                  className="p-1 transition-transform hover:scale-110 focus:outline-none cursor-pointer"
-                >
-                  <Star
-                    className={`w-4 h-4 transition-colors ${
-                      star <= (hoverRating || userRating)
-                        ? "fill-amber-400 text-amber-400"
-                        : "text-slate-600 hover:text-slate-400"
-                    }`}
-                  />
-                </button>
+                <div key={star} className="relative flex flex-col items-center">
+                  {/* 🎈 মাথার ওপর ফ্ল্যাটিং পপআপ ব্যাজ */}
+                  {hoverRating === star && (
+                    <div className="absolute -top-8.5 z-20 flex flex-col items-center animate-in fade-in zoom-in-90 duration-150 pointer-events-none">
+                      <div className="flex items-center gap-1 whitespace-nowrap rounded-md border border-cyan-500/40 bg-[#0d1736] px-2 py-0.5 text-[10px] font-bold text-white shadow-lg shadow-black/50">
+                        <span>{ratingLabels[star].label}</span>
+                        <span>{ratingLabels[star].emoji}</span>
+                      </div>
+                      {/* ছোট নিচের তীর (Arrow indicator) */}
+                      <div className="h-1.5 w-1.5 rotate-45 border-b border-r border-cyan-500/40 bg-[#0d1736] -mt-1" />
+                    </div>
+                  )}
+
+                  {/* স্টার বাটন */}
+                  <button
+                    type="button"
+                    onClick={() => setUserRating(star)}
+                    onMouseEnter={() => setHoverRating(star)}
+                    onMouseLeave={() => setHoverRating(0)}
+                    className="p-1 transition-transform hover:scale-125 focus:outline-none cursor-pointer"
+                  >
+                    <Star
+                      className={`w-4 h-4 transition-colors duration-200 ${
+                        star <= (hoverRating || userRating)
+                          ? "fill-amber-400 text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]"
+                          : "text-slate-600 hover:text-slate-400"
+                      }`}
+                    />
+                  </button>
+                </div>
               ))}
             </div>
           </div>

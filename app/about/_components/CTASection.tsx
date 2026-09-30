@@ -1,14 +1,20 @@
+"use client";
+
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import Button from "@/components/ui/Button";
+import ServiceSelectModal from "@/components/ui/ServiceSelectModal";
 
 export default function CTASection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section className="w-full px-5 py-16 sm:px-6 lg:px-10 lg:py-20 xl:px-16">
       <div className="mx-auto max-w-7xl">
         <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 sm:p-10 lg:p-14">
           {/* Background Glow */}
-          <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-cyan-400/5 blur-3xl" />
-          <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-[#C9A86A]/5 blur-3xl" />
+          <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-cyan-400/5 blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-[#C9A86A]/5 blur-3xl pointer-events-none" />
 
           <div className="relative grid items-center gap-12 lg:grid-cols-[1fr_auto]">
             {/* Left */}
@@ -26,20 +32,20 @@ export default function CTASection() {
               </p>
 
               <div className="mt-8 flex flex-col gap-4 sm:flex-row items-stretch sm:items-center">
-                {/* ১. সরাসরি টিমের সাথে কাজ শুরু করার বাটন */}
+                {/* ১. পপআপ ট্রিগার বাটন */}
                 <Button
-                  href="/contact"
+                  onClick={() => setIsModalOpen(true)}
                   variant="primary"
                   size="md"
-                  className="flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(201,168,106,0.25)] hover:scale-102 transition-transform"
+                  className="flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Let&apos;s Work Together</span>
-                  <ArrowRight size={18} />
+                  <ArrowRight size={18}/>
                 </Button>
 
-                {/* ২. এরপর সার্ভিস ও প্যাকেজ দেখার বাটন */}
+                {/* ২. সার্ভিস ও প্যাকেজ দেখার বাটন */}
                 <Button
-                  href="/services"
+                  href="/services#expertise"
                   variant="secondary"
                   size="md"
                   className="flex items-center justify-center gap-2 hover:border-cyan-400 transition-colors"
@@ -74,6 +80,14 @@ export default function CTASection() {
           </div>
         </div>
       </div>
+
+      {/* 🚀 সার্ভিস চয়েস পপআপ মডাল */}
+      <ServiceSelectModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Start Your Project"
+        description="Select the core service you need so we can guide you to the right plan:"
+      />
     </section>
   );
 }

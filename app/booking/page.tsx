@@ -12,10 +12,13 @@ import {
   Globe,
   Smartphone,
   Gamepad2,
-  ArrowRight,
+  CheckCircle2,
+  Home,
+  FileText,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { useToast } from "@/components/ui/Toast";
+import ServiceSelectModal from "@/components/ui/ServiceSelectModal";
 import type { User } from "@supabase/supabase-js";
 
 function BookingForm() {
@@ -30,7 +33,7 @@ function BookingForm() {
   const packageName = searchParams.get("package") || "";
   const rawService = (searchParams.get("service") || "web").toLowerCase();
 
-  // 🧭 ডাইনামিক সার্ভিস মেটাডাটা নির্ধারণ
+  // ডাইনামিক সার্ভিস মেটাডাটা
   const serviceMeta = {
     web: {
       name: "Web Development",
@@ -63,12 +66,15 @@ function BookingForm() {
 
   const ServiceIcon = serviceMeta.icon;
 
-  // ফর্মের ডেটা
+  // ফর্মের ফিল্ডগুলো
   const [clientName, setClientName] = useState("");
   const [clientEmail, setClientEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  // 🚀 বুকিং সাকসেস পপআপ স্টেট
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -126,28 +132,13 @@ function BookingForm() {
       if (error) throw error;
 
       showToast(
-        "Booking Registered!",
-        "Redirecting to WhatsApp for confirmation... 🚀",
+        "Booking Successful!",
+        "Your project request has been submitted.",
         "success",
       );
 
-      const waMsg =
-        `*New Booking Request - Grow Tech*\n\n` +
-        `👤 *Name:* ${clientName.trim()}\n` +
-        `📧 *Email:* ${clientEmail.trim()}\n` +
-        `📞 *WhatsApp:* ${phone.trim()}\n` +
-        `🛠️ *Service Type:* ${serviceMeta.name}\n` +
-        `📦 *Selected Package:* ${packageName}\n` +
-        (notes ? `📝 *Requirements:* ${notes.trim()}\n\n` : `\n`) +
-        `Hi Grow Tech, I have confirmed my booking on the website. Let's discuss the project! 🙌`;
-
-      setTimeout(() => {
-        window.open(
-          `https://wa.me/+918902709631?text=${encodeURIComponent(waMsg)}`,
-          "_blank",
-        );
-        router.push("/profile/orders");
-      }, 700);
+      // WhatsApp রিডাইরেক্ট বন্ধ করে সাকসেস পপআপ দেখানো হলো
+      setShowSuccessModal(true);
     } catch (err: unknown) {
       const errMsg =
         err instanceof Error ? err.message : "Failed to register booking.";
@@ -179,10 +170,9 @@ function BookingForm() {
         <span className="golden-tag">GROW TECH CHECKOUT</span>
       </div>
 
-      {/* 📦 সিলেক্ট করা প্যাকেজের ব্যানার (সার্ভিস আইডেন্টিটি সহ) */}
+      {/* 📦 সিলেক্ট করা প্যাকেজের ব্যানার */}
       <div className="rounded-2xl border border-cyan-500/40 bg-linear-to-br from-[#0e1838] to-[#0c1533] p-5 sm:p-6 backdrop-blur-xl">
         <div className="flex items-center justify-between gap-3 mb-2">
-          {/* সার্ভিস ক্যাটাগরি ব্যাজ */}
           <span
             className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider ${serviceMeta.bg} ${serviceMeta.border} ${serviceMeta.color} border`}
           >
@@ -205,7 +195,7 @@ function BookingForm() {
         </div>
       </div>
 
-      {/* 📝 ছোট ও ক্লিন বুকিং ফর্ম */}
+      {/* 📝 বুকিং ফর্ম */}
       <form
         onSubmit={handleSubmit}
         className="rounded-3xl border border-[#1c2d66] bg-[#0e1838]/80 p-6 sm:p-8 backdrop-blur-xl space-y-5 shadow-2xl"
@@ -281,69 +271,58 @@ function BookingForm() {
             <span>Saving Order...</span>
           ) : (
             <>
-              <span>Confirm & Connect on WhatsApp</span>
+              <span>Confirm Booking</span>
               <Send className="w-3.5 h-3.5" />
             </>
           )}
         </button>
       </form>
 
-      {/* 🚀 পপআপ: সরাসরি এলে ৩টি সার্ভিসের পেজে যাওয়ার অপশন */}
-      {!packageName && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="w-full max-w-md rounded-3xl border border-[#1c2d66] bg-[#0c1533] p-6 sm:p-7 shadow-2xl space-y-5 text-center">
-            <div className="space-y-1">
-              <span className="golden-tag">CHOOSE A SERVICE</span>
-              <h3 className="cabinet text-xl font-bold text-white pt-1">
-                Select What You Need First
+      {/* 🚀 সার্ভিসের অপশন না থাকলে সিলেক্ট করার মডাল */}
+      <ServiceSelectModal isOpen={!packageName} />
+
+      {/* 🎉 Booking Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="relative w-full max-w-md rounded-3xl border border-cyan-500/40 bg-[#0c1533] p-6 sm:p-8 shadow-2xl text-center space-y-5">
+            {/* সাকসেস আইকন */}
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-cyan-500/30 bg-cyan-950/40 text-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.25)]">
+              <CheckCircle2 className="h-9 w-9 text-cyan-400" />
+            </div>
+
+            <div className="space-y-2">
+              <span className="golden-tag">ORDER CONFIRMED</span>
+              <h3 className="cabinet text-2xl font-extrabold text-white">
+                Booking Successful!
               </h3>
-              <p className="text-xs text-slate-400">
-                Please pick a service category to explore plans and complete
-                booking:
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Thank you,{" "}
+                <span className="font-semibold text-white">{clientName}</span>!
+                Your project request for{" "}
+                <span className="font-semibold text-cyan-400">
+                  {packageName}
+                </span>{" "}
+                has been received. Our team will review your notes and contact
+                you shortly.
               </p>
             </div>
 
-            {/* ৩টি সার্ভিসের সঠিক লিংক */}
-            <div className="space-y-2.5 pt-2">
+            {/* অ্যাকশন বাটনসমূহ */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <Link
-                href="/services"
-                className="flex items-center justify-between p-3.5 rounded-xl border border-[#1c2d66] bg-[#0e1838] hover:border-cyan-400 hover:bg-[#121f48] text-white transition-all group"
+                href="/profile/orders"
+                className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-400 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-cyan-300 transition-all shadow-[0_0_15px_rgba(0,229,255,0.3)] active:scale-95"
               >
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400">
-                    <Globe className="w-4 h-4" />
-                  </div>
-                  <span className="text-xs font-bold">Web Development</span>
-                </div>
-                <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
+                <FileText className="w-4 h-4" />
+                <span>Booking Details</span>
               </Link>
 
               <Link
-                href="/portfolio/app"
-                className="flex items-center justify-between p-3.5 rounded-xl border border-[#1c2d66] bg-[#0e1838] hover:border-indigo-400 hover:bg-[#121f48] text-white transition-all group"
+                href="/"
+                className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-white/10 bg-[#121f48] text-slate-200 font-semibold text-xs uppercase tracking-wider hover:bg-[#1a2d66] hover:text-white transition-all active:scale-95"
               >
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400">
-                    <Smartphone className="w-4 h-4" />
-                  </div>
-                  <span className="text-xs font-bold">
-                    Mobile App Development
-                  </span>
-                </div>
-                <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-indigo-400 group-hover:translate-x-1 transition-all" />
-              </Link>
-
-              <Link
-                href="/services/game"
-                className="flex items-center justify-between p-3.5 rounded-xl border border-[#1c2d66] bg-[#0e1838] hover:border-purple-400 hover:bg-[#121f48] text-white transition-all group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400">
-                    <Gamepad2 className="w-4 h-4" />
-                  </div>
-                  <span className="text-xs font-bold">Game Development</span>
-                </div>
-                <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-purple-400 group-hover:translate-x-1 transition-all" />
+                <Home className="w-4 h-4 text-cyan-400" />
+                <span>Back to Home</span>
               </Link>
             </div>
           </div>

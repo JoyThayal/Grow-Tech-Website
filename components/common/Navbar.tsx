@@ -34,20 +34,20 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#1c2d66] bg-[#0a1128]/85 backdrop-blur-xl">
       <nav className="relative mx-auto flex h-16 md:h-20 items-center justify-between px-4 sm:px-6 lg:px-12">
-        {/* লোগো */}
+        {/* Logo */}
         <Link href="/" className="shrink-0">
           <Image
             src="/images/growtech-logo.png"
             width={140}
             height={40}
             priority
-            alt="Logo"
+            alt="Grow Tech Logo"
             className="w-28 sm:w-32 md:w-36 h-auto"
           />
         </Link>
 
-        {/* 💻 Desktop Links (একদম ক্লিন ও সাধারণ) */}
-        <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-7 text-sm font-medium">
+        {/* 💻 Desktop Navigation Links */}
+        <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-8 text-sm font-medium">
           <Link
             href="/"
             className={`py-1 transition-colors ${
@@ -88,16 +88,6 @@ export default function Navbar() {
           >
             Portfolio
           </Link>
-          <Link
-            href="/contact"
-            className={`py-1 transition-colors ${
-              pathname === "/contact"
-                ? "text-cyan-400 font-semibold"
-                : "text-slate-300 hover:text-cyan-400"
-            }`}
-          >
-            Contact
-          </Link>
         </div>
 
         {/* 💻 Desktop Actions */}
@@ -107,7 +97,7 @@ export default function Navbar() {
           ) : user ? (
             <Link
               href="/profile"
-              className="flex items-center gap-2 p-1.5 pr-3 rounded-full border border-[#1c2d66] bg-[#132247]/60 text-slate-300 hover:text-white"
+              className="flex items-center gap-2 p-1.5 pr-3 rounded-full border border-[#1c2d66] bg-[#132247]/60 text-slate-300 hover:text-white transition-colors"
             >
               <div className="relative w-7 h-7 rounded-full overflow-hidden bg-[#1c2f62] flex items-center justify-center">
                 {user.user_metadata?.avatar_url ? (
@@ -126,25 +116,31 @@ export default function Navbar() {
           ) : (
             <Link
               href="/auth"
-              className="text-xs font-medium text-slate-300 hover:text-cyan-400 px-3"
+              className="text-xs font-medium text-slate-300 hover:text-cyan-400 px-3 py-1.5 transition-colors"
             >
               Sign In
             </Link>
           )}
 
-          <Button
-            href="/contact"
-            variant="glow"
-            size="md"
-            className="flex items-center gap-2 group"
-          >
-            <Headphones className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
-            <span>Get Support</span>
+          {/* Desktop Glow Button */}
+          <Button href="/contact" variant="glow" size="md">
+            <Headphones className="w-4 h-4" />
+            Contact Us
           </Button>
         </div>
 
         {/* 📱 Mobile Actions */}
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2.5 md:hidden">
+          {/* 🎧 Mobile Support Quick Action Button */}
+          <Link
+            href="/contact"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-500/40 bg-cyan-950/40 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)] active:scale-95 transition-all"
+            aria-label="Support & Contact"
+          >
+            <Headphones className="w-4 h-4" />
+          </Link>
+
+          {/* Mobile Auth / Profile */}
           {!authLoading &&
             (user ? (
               <Link
@@ -165,22 +161,24 @@ export default function Navbar() {
             ) : (
               <Link
                 href="/auth"
-                className="text-xs px-2 py-1 rounded-lg border border-[#1c2d66] bg-[#132247]/50 text-slate-300"
+                className="text-xs px-2.5 py-1.5 rounded-lg border border-[#1c2d66] bg-[#132247]/50 text-slate-300"
               >
                 Sign In
               </Link>
             ))}
 
+          {/* Hamburger Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 rounded-xl border border-[#1c2d66] bg-[#132247]/60 text-white cursor-pointer"
+            className="p-2 rounded-xl border border-[#1c2d66] bg-[#132247]/60 text-white cursor-pointer active:scale-95 transition-all"
+            aria-label="Toggle Menu"
           >
             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </nav>
 
-      {/* 📱 Mobile Menu Dropdown */}
+      {/* 📱 Mobile Dropdown Menu */}
       {isOpen && (
         <div className="border-b border-[#1c2d66] bg-[#0a1128]/95 px-6 py-5 md:hidden space-y-3">
           <Link
@@ -200,7 +198,7 @@ export default function Navbar() {
           <Link
             href="/services"
             onClick={() => setIsOpen(false)}
-            className="block py-1 text-cyan-400 font-medium"
+            className="block py-1 text-slate-300 hover:text-cyan-400"
           >
             Services
           </Link>
@@ -211,13 +209,17 @@ export default function Navbar() {
           >
             Portfolio
           </Link>
-          <Link
-            href="/contact"
-            onClick={() => setIsOpen(false)}
-            className="block py-1 text-slate-300 hover:text-cyan-400"
-          >
-            Contact
-          </Link>
+          <div className="pt-2">
+            <Button
+              href="/contact"
+              variant="glow"
+              size="md"
+              className="w-full justify-center"
+              onClick={() => setIsOpen(false)}
+            >
+              Contact Us
+            </Button>
+          </div>
         </div>
       )}
     </header>
