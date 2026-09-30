@@ -70,7 +70,7 @@ export default function FeaturesSection() {
           </div>
 
           <Image
-            src="/images/all.png"
+            src="/images/our-capabilities.png"
             width={600}
             height={100}
             alt="Grow Tech capabilities"

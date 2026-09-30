@@ -25,23 +25,26 @@ export default function CTASection() {
                 precision engineering, and innovative thinking.
               </p>
 
-              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <div className="mt-8 flex flex-col gap-4 sm:flex-row items-stretch sm:items-center">
+                {/* ১. সরাসরি টিমের সাথে কাজ শুরু করার বাটন */}
                 <Button
                   href="/contact"
                   variant="primary"
-                  className="flex items-center justify-center gap-2"
+                  size="md"
+                  className="flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(201,168,106,0.25)] hover:scale-102 transition-transform"
                 >
-                  Start a Project
+                  <span>Let&apos;s Work Together</span>
                   <ArrowRight size={18} />
                 </Button>
 
+                {/* ২. এরপর সার্ভিস ও প্যাকেজ দেখার বাটন */}
                 <Button
-                  href="https://wa.me/+918902709631?text=Hi%20Grow%20Tech,%20I%20want%20to%20discuss%20a%20project."
+                  href="/services"
                   variant="secondary"
-                  className="flex items-center justify-center gap-2"
+                  size="md"
+                  className="flex items-center justify-center gap-2 hover:border-cyan-400 transition-colors"
                 >
-                  Chat on WhatsApp
-                  <ArrowRight size={18} />
+                  <span>Explore Our Services</span>
                 </Button>
               </div>
             </div>

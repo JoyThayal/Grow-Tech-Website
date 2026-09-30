@@ -10,7 +10,7 @@ export default function SolutionsSection() {
       description:
         "Most websites are slow, clunky brochures that lose users. We engineer custom, ultra-fast, animated modern platforms that grab attention instantly and convert casual visitors into high-paying clients.",
       cta: "Build Website",
-      href: "/portfolio/web",
+      href: "/services/web",
     },
     {
       id: 2,
@@ -19,7 +19,7 @@ export default function SolutionsSection() {
       description:
         "Tired of buggy apps that crash under pressure? We build scalable, rock-solid mobile applications designed for flawless performance, keeping your users hooked and driving revenue straight from their pockets.",
       cta: "Explore Apps",
-      href: "/portfolio/app",
+      href: "/services/app",
     },
     {
       id: 3,
@@ -28,7 +28,7 @@ export default function SolutionsSection() {
       description:
         "Stop wasting thousands on high user-acquisition costs. Our engaging, interactive, hyper-casual games build massive user engagement and viral loops, turning ordinary players into fanatical brand advocates.",
       cta: "Play Games",
-      href: "/portfolio/game",
+      href: "/services/game",
     },
   ];
 

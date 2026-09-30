@@ -12,6 +12,8 @@ import {
   Sparkles,
   ShieldCheck,
   Clock,
+  RotateCcw,
+  Headphones,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 
@@ -23,8 +25,9 @@ interface PricingPlan {
   category: "starter" | "growth" | "enterprise";
   tagline: string;
   price: string;
-  delivery: string;
-  revisions: string;
+  deliveryDays: string; // ডেলিভারি টাইম পরিষ্কারভাবে
+  revisions: string; // ফ্রি রিভিশন রাউন্ড
+  freeSupport: string; // লঞ্চের পর কত দিন ফ্রি টেক সাপোর্ট
   renewal: string;
   icon: typeof Globe;
   features: string[];
@@ -39,8 +42,9 @@ const plans: PricingPlan[] = [
     tagline:
       "A clean, modern single-page website to launch your business online and get direct WhatsApp leads.",
     price: "₹4,999",
-    delivery: "3–5 Days",
-    revisions: "2 Free Revision Rounds",
+    deliveryDays: "3–5 Days Delivery",
+    revisions: "2 Free Revisions",
+    freeSupport: "7 Days Free Support",
     renewal: "₹2,000 / year (Domain & Maintenance)",
     icon: Globe,
     features: [
@@ -64,8 +68,9 @@ const plans: PricingPlan[] = [
     tagline:
       "A full 4–5 page website to showcase your brand, rank higher on Google, and win customer trust.",
     price: "₹9,999",
-    delivery: "6–8 Days",
-    revisions: "3 Rounds + 14 Days Tech Support",
+    deliveryDays: "6–8 Days Delivery",
+    revisions: "3 Free Revisions",
+    freeSupport: "14 Days Free Support",
     renewal: "₹2,500 / year (Domain, Hosting & Care)",
     icon: Layers,
     features: [
@@ -88,8 +93,9 @@ const plans: PricingPlan[] = [
     tagline:
       "For businesses that need customer logins, private data management, or an online dashboard.",
     price: "₹18,999",
-    delivery: "12–15 Days",
-    revisions: "30 Days Full Technical Support",
+    deliveryDays: "12–15 Days Delivery",
+    revisions: "Unlimited during Dev",
+    freeSupport: "30 Days Full Support",
     renewal: "Custom Annual Cloud Maintenance",
     icon: Database,
     features: [
@@ -111,8 +117,9 @@ const plans: PricingPlan[] = [
     tagline:
       "Give your slow or outdated website a modern, fast, and mobile-friendly new look.",
     price: "₹5,999",
-    delivery: "4–6 Days",
-    revisions: "2 Rounds Pre-Launch + 7 Days Monitoring",
+    deliveryDays: "4–6 Days Delivery",
+    revisions: "2 Free Revisions",
+    freeSupport: "10 Days Post-Launch Support",
     renewal: "Retains your existing domain authority",
     icon: RefreshCw,
     features: [
@@ -138,7 +145,7 @@ export default function ServicesPage() {
   const filteredPlans =
     filter === "all" ? plans : plans.filter((p) => p.category === filter);
 
-  // 🛡️ বুলেটপ্রুফ রিডাইরেক্ট হ্যান্ডলার: বাটন ক্লিক করার মুহূর্তে সরাসরি Supabase সেশন পড়বে
+  // 🛡️ বুলেটপ্রুফ রিডাইরেক্ট হ্যান্ডলার
   const handleBookingRedirect = async (packageName: string) => {
     const targetUrl = `/booking?service=web&package=${encodeURIComponent(packageName)}`;
 
@@ -147,10 +154,8 @@ export default function ServicesPage() {
     } = await supabase.auth.getSession();
 
     if (!session?.user) {
-      // সত্যি সত্যি লগইন না থাকলেই কেবল লগইন পেজে পাঠাবে
       router.push(`/auth?next=${encodeURIComponent(targetUrl)}`);
     } else {
-      // লগইন থাকলে সরাসরি বুকিং পেজে যাবে
       router.push(targetUrl);
     }
   };
@@ -234,8 +239,8 @@ export default function ServicesPage() {
                 )}
 
                 <div>
-                  {/* Top Bar: Icon + Title + Timeline */}
-                  <div className="flex items-start justify-between gap-4 mb-4">
+                  {/* Top Bar: Icon + Title */}
+                  <div className="flex items-start justify-between gap-4 mb-3">
                     <div className="flex items-center gap-3.5">
                       <div className="p-3 rounded-2xl bg-[#121f48] border border-[#243982] text-cyan-400 shrink-0">
                         <Icon className="w-6 h-6" />
@@ -244,16 +249,24 @@ export default function ServicesPage() {
                         <h3 className="cabinet text-xl sm:text-2xl font-bold text-slate-100">
                           {plan.name}
                         </h3>
-                        <div className="flex items-center gap-2 mt-1 text-[11px] text-slate-400 font-mono">
-                          <span className="flex items-center gap-1">
-                            <Clock className="w-3.5 h-3.5 text-[#C9A86A]" />
-                            {plan.delivery}
-                          </span>
-                          <span>•</span>
-                          <span>{plan.revisions}</span>
-                        </div>
                       </div>
                     </div>
+                  </div>
+
+                  {/* 🕒 Timeline, Revisions & Support Bar */}
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#121f48] border border-[#1c2d66] text-[11px] text-cyan-300 font-mono">
+                      <Clock className="w-3.5 h-3.5 text-cyan-400" />
+                      {plan.deliveryDays}
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#121f48] border border-[#1c2d66] text-[11px] text-slate-300 font-mono">
+                      <RotateCcw className="w-3.5 h-3.5 text-[#C9A86A]" />
+                      {plan.revisions}
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#121f48] border border-[#1c2d66] text-[11px] text-emerald-300 font-mono">
+                      <Headphones className="w-3.5 h-3.5 text-emerald-400" />
+                      {plan.freeSupport}
+                    </span>
                   </div>
 
                   <p className="garet text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">
@@ -308,8 +321,8 @@ export default function ServicesPage() {
                 {/* Bottom CTA Row */}
                 <div className="pt-5 border-t border-[#1c2d66]/60 flex flex-col sm:flex-row items-center justify-between gap-4 mt-auto">
                   <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
-                    <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0" />
-                    <span>Free ongoing maintenance support</span>
+                    <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Free {plan.freeSupport} included</span>
                   </div>
 
                   <button

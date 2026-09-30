@@ -4,54 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import {
-  Menu,
-  X,
-  User as UserIcon,
-  ChevronDown,
-  Globe,
-  Smartphone,
-  Gamepad2,
-  ArrowRight,
-} from "lucide-react";
+import { Menu, X, User as UserIcon, Headphones } from "lucide-react";
 import Button from "../ui/Button";
 import { supabase } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
-
-const services = [
-  {
-    name: "Web Development",
-    desc: "Next.js & modern platforms",
-    href: "/services/web",
-    icon: Globe,
-  },
-  {
-    name: "App Development",
-    desc: "Scalable mobile apps",
-    href: "/services/app",
-    icon: Smartphone,
-  },
-  {
-    name: "Game Development",
-    desc: "Interactive 2D/3D games",
-    href: "/services/game",
-    icon: Gamepad2,
-  },
-];
-
-const links = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "Contact", href: "/contact" },
-];
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const [authLoading, setAuthLoading] = useState(true); // 🛡️ গ্লিচ আটকানোর গার্ড
-  const [servicesOpen, setServicesOpen] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -84,71 +46,55 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* 💻 Desktop Links */}
+        {/* 💻 Desktop Links (একদম ক্লিন ও সাধারণ) */}
         <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-7 text-sm font-medium">
           <Link
             href="/"
-            className={`py-1 transition-colors ${pathname === "/" ? "text-cyan-400 font-semibold" : "text-slate-300 hover:text-cyan-400"}`}
+            className={`py-1 transition-colors ${
+              pathname === "/"
+                ? "text-cyan-400 font-semibold"
+                : "text-slate-300 hover:text-cyan-400"
+            }`}
           >
             Home
           </Link>
           <Link
             href="/about"
-            className={`py-1 transition-colors ${pathname === "/about" ? "text-cyan-400 font-semibold" : "text-slate-300 hover:text-cyan-400"}`}
+            className={`py-1 transition-colors ${
+              pathname === "/about"
+                ? "text-cyan-400 font-semibold"
+                : "text-slate-300 hover:text-cyan-400"
+            }`}
           >
             About
           </Link>
-
-          {/* Services Hover Dropdown */}
-          <div
-            className="relative group py-5"
-            onMouseEnter={() => setServicesOpen(true)}
-            onMouseLeave={() => setServicesOpen(false)}
+          <Link
+            href="/services"
+            className={`py-1 transition-colors ${
+              pathname.startsWith("/services")
+                ? "text-cyan-400 font-semibold"
+                : "text-slate-300 hover:text-cyan-400"
+            }`}
           >
-            <div className="flex items-center gap-1 cursor-pointer text-slate-300 group-hover:text-cyan-400">
-              <Link
-                href="/services"
-                className={
-                  pathname.startsWith("/services")
-                    ? "text-cyan-400 font-semibold"
-                    : ""
-                }
-              >
-                Services
-              </Link>
-              <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
-            </div>
-
-            {servicesOpen && (
-              <div className="absolute top-14 -left-10 w-72 rounded-2xl border border-[#1c2d66] bg-[#0e1838] p-3 shadow-2xl backdrop-blur-2xl">
-                {services.map(({ name, desc, href, icon: Icon }) => (
-                  <Link
-                    key={name}
-                    href={href}
-                    className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#132247]/70 text-slate-300 hover:text-white transition-all"
-                  >
-                    <div className="p-2 rounded-lg bg-[#121f48] text-cyan-400">
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold">{name}</p>
-                      <p className="text-[10px] text-slate-400">{desc}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-
+            Services
+          </Link>
           <Link
             href="/portfolio"
-            className={`py-1 transition-colors ${pathname.startsWith("/portfolio") ? "text-cyan-400 font-semibold" : "text-slate-300 hover:text-cyan-400"}`}
+            className={`py-1 transition-colors ${
+              pathname.startsWith("/portfolio")
+                ? "text-cyan-400 font-semibold"
+                : "text-slate-300 hover:text-cyan-400"
+            }`}
           >
             Portfolio
           </Link>
           <Link
             href="/contact"
-            className={`py-1 transition-colors ${pathname === "/contact" ? "text-cyan-400 font-semibold" : "text-slate-300 hover:text-cyan-400"}`}
+            className={`py-1 transition-colors ${
+              pathname === "/contact"
+                ? "text-cyan-400 font-semibold"
+                : "text-slate-300 hover:text-cyan-400"
+            }`}
           >
             Contact
           </Link>
@@ -186,8 +132,14 @@ export default function Navbar() {
             </Link>
           )}
 
-          <Button href="/contact" variant="glow" size="md">
-            Let&apos;s Talk
+          <Button
+            href="/contact"
+            variant="glow"
+            size="md"
+            className="flex items-center gap-2 group"
+          >
+            <Headphones className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
+            <span>Get Support</span>
           </Button>
         </div>
 
@@ -221,7 +173,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 rounded-xl border border-[#1c2d66] bg-[#132247]/60 text-white"
+            className="p-2 rounded-xl border border-[#1c2d66] bg-[#132247]/60 text-white cursor-pointer"
           >
             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -234,47 +186,35 @@ export default function Navbar() {
           <Link
             href="/"
             onClick={() => setIsOpen(false)}
-            className="block py-1 text-slate-300"
+            className="block py-1 text-slate-300 hover:text-cyan-400"
           >
             Home
           </Link>
           <Link
             href="/about"
             onClick={() => setIsOpen(false)}
-            className="block py-1 text-slate-300"
+            className="block py-1 text-slate-300 hover:text-cyan-400"
           >
             About
           </Link>
-
-          <div className="py-1">
-            <span className="text-xs text-slate-500 font-mono uppercase">
-              Services
-            </span>
-            <div className="pl-2 mt-1 space-y-1">
-              {services.map(({ name, href }) => (
-                <Link
-                  key={name}
-                  href={href}
-                  onClick={() => setIsOpen(false)}
-                  className="block py-1 text-sm text-cyan-400"
-                >
-                  {name}
-                </Link>
-              ))}
-            </div>
-          </div>
-
+          <Link
+            href="/services"
+            onClick={() => setIsOpen(false)}
+            className="block py-1 text-cyan-400 font-medium"
+          >
+            Services
+          </Link>
           <Link
             href="/portfolio"
             onClick={() => setIsOpen(false)}
-            className="block py-1 text-slate-300"
+            className="block py-1 text-slate-300 hover:text-cyan-400"
           >
             Portfolio
           </Link>
           <Link
             href="/contact"
             onClick={() => setIsOpen(false)}
-            className="block py-1 text-slate-300"
+            className="block py-1 text-slate-300 hover:text-cyan-400"
           >
             Contact
           </Link>

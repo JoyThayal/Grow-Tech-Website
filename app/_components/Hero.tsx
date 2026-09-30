@@ -34,12 +34,14 @@ export default function HeroSection() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button href="/contact" variant="primary" size="lg">
+          {/* Direct Services Hub / Booking Page */}
+          <Button href="/services#expertise" variant="primary" size="lg">
             Scale your business
           </Button>
 
-          <Button href="/services" variant="secondary" size="lg">
-            Explore services
+          {/* Portfolio explore korte pare proof dekhar jonno */}
+          <Button href="/portfolio" variant="secondary" size="lg">
+            Explore our work
           </Button>
         </div>
       </div>

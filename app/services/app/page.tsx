@@ -11,6 +11,10 @@ import {
   Sparkles,
   Clock,
   Code2,
+  ShieldCheck,
+  RotateCcw,
+  Headphones,
+  LayoutGrid,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 
@@ -22,8 +26,10 @@ interface AppPackage {
   popular?: boolean;
   tagline: string;
   price: string;
-  delivery: string;
-  screens: string;
+  deliveryTime: string; // ডেলিভারি সময় স্পষ্টভাবে
+  screensCount: string; // অ্যাপ স্ক্রিন সংখ্যা
+  revisions: string; // ফ্রি রিভিশন
+  freeSupport: string; // হ্যান্ডওভারের পর ফ্রি টেক সাপোর্ট
   icon: typeof Smartphone;
   features: string[];
 }
@@ -36,8 +42,10 @@ const appPackages: AppPackage[] = [
     tagline:
       "A fast, responsive Flutter Android app with offline storage for personal utilities or catalog showcases.",
     price: "₹8,000 – ₹15,000",
-    delivery: "5–8 Days",
-    screens: "3–5 App Screens",
+    deliveryTime: "5–8 Days Delivery",
+    screensCount: "3–5 App Screens",
+    revisions: "2 Free Revisions",
+    freeSupport: "14 Days Free Support",
     icon: Smartphone,
     features: [
       "Custom Flutter Android App (Clean Architecture)",
@@ -57,8 +65,10 @@ const appPackages: AppPackage[] = [
     tagline:
       "Full cloud connectivity with user authentication, live database updates, and order/appointment workflows.",
     price: "₹15,000 – ₹30,000",
-    delivery: "10–14 Days",
-    screens: "5–10+ App Screens",
+    deliveryTime: "10–14 Days Delivery",
+    screensCount: "5–10+ App Screens",
+    revisions: "3 Free Revisions",
+    freeSupport: "30 Days Free Support",
     icon: Layers,
     features: [
       "Everything in Basic App, plus Cloud Architecture",
@@ -77,8 +87,10 @@ const appPackages: AppPackage[] = [
     tagline:
       "Sophisticated architecture with multiple roles, REST API sync, notifications, and web dashboard integration.",
     price: "₹30,000 – ₹60,000+",
-    delivery: "18–25 Days",
-    screens: "10–15+ App Screens",
+    deliveryTime: "18–25 Days Delivery",
+    screensCount: "10–15+ App Screens",
+    revisions: "Unlimited during Dev",
+    freeSupport: "60 Days Full Support",
     icon: Database,
     features: [
       "Multi-Role System (Admin, Staff, Customer/Client)",
@@ -122,7 +134,7 @@ export default function AppServicesPage() {
       <div className="pointer-events-none absolute bottom-20 right-10 -z-10 h-96 w-96 rounded-full bg-cyan-500/10 blur-[150px]" />
 
       <div className="mx-auto max-w-7xl">
-        {/* 🌟 Centered Header (Web & Game পৃষ্ঠার অনুরূপ কাঠামো) */}
+        {/* 🌟 Centered Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-12 sm:mb-16">
           <span className="golden-tag inline-block">
             AMAN SHAW • APP DEV STUDIO
@@ -195,8 +207,8 @@ export default function AppServicesPage() {
                 )}
 
                 <div>
-                  {/* Top: Icon + Title + Info */}
-                  <div className="flex items-start gap-3.5 mb-4">
+                  {/* Top: Icon + Title */}
+                  <div className="flex items-center gap-3.5 mb-3">
                     <div className="p-3 rounded-2xl bg-[#121f48] border border-[#243982] text-indigo-400 shrink-0">
                       <Icon className="w-6 h-6" />
                     </div>
@@ -204,15 +216,27 @@ export default function AppServicesPage() {
                       <h3 className="cabinet text-lg sm:text-xl font-bold text-white">
                         {pkg.name}
                       </h3>
-                      <div className="flex items-center gap-2 mt-1 text-[11px] text-slate-400 font-mono">
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-[#C9A86A]" />
-                          {pkg.delivery}
-                        </span>
-                        <span>•</span>
-                        <span className="text-slate-300">{pkg.screens}</span>
-                      </div>
                     </div>
+                  </div>
+
+                  {/* 🕒 Timeline, Screens & Support Badges */}
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#121f48] border border-[#1c2d66] text-[11px] text-indigo-300 font-mono">
+                      <Clock className="w-3.5 h-3.5 text-indigo-400" />
+                      {pkg.deliveryTime}
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#121f48] border border-[#1c2d66] text-[11px] text-slate-300 font-mono">
+                      <LayoutGrid className="w-3.5 h-3.5 text-[#C9A86A]" />
+                      {pkg.screensCount}
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#121f48] border border-[#1c2d66] text-[11px] text-emerald-300 font-mono">
+                      <Headphones className="w-3.5 h-3.5 text-emerald-400" />
+                      {pkg.freeSupport}
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#121f48] border border-[#1c2d66] text-[11px] text-slate-400 font-mono">
+                      <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
+                      {pkg.revisions}
+                    </span>
                   </div>
 
                   <p className="garet text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
@@ -246,8 +270,13 @@ export default function AppServicesPage() {
                   </div>
                 </div>
 
-                {/* Bottom CTA Button */}
-                <div className="pt-4 border-t border-[#1c2d66]/60 mt-auto">
+                {/* Bottom CTA Button & Guarantee */}
+                <div className="pt-4 border-t border-[#1c2d66]/60 mt-auto space-y-3">
+                  <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
+                    <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Includes {pkg.freeSupport} post-handover</span>
+                  </div>
+
                   <button
                     type="button"
                     onClick={() => handleBooking(pkg.name)}
@@ -368,7 +397,7 @@ export default function AppServicesPage() {
             href="https://wa.me/+918902709631?text=Hi%20Grow%20Tech,%20I%20want%20to%20discuss%20a%20custom%20Flutter%20mobile%20app%20project."
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 px-6 py-3.5 rounded-xl bg-indigo-500 text-white font-bold text-xs uppercase tracking-wider hover:bg-indigo-400 transition-all shadow-[0_0_20px_rgba(99,102,241,0.35)] flex items-center gap-2"
+            className="shrink-0 px-6 py-3.5 rounded-xl bg-indigo-500 text-white font-bold text-xs uppercase tracking-wider hover:bg-indigo-400 transition-all shadow-[0_0_20px_rgba(99,102,241,0.35)] flex items-center gap-2 cursor-pointer active:scale-95"
           >
             <span>Discuss App Architecture</span>
             <ArrowRight className="w-4 h-4" />
