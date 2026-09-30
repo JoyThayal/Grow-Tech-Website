@@ -2,12 +2,13 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { Play, Download, Star } from "lucide-react";
+import { Play, Download } from "lucide-react";
 import { GameProject } from "../data";
 import RatingModal, {
   RatingReview,
 } from "@/components/hooks/rating/RatingModal";
 import { useProjectReviews } from "@/components/hooks/useProjectReviews";
+import ProjectRatingTrigger from "@/components/hooks/rating/ProjectRatingTrigger";
 
 interface GameCardProps {
   project: GameProject & {
@@ -38,8 +39,12 @@ export default function GameCard({
     handleDownload,
     handleLoginRedirect,
     handleSubmitRating,
-    handleDeleteReview,
   } = useProjectReviews(projectSlug, project.reviews, project.downloadUrl);
+
+  // 🔍 ইউজার রেটিং দিয়ে ফেলেছে কি না চেক করা
+  const hasUserRated = Boolean(
+    user?.id && reviewsList.some((r) => r.userId === user.id),
+  );
 
   // 🖼️ লোকাল বা Cloudinary লিংক হ্যান্ডলার
   const finalImageSrc = project.imageSrc.startsWith("http")
@@ -154,29 +159,11 @@ export default function GameCard({
             </div>
           </div>
 
-          {/* Header & Rating Button */}
-          <div className="flex items-center justify-between mb-3">
+          {/* Header Title */}
+          <div className="mb-3">
             <h3 className="cabinet text-xl font-bold">
               <span className="gradient-text">{project.title}</span>
             </h3>
-
-            {/* ⭐ Rating Button */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsModalOpen(true);
-              }}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-400/40 transition-all text-xs text-slate-300 hover:text-purple-300 cursor-pointer"
-            >
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-              <span className="font-semibold text-white">
-                {totalReviews > 0 ? averageRating.toFixed(1) : "0.0"}
-              </span>
-              <span className="text-slate-400 text-[11px]">
-                ({totalReviews})
-              </span>
-            </button>
           </div>
 
           {/* Tags */}
@@ -194,9 +181,19 @@ export default function GameCard({
           )}
 
           {/* Description */}
-          <p className="text-slate-300 text-xs leading-relaxed">
+          <p className="text-slate-300 text-xs leading-relaxed mb-4">
             {project.description}
           </p>
+        </div>
+
+        {/* 🌟 Unified Clean Rating Action */}
+        <div className="pt-3 border-t border-[#ffffff0f]">
+          <ProjectRatingTrigger
+            totalReviews={totalReviews}
+            averageRating={averageRating}
+            hasUserRated={hasUserRated}
+            onOpenModal={() => setIsModalOpen(true)}
+          />
         </div>
       </div>
 
@@ -215,7 +212,6 @@ export default function GameCard({
         onDownloadClick={handleDownload}
         onLoginClick={handleLoginRedirect}
         onSubmitRating={handleSubmitRating}
-        onDeleteReview={handleDeleteReview}
       />
     </>
   );

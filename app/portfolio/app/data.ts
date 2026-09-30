@@ -17,7 +17,8 @@ export const completedAppProjects: AppProject[] = [
     highlightColor:
       "bg-gradient-to-r from-orange-500 to-green-500 bg-clip-text text-transparent",
     imageSrc: "task-manager.png",
-    videoUrl: "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1790686267/task-manager.mp4",
+    videoUrl:
+      "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1790686267/task-manager.mp4",
     features: [
       "Task Creation & Management",
       "Goals Creation & Tracking",
@@ -26,6 +27,24 @@ export const completedAppProjects: AppProject[] = [
     ],
     apkUrl:
       "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/task-manager.apk",
+  },
+  {
+    id: "c2",
+    title: "Weather Forecast App",
+    highlightTitle: "Vayun",
+    highlightColor:
+      "bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(6,182,212,0.4)]",
+    imageSrc: "vayun_thumbnail.png",
+    videoUrl:
+      "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1790686267/task-manager.mp4",
+    features: [
+      "Easy location searching & getting correct weather information",
+      "User can save location data locally",
+      "Available screen refreshing for instant information",
+      "Default location setup availability",
+    ],
+    apkUrl:
+      "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/vayun.apk",
   },
 ];
 

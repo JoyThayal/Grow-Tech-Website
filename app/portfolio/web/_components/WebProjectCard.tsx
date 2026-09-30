@@ -2,12 +2,13 @@
 
 import React, { useState, useSyncExternalStore } from "react";
 import Image from "next/image";
-import { ArrowUpRight, Star } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { WebProject } from "../data";
 import RatingModal, {
   RatingReview,
 } from "@/components/hooks/rating/RatingModal";
 import { useProjectReviews } from "@/components/hooks/useProjectReviews";
+import ProjectRatingTrigger from "@/components/hooks/rating/ProjectRatingTrigger";
 
 interface WebProjectCardProps {
   project: WebProject & {
@@ -24,7 +25,7 @@ export default function WebProjectCard({
   const projectSlug =
     project.slug || project.title.toLowerCase().replace(/\s+/g, "-");
 
-  // ⚡ কোনো cascading render বা useEffect ছাড়া নিরাপদ লাইভ সিঙ্ক
+  // ⚡ ভিজিট ট্র্যাকিং
   const hasVisited = useSyncExternalStore(
     (callback) => {
       window.addEventListener("storage", callback);
@@ -43,14 +44,17 @@ export default function WebProjectCard({
     averageRating,
     handleLoginRedirect,
     handleSubmitRating,
-    handleDeleteReview,
   } = useProjectReviews(projectSlug, project.reviews);
 
-  // 🎯 সাইট ভিজিট ট্র্যাক করার ফাংশন
+  // 🔍 ইউজার রেটিং দিয়ে ফেলেছে কি না
+  const hasUserRated = Boolean(
+    user?.id && reviewsList.some((r) => r.userId === user.id),
+  );
+
+  // 🎯 সাইট ভিজিট ট্র্যাক
   const handleSiteVisit = () => {
     if (typeof window !== "undefined") {
       localStorage.setItem(`visited_${projectSlug}`, "true");
-      // একই পেজে স্টেটকে তৎক্ষণাৎ আপডেট করার জন্য স্টোরেজ ইভেন্ট ট্রিগার
       window.dispatchEvent(new Event("storage"));
     }
     window.open(project.liveUrl, "_blank", "noopener,noreferrer");
@@ -118,7 +122,7 @@ export default function WebProjectCard({
           </div>
         </div>
 
-        {/* Info & Rating */}
+        {/* Info Section */}
         <div className="px-1 pb-1">
           <div className="flex items-center justify-between mb-1.5">
             <h3 className="cabinet text-xl font-bold text-white group-hover:text-[#c9a86a] transition-colors duration-300">
@@ -134,24 +138,14 @@ export default function WebProjectCard({
             {project.description}
           </p>
 
-          {/* Rating Button */}
-          <div className="flex items-center justify-end pt-2 border-t border-[#ffffff0f]">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsModalOpen(true);
-              }}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#ffffff0a] hover:bg-[#c9a86a]/15 border border-[#ffffff10] hover:border-[#c9a86a]/30 transition-all text-xs text-slate-300 hover:text-[#c9a86a] cursor-pointer"
-            >
-              <Star className="w-3.5 h-3.5 fill-[#c9a86a] text-[#c9a86a]" />
-              <span className="font-semibold text-white">
-                {totalReviews > 0 ? averageRating.toFixed(1) : "0.0"}
-              </span>
-              <span className="text-slate-400 text-[11px]">
-                ({totalReviews})
-              </span>
-            </button>
+          {/* 🌟 Unified Clean Rating Action */}
+          <div className="pt-2.5 border-t border-[#ffffff0f]">
+            <ProjectRatingTrigger
+              totalReviews={totalReviews}
+              averageRating={averageRating}
+              hasUserRated={hasUserRated}
+              onOpenModal={() => setIsModalOpen(true)}
+            />
           </div>
         </div>
       </div>
@@ -171,7 +165,6 @@ export default function WebProjectCard({
         onVisitClick={handleSiteVisit}
         onLoginClick={handleLoginRedirect}
         onSubmitRating={handleSubmitRating}
-        onDeleteReview={handleDeleteReview}
       />
     </>
   );

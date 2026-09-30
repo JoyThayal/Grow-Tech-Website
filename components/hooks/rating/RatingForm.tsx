@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import {
   Star,
@@ -6,11 +8,13 @@ import {
   Send,
   DownloadCloud,
   ExternalLink,
+  CheckCircle2,
 } from "lucide-react";
 import { useToast } from "@/components/ui/Toast";
 
 interface Props {
   isLoggedIn: boolean;
+  hasRated?: boolean;
   requireDownload?: boolean;
   hasDownloaded?: boolean;
   requireVisit?: boolean;
@@ -32,6 +36,7 @@ const ratingLabels: Record<number, { label: string; emoji: string }> = {
 
 export function RatingForm({
   isLoggedIn,
+  hasRated,
   requireDownload,
   hasDownloaded,
   requireVisit,
@@ -97,6 +102,22 @@ export function RatingForm({
             <LogIn className="w-3.5 h-3.5" />
             <span>Sign In</span>
           </button>
+        </div>
+      ) : hasRated ? (
+        /* 🌟 ইউজার ইতোমধ্যে রেটিং দিয়ে থাকলে এই মেসেজটি দেখাবে */
+        <div className="flex items-center gap-3 p-1">
+          <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 shrink-0">
+            <CheckCircle2 className="w-4 h-4" />
+          </div>
+          <div>
+            <h5 className="text-xs font-semibold text-emerald-400">
+              Review Submitted
+            </h5>
+            <p className="text-[11px] text-slate-400">
+              You have already shared your feedback for this project. Thank you!
+              🙌
+            </p>
+          </div>
         </div>
       ) : requireDownload && !hasDownloaded ? (
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-1">
@@ -168,7 +189,7 @@ export function RatingForm({
                         <span>{ratingLabels[star].label}</span>
                         <span>{ratingLabels[star].emoji}</span>
                       </div>
-                      {/* ছোট নিচের তীর (Arrow indicator) */}
+                      {/* ছোট নিচের তীর */}
                       <div className="h-1.5 w-1.5 rotate-45 border-b border-r border-cyan-500/40 bg-[#0d1736] -mt-1" />
                     </div>
                   )}

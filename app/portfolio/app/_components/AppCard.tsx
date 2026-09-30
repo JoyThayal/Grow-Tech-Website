@@ -2,12 +2,13 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { Play, Download, Star } from "lucide-react";
+import { Play, Download } from "lucide-react";
 import { AppProject } from "../data";
 import RatingModal, {
   RatingReview,
 } from "@/components/hooks/rating/RatingModal";
 import { useProjectReviews } from "@/components/hooks/useProjectReviews";
+import ProjectRatingTrigger from "@/components/hooks/rating/ProjectRatingTrigger";
 
 interface AppCardProps {
   project: AppProject & {
@@ -25,7 +26,6 @@ export default function AppCard({
   const projectSlug =
     project.slug || project.title.toLowerCase().replace(/\s+/g, "-") + "-app";
 
-  // ⚡ হুক থেকে সব ডেটা ও লজিক এক লাইনে চলে এল
   const {
     isModalOpen,
     setIsModalOpen,
@@ -37,8 +37,11 @@ export default function AppCard({
     handleDownload,
     handleLoginRedirect,
     handleSubmitRating,
-    handleDeleteReview,
   } = useProjectReviews(projectSlug, project.reviews, project.apkUrl);
+
+  const hasUserRated = Boolean(
+    user?.id && reviewsList.some((r) => r.userId === user.id),
+  );
 
   return (
     <>
@@ -126,22 +129,14 @@ export default function AppCard({
           </div>
         </div>
 
-        {/* Rating Button */}
-        <div className="flex items-center justify-end pt-3 border-t border-[#ffffff0f]">
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsModalOpen(true);
-            }}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/4 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 transition-all text-xs text-slate-300 hover:text-cyan-400 cursor-pointer"
-          >
-            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-            <span className="font-semibold text-white">
-              {totalReviews > 0 ? averageRating.toFixed(1) : "0.0"}
-            </span>
-            <span className="text-slate-400 text-[11px]">({totalReviews})</span>
-          </button>
+        {/* 🌟 Unified Clean Rating Action */}
+        <div className="pt-3 border-t border-[#ffffff0f]">
+          <ProjectRatingTrigger
+            totalReviews={totalReviews}
+            averageRating={averageRating}
+            hasUserRated={hasUserRated}
+            onOpenModal={() => setIsModalOpen(true)}
+          />
         </div>
       </div>
 
@@ -159,7 +154,6 @@ export default function AppCard({
         onDownloadClick={handleDownload}
         onLoginClick={handleLoginRedirect}
         onSubmitRating={handleSubmitRating}
-        onDeleteReview={handleDeleteReview}
       />
     </>
   );
