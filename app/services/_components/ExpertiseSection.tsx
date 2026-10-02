@@ -27,9 +27,9 @@ interface ServiceItem {
 const services: ServiceItem[] = [
   {
     id: "web",
-    title: "Web Architecture",
+    title: "Web Development",
     tagline:
-      "Ultra-fast Next.js 15 platforms, interactive UI/UX, and cloud database systems.",
+      "Ultra-fast modern websites, interactive web apps, and custom database solutions for your business.",
     href: "/services/web",
     badge: "Next.js 15",
     imageSrc: "/services-images/web-development.png",
@@ -41,9 +41,9 @@ const services: ServiceItem[] = [
   },
   {
     id: "app",
-    title: "Flutter App Dev",
+    title: "App Development",
     tagline:
-      "Scalable Android apps with offline local storage, cloud sync, and sleek aesthetics.",
+      "Custom Android and cross-platform mobile apps with smooth performance, cloud sync, and offline support.",
     href: "/services/app",
     badge: "Flutter & Cloud",
     imageSrc: "/services-images/app-development.png",
@@ -55,9 +55,9 @@ const services: ServiceItem[] = [
   },
   {
     id: "game",
-    title: "Game Engineering",
+    title: "Game Development",
     tagline:
-      "Playable 2D & 3D worlds, custom mechanics, fluid physics, and immersive game loops.",
+      "Interactive 2D and 3D games with engaging storylines, custom mechanics, and fluid physics.",
     href: "/services/game",
     badge: "2D / 3D Games",
     imageSrc: "/services-images/game-development.png",
@@ -71,20 +71,21 @@ const services: ServiceItem[] = [
 
 export default function ExpertiseSection() {
   return (
-    <section id="expertise" className="w-full px-4 sm:px-6 lg:px-12 py-25 relative overflow-hidden">
+    <section
+      id="expertise"
+      className="w-full px-4 sm:px-6 lg:px-12 py-24 relative overflow-hidden"
+    >
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-14 text-center max-w-3xl mx-auto space-y-3">
-          <span className="golden-tag inline-block">OUR EXPERTISE</span>
+          <span className="golden-tag inline-block">OUR SERVICES</span>
 
           <h2 className="cabinet text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-5xl">
-            <span className="gradient-text">
-              Comprehensive Digital Solutions
-            </span>
+            <span className="gradient-text">Services We Provide</span>
           </h2>
           <p className="garet text-xs sm:text-sm text-slate-400">
-            Engineered with precision for scale, interactive user experiences,
-            and modern architecture.
+            High-performance web, mobile app, and game development tailored to
+            bring your ideas to life.
           </p>
         </div>
 
@@ -108,7 +109,7 @@ export default function ExpertiseSection() {
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
-                    {/* ডার্ক গ্রেডিয়েন্ট ওভারলে */}
+                    {/* ডার্ক গ্রেডিয়েন্ট ওভারলে */}
                     <div className="absolute inset-0 bg-linear-to-t from-slate-950/80 via-transparent to-transparent z-10" />
 
                     {/* ব্যাজ */}
@@ -143,7 +144,7 @@ export default function ExpertiseSection() {
                     href={service.href}
                     className="w-full py-2.5 px-4 rounded-xl bg-[#121f48] hover:bg-white hover:text-slate-950 text-slate-200 border border-[#1c2d66] hover:border-white text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm"
                   >
-                    <span>View Service Packages</span>
+                    <span>View Pricing & Packages</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>
