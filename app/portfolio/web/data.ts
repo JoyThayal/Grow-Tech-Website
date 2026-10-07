@@ -36,7 +36,7 @@ export const webProjectsData: WebProject[] = [
     imageSrc:
       "https://res.cloudinary.com/inwomltf/image/upload/q_auto,f_auto/v1790690797/restaurant-website.png",
     techStack: ["TYPESCRIPT", "TAILWIND", "NEXT.JS"],
-    liveUrl: "https://saradin-restaurant.vercel.app/",
+    liveUrl: "https://bhojraj-restaurant.vercel.app/",
   },
   {
     id: "04",
