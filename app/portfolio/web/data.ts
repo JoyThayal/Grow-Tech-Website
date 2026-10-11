@@ -5,6 +5,13 @@ export interface WebProject {
   imageSrc: string;
   techStack: string[];
   liveUrl: string;
+  packageId:
+    | "single-page"
+    | "multi-page"
+    | "dynamic-portal"
+    | "redesign-upgrade";
+  packageName: string; // e.g. "Complete Multi-Page"
+  packagePrice: string; // e.g. "₹9,999"
 }
 
 export const webProjectsData: WebProject[] = [
@@ -17,6 +24,9 @@ export const webProjectsData: WebProject[] = [
       "https://res.cloudinary.com/inwomltf/image/upload/q_auto,f_auto/v1790690811/lazarev-website.png",
     techStack: ["NEXT.JS 15", "TAILWIND CSS", "FRAMER MOTION"],
     liveUrl: "https://lazarev-website-gt.netlify.app/",
+    packageId: "single-page",
+    packageName: "Single Page",
+    packagePrice: "₹9,999",
   },
   {
     id: "02",
@@ -27,6 +37,9 @@ export const webProjectsData: WebProject[] = [
       "https://res.cloudinary.com/inwomltf/image/upload/q_auto,f_auto/v1790690588/gym-website.png",
     techStack: ["TYPESCRIPT", "TAILWIND", "NEXT.JS"],
     liveUrl: "https://gym-power-website.vercel.app/",
+    packageId: "single-page",
+    packageName: "Single Page",
+    packagePrice: "₹9,999",
   },
   {
     id: "03",
@@ -37,6 +50,9 @@ export const webProjectsData: WebProject[] = [
       "https://res.cloudinary.com/inwomltf/image/upload/q_auto,f_auto/v1790690797/restaurant-website.png",
     techStack: ["TYPESCRIPT", "TAILWIND", "NEXT.JS"],
     liveUrl: "https://bhojraj-restaurant.vercel.app/",
+    packageId: "single-page",
+    packageName: "Single Page",
+    packagePrice: "₹9,999",
   },
   {
     id: "04",
@@ -47,6 +63,9 @@ export const webProjectsData: WebProject[] = [
       "https://res.cloudinary.com/inwomltf/image/upload/q_auto,f_auto/v1790690818/lets-abc.png",
     techStack: ["NEXT.JS", "TYPESCRIPT", "THREE.JS"],
     liveUrl: "https://lets-abc.vercel.app/",
+    packageId: "single-page",
+    packageName: "Single Page",
+    packagePrice: "₹9,999",
   },
   {
     id: "05",
@@ -57,6 +76,9 @@ export const webProjectsData: WebProject[] = [
       "https://res.cloudinary.com/inwomltf/image/upload/q_auto,f_auto/v1790690812/netpro-it-website.png",
     techStack: ["REACT", "NODE.JS", "TAILWIND"],
     liveUrl: "https://netpro-it.netlify.app/",
+    packageId: "single-page",
+    packageName: "Single Page",
+    packagePrice: "₹9,999",
   },
   {
     id: "06",
@@ -67,5 +89,8 @@ export const webProjectsData: WebProject[] = [
       "https://res.cloudinary.com/inwomltf/image/upload/q_auto,f_auto/v1790690804/infinity-maths-academy.png",
     techStack: ["REACT", "TAILWIND", "NEXT.JS"],
     liveUrl: "https://infinity-maths-academy.netlify.app/",
+    packageId: "single-page",
+    packageName: "Single Page",
+    packagePrice: "₹9,999",
   },
 ];

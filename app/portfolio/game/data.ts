@@ -23,6 +23,18 @@ export const gameProjects: GameProject[] = [
       "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1790686273/flappy-bird.mp4",
     downloadUrl: "/game-apks/Flappy-Adventurer.apk",
   },
+  {
+    id: "g2",
+    title: "Physics Parkour",
+    rating: "4.8",
+    tags: ["Unity", "C#", "2D Arcade", "Endless Runner"],
+    description:
+      "Tap to flap and dodge challenging obstacles! Test your reflexes and set unbeatable high scores in this addictive 2D endless adventure.",
+    imageSrc: "physics-parkour.png",
+    trailerUrl:
+      "",
+    downloadUrl: "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/Parkour.apk",
+  },
   // {
   //   id: "g3",
   //   title: "Open World Zombie Shooter",
