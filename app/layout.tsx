@@ -10,6 +10,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { ToastProvider } from "@/components/ui/Toast";
 import { Suspense } from "react";
 import GlobalClickSpark from "@/components/ui/GlobalClickSpark";
+import ScrollToTop from "@/components/common/ScrollToTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -97,6 +98,8 @@ export default function RootLayout({
 
         {/* 📊 Google Analytics 4 */}
         <GoogleAnalytics gaId="G-YMNT3DLTS1" />
+
+        <ScrollToTop />
       </body>
     </html>
   );

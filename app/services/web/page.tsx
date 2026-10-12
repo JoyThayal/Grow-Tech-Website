@@ -166,7 +166,7 @@ export default function ServicesPage() {
       <div className="pointer-events-none absolute top-10 left-1/2 -translate-x-1/2 -z-10 h-96 w-full max-w-5xl rounded-full bg-cyan-500/10 blur-[150px]" />
       <div className="pointer-events-none absolute bottom-20 right-10 -z-10 h-96 w-96 rounded-full bg-[#C9A86A]/10 blur-[150px]" />
 
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-7xl">
         {/* 🌟 Header Section */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-12 sm:mb-16">
           <span className="golden-tag inline-block">
@@ -229,7 +229,7 @@ export default function ServicesPage() {
                   <div
                     className={`absolute -top-3 right-6 flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase shadow-md ${
                       plan.popular
-                        ? "bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 shadow-[0_0_12px_rgba(0,229,255,0.3)]"
+                        ? "bg-linear-to-r from-cyan-400 to-blue-500 text-slate-950 shadow-[0_0_12px_rgba(0,229,255,0.3)]"
                         : "border border-[#C9A86A] bg-[#0A1128] text-[#C9A86A]"
                     }`}
                   >
@@ -359,7 +359,7 @@ export default function ServicesPage() {
           <button
             type="button"
             onClick={() => handleBookingRedirect("Custom Tech Scope")}
-            className="shrink-0 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:opacity-95 transition-all shadow-[0_0_20px_rgba(0,229,255,0.3)] flex items-center gap-2 cursor-pointer active:scale-95"
+            className="shrink-0 px-6 py-3.5 rounded-xl bg-linear-to-r from-cyan-400 to-blue-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:opacity-95 transition-all shadow-[0_0_20px_rgba(0,229,255,0.3)] flex items-center gap-2 cursor-pointer active:scale-95"
           >
             <span>Request Custom Booking</span>
             <ArrowRight className="w-4 h-4" />

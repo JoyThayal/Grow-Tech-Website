@@ -36,7 +36,7 @@ export const completedAppProjects: AppProject[] = [
       "bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(6,182,212,0.4)]",
     imageSrc: "vayun_thumbnail.png",
     videoUrl:
-      "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1790686267/task-manager.mp4",
+      "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1791791623/WhatsApp_Video_2026-10-07_at_9.39.20_AM.mp4",
     features: [
       "Easy location searching & getting correct weather information",
       "User can save location data locally",

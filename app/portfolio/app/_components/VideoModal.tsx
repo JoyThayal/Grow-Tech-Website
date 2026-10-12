@@ -56,6 +56,7 @@ export default function VideoModal({
         <video
           src={videoUrl}
           autoPlay
+          controls
           loop
           muted
           playsInline
