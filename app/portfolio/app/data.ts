@@ -57,7 +57,7 @@ export const completedAppProjects: AppProject[] = [
       "bg-gradient-to-r from-red-500 via-amber-500 to-yellow-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(244,63,94,0.3)]",
     imageSrc: "roy-biryani.png", // 👈 নিচে তোমার জন্য ইমেজটি জেনারেট করে দেওয়া হয়েছে
     videoUrl:
-      "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1792193542/roy-biryani-demo.mp4", // এখানে তোমার ডেমো ভিডিও লিঙ্ক বসাবে
+      "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1792166887/WhatsApp_Video_2026-10-16_at_9.12.38_PM.mp4", // এখানে তোমার ডেমো ভিডিও লিঙ্ক বসাবে
     features: [
       "Smooth Online Biryani & Side Dishes Ordering",
       "Special Occasions Catering Services Booking",
