@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { Sparkles, Briefcase, Boxes } from "lucide-react";
 import { completedAppProjects } from "./data";
@@ -27,19 +27,19 @@ type TabType = (typeof TABS)[number]["id"];
 // মূল লজিকটি আলাদা কম্পোনেন্টে রাখা হলো যাতে Suspense কাজ করে
 function AppUniverseContent() {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [selectedVideo, setSelectedVideo] = React.useState<string | null>(null);
 
-  // 🔗 URL থেকে ট্যাব পড়া (?tab=client থাকলে 'client', না থাকলে ডিফল্ট 'own')
+  // 🔗 সরাসরি URL থেকে activeTab নির্ধারণ (কোনো useState বা useEffect লাগবে না!)
   const currentTabParam = searchParams.get("tab");
   const activeTab: TabType = currentTabParam === "client" ? "client" : "own";
 
-  // 🔄 ট্যাবে ক্লিক করলে URL আপডেট করার ফাংশন
+  // 🔄 ট্যাবে ক্লিক করলে সাথে সাথে URL আপডেট হবে
   const handleTabChange = (tabId: TabType) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("tab", tabId);
-    // পেজ রিলোড না করে স্মুথলি URL আপডেট হবে
-    router.replace(`?${params.toString()}`, { scroll: false });
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   const filteredProjects = completedAppProjects.filter(
