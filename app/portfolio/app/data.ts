@@ -7,6 +7,7 @@ export interface AppProject {
   features: string[];
   videoUrl?: string;
   apkUrl?: string;
+  category: "own" | "client"; // 👈 নতুন যোগ করা হলো
 }
 
 export const completedAppProjects: AppProject[] = [
@@ -27,6 +28,7 @@ export const completedAppProjects: AppProject[] = [
     ],
     apkUrl:
       "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/task-manager.apk",
+    category: "own", // 👈 Grow Tech-এর নিজস্ব
   },
   {
     id: "c2",
@@ -45,53 +47,25 @@ export const completedAppProjects: AppProject[] = [
     ],
     apkUrl:
       "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/vayun.apk",
+    category: "own", // 👈 Grow Tech-এর নিজস্ব
   },
-];
-
-export const demoAppProjects: AppProject[] = [
-  // {
-  //   id: "d1",
-  //   title: "Simple UI Kit",
-  //   highlightTitle: "Travello",
-  //   highlightColor: "text-red-500",
-  //   imageSrc: "travello.png",
-  //   videoUrl: "/videos/travello.mp4",
-  //   features: [
-  //     "Login / Registration Integrated",
-  //     "Application handle multiple pages",
-  //     "User can check user data in home page",
-  //     "A simple demo traveling app",
-  //   ],
-  //   apkUrl: "/app-apks/travello.apk",
-  // },
-  // {
-  //   id: "d2",
-  //   title: "Demo",
-  //   highlightTitle: "Chat App",
-  //   highlightColor: "text-green-500",
-  //   imageSrc: "chat-app.png",
-  //   videoUrl: "/videos/chat-app.mp4",
-  //   features: [
-  //     "Login / Registration Integrated",
-  //     "Multi pages handling by app",
-  //     "A demo chat logic integrated",
-  //     "Email-Password / Google Authentication",
-  //     "Theme feature integrated",
-  //   ],
-  //   apkUrl: "/app-apks/chat-app.apk",
-  // },
-  // {
-  //   id: "d3",
-  //   title: "Login / Register Screen",
-  //   highlightTitle: "Fruzz Digital",
-  //   highlightColor: "text-cyan-500",
-  //   imageSrc: "fruzz.png",
-  //   videoUrl: "/videos/fruzz.mp4",
-  //   features: [
-  //     "Login / Registration Integrated",
-  //     "Email-Password / Google Authentication",
-  //     "User data editable feature added",
-  //   ],
-  //   apkUrl: "/app-apks/fruzz-digi.apk",
-  // },
+  {
+    id: "c3",
+    title: "Food Delivery & Catering",
+    highlightTitle: "Roy Biryani",
+    highlightColor:
+      "bg-gradient-to-r from-red-500 via-amber-500 to-yellow-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(244,63,94,0.3)]",
+    imageSrc: "roy-biryani.png", // 👈 নিচে তোমার জন্য ইমেজটি জেনারেট করে দেওয়া হয়েছে
+    videoUrl:
+      "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1792193542/roy-biryani-demo.mp4", // এখানে তোমার ডেমো ভিডিও লিঙ্ক বসাবে
+    features: [
+      "Smooth Online Biryani & Side Dishes Ordering",
+      "Special Occasions Catering Services Booking",
+      "Interactive Menu with Chicken, Mutton & Chaps",
+      "Real-time Order Status & On-Time Delivery Tracking",
+    ],
+    apkUrl:
+      "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/roy-biryani.apk", // তোমাদের ডেপ্লয় করা apk-র লিঙ্ক
+    category: "client", // 👈 Client Works ট্যাবে দেখাবে
+  },
 ];

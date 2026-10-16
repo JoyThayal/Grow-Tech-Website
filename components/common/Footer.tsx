@@ -4,7 +4,6 @@ import {
   RiYoutubeFill,
   RiLinkedinBoxFill,
   RiFacebookCircleFill,
-  RiTwitterXFill,
 } from "react-icons/ri";
 
 const quickLinks = [
@@ -18,14 +17,14 @@ const quickLinks = [
 const socialLinks = [
   {
     name: "Instagram",
-    href: "https://instagram.com",
+    href: "https://www.instagram.com/growtech_official?vrfl=eW00a3MxbmpqZ2Fl",
     icon: RiInstagramFill,
     hover:
       "hover:bg-gradient-to-tr hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 hover:text-white hover:shadow-[0_0_20px_rgba(225,29,72,0.6)]",
   },
   {
     name: "YouTube",
-    href: "https://youtube.com",
+    href: "https://www.youtube.com/@grow_tech_company",
     icon: RiYoutubeFill,
     hover:
       "hover:bg-red-600 hover:text-white hover:shadow-[0_0_20px_rgba(220,38,38,0.7)]",
@@ -39,18 +38,18 @@ const socialLinks = [
   },
   {
     name: "Facebook",
-    href: "https://facebook.com",
+    href: "https://www.facebook.com/share/1FK2QHEyni/",
     icon: RiFacebookCircleFill,
     hover:
       "hover:bg-blue-600 hover:text-white hover:shadow-[0_0_20px_rgba(37,99,235,0.7)]",
   },
-  {
-    name: "X",
-    href: "https://x.com",
-    icon: RiTwitterXFill,
-    hover:
-      "hover:bg-black hover:text-white hover:border-slate-700 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]",
-  },
+  // {
+  //   name: "X",
+  //   href: "https://x.com",
+  //   icon: RiTwitterXFill,
+  //   hover:
+  //     "hover:bg-black hover:text-white hover:border-slate-700 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]",
+  // },
 ];
 
 const socialClass =
