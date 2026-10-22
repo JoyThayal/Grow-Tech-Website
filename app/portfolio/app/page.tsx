@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { Suspense, useTransition } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { Sparkles, Briefcase, Boxes } from "lucide-react";
@@ -30,17 +30,29 @@ function AppUniverseContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
   const [selectedVideo, setSelectedVideo] = React.useState<string | null>(null);
 
-  // 🔗 সরাসরি URL থেকে activeTab নির্ধারণ
+  // 🔗 সরাসরি URL প্যারামিটারকে Single Source of Truth রাখা
   const currentTabParam = searchParams.get("tab");
   const activeTab: TabType = currentTabParam === "client" ? "client" : "own";
 
-  // 🔄 ট্যাবে ক্লিক করলে URL আপডেট
+  // 🔄 ট্যাবে ক্লিক করলে স্মুথলি এবং নন-ব্লকিংভাবে URL আপডেট
   const handleTabChange = (tabId: TabType) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("tab", tabId);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    if (tabId === activeTab) return;
+
+    startTransition(() => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (tabId === "own") {
+        params.delete("tab"); // ডিফল্ট ট্যাবে URL ক্লিন থাকবে
+      } else {
+        params.set("tab", tabId);
+      }
+      const query = params.toString();
+      router.replace(query ? `${pathname}?${query}` : pathname, {
+        scroll: false,
+      });
+    });
   };
 
   const filteredProjects = completedAppProjects.filter(
@@ -65,7 +77,7 @@ function AppUniverseContent() {
                   key={tab.id}
                   type="button"
                   onClick={() => handleTabChange(tab.id)}
-                  className={`relative z-10 flex items-center justify-center gap-2 px-3 sm:px-6 py-2.5 rounded-xl sm:rounded-full text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer select-none text-center ${
+                  className={`relative z-10 flex items-center justify-center gap-2 px-3 sm:px-6 py-2.5 rounded-xl sm:rounded-full text-xs sm:text-sm font-semibold transition-colors duration-150 cursor-pointer select-none text-center ${
                     isActive
                       ? "text-slate-950 font-bold"
                       : "text-slate-400 hover:text-white"
@@ -74,18 +86,18 @@ function AppUniverseContent() {
                   {isActive && (
                     <motion.div
                       layoutId="activeAppTabIndicator"
-                      className="absolute inset-0 rounded-xl sm:rounded-full bg-linear-to-r from-cyan-400 via-cyan-300 to-blue-400 shadow-[0_0_20px_rgba(34,211,238,0.4)]"
+                      className="absolute inset-0 rounded-xl sm:rounded-full bg-linear-to-r from-cyan-400 via-cyan-300 to-blue-400 shadow-[0_0_20px_rgba(34,211,238,0.35)] transform-gpu"
                       transition={{
                         type: "spring",
-                        stiffness: 450,
-                        damping: 32,
+                        stiffness: 500,
+                        damping: 35,
+                        mass: 0.6,
                       }}
                     />
                   )}
 
                   <span className="relative z-10 flex items-center gap-1.5 sm:gap-2">
                     <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 stroke-[2.2]" />
-                    {/* মোবাইলে কম্প্যাক্ট নাম, বড় স্ক্রিনে পুরো নাম */}
                     <span className="sm:hidden">{tab.label}</span>
                     <span className="hidden sm:inline">{tab.fullLabel}</span>
                   </span>
@@ -100,10 +112,10 @@ function AppUniverseContent() {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, y: 15, scale: 0.98 }}
+              initial={{ opacity: 0, y: 12, scale: 0.99 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -15, scale: 0.98 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
+              exit={{ opacity: 0, y: -12, scale: 0.99 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8"
             >
               {filteredProjects.length > 0 ? (
