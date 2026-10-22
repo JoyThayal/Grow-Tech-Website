@@ -32,7 +32,8 @@ export const gameProjects: GameProject[] = [
     description:
       "Tap to flap and dodge challenging obstacles! Test your reflexes and set unbeatable high scores in this addictive 2D endless adventure.",
     imageSrc: "physics-parkour.png",
-    trailerUrl: "",
+    trailerUrl:
+      "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1792686027/WhatsApp_Video_2026-10-22_at_9.43.55_PM.mp4",
     downloadUrl:
       "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/Parkour.apk",
   },
