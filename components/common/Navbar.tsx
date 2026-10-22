@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Menu, X, User as UserIcon, Headphones } from "lucide-react";
+import { Menu, X, User as UserIcon, Headphones, LogIn } from "lucide-react";
 import Button from "../ui/Button";
 import { supabase } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
@@ -91,15 +91,15 @@ export default function Navbar() {
         </div>
 
         {/* 💻 Desktop Actions */}
-        <div className="hidden md:flex items-center gap-4 shrink-0">
+        <div className="hidden md:flex items-center gap-3 shrink-0">
           {authLoading ? (
-            <div className="w-20 h-8 rounded-full bg-[#132247]/40 animate-pulse" />
+            <div className="w-24 h-9 rounded-xl bg-[#132247]/40 animate-pulse" />
           ) : user ? (
             <Link
               href="/profile"
-              className="flex items-center gap-2 p-1.5 pr-3 rounded-full border border-[#1c2d66] bg-[#132247]/60 text-slate-300 hover:text-white transition-colors"
+              className="flex items-center gap-2 p-1.5 pr-3.5 rounded-xl border border-[#1c2d66] bg-[#132247]/60 text-slate-300 hover:text-white hover:border-cyan-500/40 transition-all"
             >
-              <div className="relative w-7 h-7 rounded-full overflow-hidden bg-[#1c2f62] flex items-center justify-center">
+              <div className="relative w-7 h-7 rounded-lg overflow-hidden bg-[#1c2f62] flex items-center justify-center">
                 {user.user_metadata?.avatar_url ? (
                   <Image
                     src={user.user_metadata.avatar_url}
@@ -111,14 +111,16 @@ export default function Navbar() {
                   <UserIcon className="w-4 h-4 text-cyan-300" />
                 )}
               </div>
-              <span className="text-xs font-medium">Profile</span>
+              <span className="text-xs font-semibold">Profile</span>
             </Link>
           ) : (
+            /* 🚀 Styled Login Button for Desktop */
             <Link
               href="/auth"
-              className="text-xs font-medium text-slate-300 hover:text-cyan-400 px-3 py-1.5 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-cyan-400 border border-cyan-500/30 bg-cyan-950/20 hover:bg-cyan-500/10 hover:border-cyan-400 transition-all shadow-[0_0_15px_rgba(6,182,212,0.1)] active:scale-95"
             >
-              Sign In
+              <LogIn className="w-3.5 h-3.5" />
+              <span>Log In</span>
             </Link>
           )}
 
@@ -140,32 +142,24 @@ export default function Navbar() {
             <Headphones className="w-4 h-4" />
           </Link>
 
-          {/* Mobile Auth / Profile */}
-          {!authLoading &&
-            (user ? (
-              <Link
-                href="/profile"
-                className="relative w-8 h-8 rounded-full overflow-hidden border border-[#1c2d66] flex items-center justify-center"
-              >
-                {user.user_metadata?.avatar_url ? (
-                  <Image
-                    src={user.user_metadata.avatar_url}
-                    alt="Profile"
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <UserIcon className="w-4 h-4 text-cyan-300" />
-                )}
-              </Link>
-            ) : (
-              <Link
-                href="/auth"
-                className="text-xs px-2.5 py-1.5 rounded-lg border border-[#1c2d66] bg-[#132247]/50 text-slate-300"
-              >
-                Sign In
-              </Link>
-            ))}
+          {/* Mobile Profile Icon (If Logged In) */}
+          {!authLoading && user && (
+            <Link
+              href="/profile"
+              className="relative w-8 h-8 rounded-xl overflow-hidden border border-[#1c2d66] flex items-center justify-center bg-[#132247]/60"
+            >
+              {user.user_metadata?.avatar_url ? (
+                <Image
+                  src={user.user_metadata.avatar_url}
+                  alt="Profile"
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <UserIcon className="w-4 h-4 text-cyan-300" />
+              )}
+            </Link>
+          )}
 
           {/* Hamburger Menu Button */}
           <button
@@ -209,7 +203,20 @@ export default function Navbar() {
           >
             Portfolio
           </Link>
-          <div className="pt-2">
+
+          {/* 📱 Mobile Action Buttons */}
+          <div className="pt-3 border-t border-[#1c2d66]/60 flex flex-col gap-2.5">
+            {!authLoading && !user && (
+              <Link
+                href="/auth"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-cyan-500/40 bg-cyan-950/30 text-cyan-300 text-xs font-semibold shadow-[0_0_15px_rgba(6,182,212,0.15)] active:scale-95 transition-all"
+              >
+                <LogIn className="w-4 h-4" />
+                <span>Log In / Sign Up</span>
+              </Link>
+            )}
+
             <Button
               href="/contact"
               variant="glow"
@@ -217,6 +224,7 @@ export default function Navbar() {
               className="w-full justify-center"
               onClick={() => setIsOpen(false)}
             >
+              <Headphones className="w-4 h-4" />
               Contact Us
             </Button>
           </div>

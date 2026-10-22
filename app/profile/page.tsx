@@ -14,6 +14,7 @@ import {
   Star,
   ArrowRight,
   LogIn,
+  AlertTriangle,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { useToast } from "@/components/ui/Toast";
@@ -25,6 +26,10 @@ export default function ProfilePage() {
 
   const [user, setUser] = useState<User | null>(null);
   const [isChecking, setIsChecking] = useState(true);
+
+  // 🚪 লগআউট পপআপ ওপেন ও লোডিং স্টেট
+  const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     // সরাসরি সেশন চেক
@@ -42,8 +47,12 @@ export default function ProfilePage() {
     return () => subscription.unsubscribe();
   }, []);
 
-  const handleSignOut = async () => {
+  // 🔒 কনফার্ম করার পর আসল লগআউট ফাংশন
+  const handleConfirmSignOut = async () => {
+    setIsLoggingOut(true);
     await supabase.auth.signOut();
+    setIsLoggingOut(false);
+    setIsSignOutModalOpen(false);
     showToast("Signed Out", "You have been logged out safely.", "info");
     router.push("/");
   };
@@ -103,9 +112,10 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
+                {/* লগআউট বাটন (ক্লিক করলে পপআপ খুলবে) */}
                 <button
                   type="button"
-                  onClick={handleSignOut}
+                  onClick={() => setIsSignOutModalOpen(true)}
                   className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#132247]/60 hover:bg-rose-500/15 border border-[#273e7d] hover:border-rose-500/40 text-slate-300 hover:text-rose-400 text-xs font-semibold transition-all cursor-pointer"
                 >
                   <LogOut className="w-3.5 h-3.5" /> Sign Out
@@ -113,7 +123,7 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            {/* 🚀 কুইক অ্যাকশন হাব (বুকিং ও রেটিং-এর জন্য আলাদা পেজ লিঙ্ক) */}
+            {/* 🚀 কুইক অ্যাকশন হাব (বুকিং ও রেটিং) */}
             <div className="space-y-3 pt-2">
               <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 pl-1 font-semibold">
                 Account Sections
@@ -195,6 +205,63 @@ export default function ProfilePage() {
           </div>
         ) : null}
       </div>
+
+      {/* 🛑 লগআউট কনফার্মেশন পপআপ মোডাল */}
+      {isSignOutModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* ব্যাকড্রপ ব্লার লেয়ার */}
+          <div
+            className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity"
+            onClick={() => !isLoggingOut && setIsSignOutModalOpen(false)}
+          />
+
+          {/* মোডাল বক্স */}
+          <div className="relative w-full max-w-sm rounded-3xl border border-[#243982] bg-[#0e1838] p-6 shadow-2xl z-10 space-y-5 animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex flex-col items-center text-center space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center shadow-[0_0_20px_rgba(244,63,94,0.15)]">
+                <AlertTriangle className="w-6 h-6" />
+              </div>
+
+              <div className="space-y-1">
+                <h3 className="cabinet text-lg font-bold text-white">
+                  Sign Out Confirmation
+                </h3>
+                <p className="text-xs text-slate-400">
+                  Are you sure you want to log out of your Grow Tech account?
+                </p>
+              </div>
+            </div>
+
+            {/* অ্যাকশন বাটনসমূহ */}
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                type="button"
+                disabled={isLoggingOut}
+                onClick={() => setIsSignOutModalOpen(false)}
+                className="w-full py-2.5 rounded-xl border border-[#273e7d] bg-[#132247]/60 hover:bg-[#132247] text-slate-300 text-xs font-semibold transition-all cursor-pointer active:scale-95"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                disabled={isLoggingOut}
+                onClick={handleConfirmSignOut}
+                className="w-full py-2.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 hover:text-white text-xs font-semibold shadow-[0_0_15px_rgba(244,63,94,0.2)] transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 disabled:opacity-50"
+              >
+                {isLoggingOut ? (
+                  <span className="w-4 h-4 border-2 border-rose-300 border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <>
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

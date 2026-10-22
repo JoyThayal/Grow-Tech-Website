@@ -21,7 +21,8 @@ export const gameProjects: GameProject[] = [
     imageSrc: "flappy-adventurer.png",
     trailerUrl:
       "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1790686273/flappy-bird.mp4",
-    downloadUrl: "/game-apks/Flappy-Adventurer.apk",
+    downloadUrl:
+      "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/Flappy-Bird.apk",
   },
   {
     id: "g2",
@@ -31,9 +32,9 @@ export const gameProjects: GameProject[] = [
     description:
       "Tap to flap and dodge challenging obstacles! Test your reflexes and set unbeatable high scores in this addictive 2D endless adventure.",
     imageSrc: "physics-parkour.png",
-    trailerUrl:
-      "",
-    downloadUrl: "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/Parkour.apk",
+    trailerUrl: "",
+    downloadUrl:
+      "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/Parkour.apk",
   },
   // {
   //   id: "g3",

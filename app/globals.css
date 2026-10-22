@@ -29,21 +29,12 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a1128;
+  --foreground: #ededed;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans, Arial, Helvetica, sans-serif);
   --font-mono: var(--font-geist-mono, "SFMono-Regular", Consolas, monospace);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a1128;
-    --foreground: #ededed;
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-  }
 }
 
 html {
@@ -58,13 +49,10 @@ body {
 
 .gradient-text {
   display: inline;
-
   background-image: linear-gradient(to top, #363a3f, #ffffff 60%);
-
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
@@ -77,7 +65,7 @@ body {
   margin-bottom: 12px;
 }
 
-/* ⬅️ ১ম রো: কোনো বিরতি ছাড়া একটানা বামে ঘুরবে */
+/* ⬅️ ১ম রো: কোনো বিরতি ছাড়া একটানা বামে ঘুরবে */
 @keyframes scroll-left {
   0% {
     transform: translate3d(0, 0, 0);
@@ -87,7 +75,7 @@ body {
   }
 }
 
-/* ➡️ ২য় রো: কোনো বিরতি ছাড়া একটানা ডানে ঘুরবে */
+/* ➡️ ২য় রো: কোনো বিরতি ছাড়া একটানা ডানে ঘুরবে */
 @keyframes scroll-right {
   0% {
     transform: translate3d(-50%, 0, 0);
