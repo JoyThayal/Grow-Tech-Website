@@ -1,15 +1,26 @@
 "use client";
 
-import React, { Suspense, useTransition } from "react";
+import React, { Suspense, useTransition, useMemo } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
-import { Sparkles, Briefcase, Boxes } from "lucide-react";
+import { Sparkles, Briefcase, Boxes, Layers } from "lucide-react";
 import { completedAppProjects } from "./data";
 import AppHeader from "./_components/AppHeader";
 import AppCard from "./_components/AppCard";
 import VideoModal from "./_components/VideoModal";
+import UniverseFilterBar, {
+  FilterTabItem,
+  FilterOptionItem,
+} from "@/components/ui/UniverseFilterBar";
 
-const TABS = [
+// 🏷️ ১. সোর্স ট্যাব (All সহ ৩টি ট্যাব)
+const APP_TABS: readonly FilterTabItem<"all" | "own" | "client">[] = [
+  {
+    id: "all",
+    label: "All",
+    fullLabel: "All Works",
+    icon: Layers,
+  },
   {
     id: "own",
     label: "Grow Tech",
@@ -24,27 +35,57 @@ const TABS = [
   },
 ] as const;
 
-type TabType = (typeof TABS)[number]["id"];
+// 📦 অ্যাপ সার্ভিস প্যাকেজ অনুযায়ী ফিল্টার অপশনসমূহ
+const APP_PACKAGE_OPTIONS: readonly FilterOptionItem[] = [
+  {
+    id: "all",
+    label: "All Packages",
+    desc: "Show apps across all architecture tiers",
+  },
+  {
+    id: "basic-app",
+    label: "Basic App / MVP",
+    desc: "Offline-first Flutter apps, personal utilities & catalogs (₹8k–₹15k)",
+  },
+  {
+    id: "business-app",
+    label: "Business & Cloud",
+    desc: "Auth, cloud databases, booking & order workflows (₹15k–₹30k)",
+  },
+  {
+    id: "advanced-app",
+    label: "Advanced Platform",
+    desc: "Multi-role, REST API, notifications & admin dashboards (₹30k–₹60k+)",
+  },
+] as const;
+
+type TabType = (typeof APP_TABS)[number]["id"];
 
 function AppUniverseContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const [selectedVideo, setSelectedVideo] = React.useState<string | null>(null);
 
-  // 🔗 সরাসরি URL প্যারামিটারকে Single Source of Truth রাখা
+  // 🔗 সরাসরি URL প্যারামিটার থেকে ট্যাব ও ফিল্টার নির্ধারণ (Default: all)
   const currentTabParam = searchParams.get("tab");
-  const activeTab: TabType = currentTabParam === "client" ? "client" : "own";
+  const activeTab: TabType =
+    currentTabParam === "own" || currentTabParam === "client"
+      ? currentTabParam
+      : "all";
 
-  // 🔄 ট্যাবে ক্লিক করলে স্মুথলি এবং নন-ব্লকিংভাবে URL আপডেট
+  const currentCategoryParam = searchParams.get("category") || "all";
+  const selectedCategory = currentCategoryParam;
+
+  // 🔄 ট্যাবে ক্লিক করলে URL আপডেট
   const handleTabChange = (tabId: TabType) => {
     if (tabId === activeTab) return;
 
     startTransition(() => {
       const params = new URLSearchParams(searchParams.toString());
-      if (tabId === "own") {
-        params.delete("tab"); // ডিফল্ট ট্যাবে URL ক্লিন থাকবে
+      if (tabId === "all") {
+        params.delete("tab"); // ডিফল্ট 'all' হলে URL পরিচ্ছন্ন থাকবে
       } else {
         params.set("tab", tabId);
       }
@@ -55,9 +96,34 @@ function AppUniverseContent() {
     });
   };
 
-  const filteredProjects = completedAppProjects.filter(
-    (project) => project.category === activeTab,
-  );
+  // 🔄 ক্যাটাগরি ফিল্টার পরিবর্তন হলে URL আপডেট
+  const handleCategoryChange = (catId: string) => {
+    startTransition(() => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (catId === "all") {
+        params.delete("category");
+      } else {
+        params.set("category", catId);
+      }
+      const query = params.toString();
+      router.replace(query ? `${pathname}?${query}` : pathname, {
+        scroll: false,
+      });
+    });
+  };
+
+  // 🎯 ফিল্টারিং লজিক
+  const filteredProjects = useMemo(() => {
+    return completedAppProjects.filter((project) => {
+      const matchesCategory =
+        activeTab === "all" || project.category === activeTab;
+
+      const matchesPackage =
+        selectedCategory === "all" || project.packageId === selectedCategory;
+
+      return matchesCategory && matchesPackage;
+    });
+  }, [activeTab, selectedCategory]);
 
   return (
     <div className="w-full min-h-screen text-white px-3 sm:px-6 lg:px-10 py-10 sm:py-16 overflow-hidden">
@@ -65,53 +131,22 @@ function AppUniverseContent() {
         {/* 🌟 Top Header */}
         <AppHeader />
 
-        {/* 🎛️ ১০০% নো-স্ক্রোল আল্ট্রা-রেসপনসিভ অ্যানিমেটেড ট্যাবস */}
-        <div className="flex justify-center mb-10 sm:mb-14 px-1">
-          <div className="grid grid-cols-2 sm:flex sm:items-center w-full max-w-md sm:w-auto p-1.5 rounded-2xl sm:rounded-full bg-[#ffffff05] border border-[#ffffff15] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]">
-            {TABS.map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
-
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => handleTabChange(tab.id)}
-                  className={`relative z-10 flex items-center justify-center gap-2 px-3 sm:px-6 py-2.5 rounded-xl sm:rounded-full text-xs sm:text-sm font-semibold transition-colors duration-150 cursor-pointer select-none text-center ${
-                    isActive
-                      ? "text-slate-950 font-bold"
-                      : "text-slate-400 hover:text-white"
-                  }`}
-                >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeAppTabIndicator"
-                      className="absolute inset-0 rounded-xl sm:rounded-full bg-linear-to-r from-cyan-400 via-cyan-300 to-blue-400 shadow-[0_0_20px_rgba(34,211,238,0.35)] transform-gpu"
-                      transition={{
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 35,
-                        mass: 0.6,
-                      }}
-                    />
-                  )}
-
-                  <span className="relative z-10 flex items-center gap-1.5 sm:gap-2">
-                    <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 stroke-[2.2]" />
-                    <span className="sm:hidden">{tab.label}</span>
-                    <span className="hidden sm:inline">{tab.fullLabel}</span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        <UniverseFilterBar
+          tabs={APP_TABS}
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+          options={APP_PACKAGE_OPTIONS}
+          selectedOption={selectedCategory}
+          onOptionChange={handleCategoryChange}
+          filterLabel="Package"
+          layoutId="activeAppUniverseTabPill"
+        />
 
         {/* 🎯 Projects Grid */}
         <div className="mb-16 sm:mb-20">
           <AnimatePresence mode="wait">
             <motion.div
-              key={activeTab}
+              key={`${activeTab}-${selectedCategory}`}
               initial={{ opacity: 0, y: 12, scale: 0.99 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -12, scale: 0.99 }}
@@ -133,10 +168,11 @@ function AppUniverseContent() {
                     <Sparkles className="w-6 h-6 animate-pulse" />
                   </div>
                   <p className="text-slate-200 font-semibold text-sm sm:text-base">
-                    No projects published yet
+                    No projects found
                   </p>
                   <p className="text-slate-500 text-xs mt-1.5 max-w-xs mx-auto">
-                    Exciting projects are currently in development. Stay tuned!
+                    Try switching tabs or changing the category filter to view
+                    more work.
                   </p>
                 </div>
               )}

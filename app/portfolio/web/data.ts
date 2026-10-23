@@ -6,7 +6,7 @@ export interface WebProject {
   videoUrl?: string;
   techStack: string[];
   liveUrl: string;
-  source: "own" | "client" | "demo"; // 👈 নতুন যোগ করা হলো
+  source: "own" | "client" | "demo";
   packageId:
     | "single-page"
     | "multi-page"
@@ -26,7 +26,7 @@ export const webProjectsData: WebProject[] = [
       "https://res.cloudinary.com/inwomltf/image/upload/q_auto,f_auto/v1790690811/lazarev-website.png",
     techStack: ["NEXT.JS 15", "TAILWIND CSS", "FRAMER MOTION"],
     liveUrl: "https://lazarev-website-gt.netlify.app/",
-    source: "demo", // 👈 নিজের প্রয়োজনমতো "own" | "client" | "demo" দাও
+    source: "demo",
     packageId: "single-page",
     packageName: "Single Page",
     packagePrice: "₹9,999",
@@ -101,18 +101,16 @@ export const webProjectsData: WebProject[] = [
     packageName: "Single Page",
     packagePrice: "₹9,999",
   },
-
   {
     id: "07",
-    title: "Infinity Maths Academy",
+    title: "Grow Tech Computer Services", // 👈 টাইটেল সংশোধন করা হলো
     description:
-      "Interactive and modern educational platform designed for seamless online learning.",
-    imageSrc:
-      "/web-images/growtech-computer.png",
+      "Comprehensive hardware, software diagnostic, and repair service platform with direct client inquiry.",
+    imageSrc: "/web-images/growtech-computer.png",
     videoUrl:
       "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1792647900/GrowTech_Computer.mp4",
-    techStack: ["REACT", "TAILWIND", "NEXT.JS"],
-    liveUrl: "https://infinity-maths-academy.netlify.app/",
+    techStack: ["NEXT.JS", "TAILWIND CSS", "FRAMER MOTION"],
+    liveUrl: "https://grow-tech.vercel.app/",
     source: "own",
     packageId: "dynamic-portal",
     packageName: "Dynamic Portal",

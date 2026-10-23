@@ -8,6 +8,8 @@ export interface GameProject {
   trailerUrl?: string;
   downloadUrl?: string;
   isComingSoon?: boolean;
+  category: "own" | "client"; // 👈 Grow Tech Originals | Client Works
+  serviceCategory: "3d" | "code" | "design" | "optimization"; // 👈 গেম সার্ভিসের ক্যাটাগরি
 }
 
 export const gameProjects: GameProject[] = [
@@ -15,6 +17,8 @@ export const gameProjects: GameProject[] = [
     id: "g1",
     title: "Flappy Adventurer",
     rating: "4.8",
+    category: "own",
+    serviceCategory: "code", // 👈 C# Scripting & Mechanics
     tags: ["Unity", "C#", "2D Arcade", "Endless Runner"],
     description:
       "Tap to flap and dodge challenging obstacles! Test your reflexes and set unbeatable high scores in this addictive 2D endless adventure.",
@@ -28,29 +32,15 @@ export const gameProjects: GameProject[] = [
     id: "g2",
     title: "Physics Parkour",
     rating: "4.8",
-    tags: ["Unity", "C#", "2D Arcade", "Endless Runner"],
+    category: "own",
+    serviceCategory: "code", // 👈 C# Scripting & Physics Mechanics
+    tags: ["Unity", "C#", "2D Arcade", "Physics"],
     description:
-      "Tap to flap and dodge challenging obstacles! Test your reflexes and set unbeatable high scores in this addictive 2D endless adventure.",
+      "Master momentum, precision leaps, and gravity-defying parkour stunts across dynamic obstacle courses.",
     imageSrc: "physics-parkour.png",
     trailerUrl:
       "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1792686027/WhatsApp_Video_2026-10-22_at_9.43.55_PM.mp4",
     downloadUrl:
       "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/Parkour.apk",
   },
-  // {
-  //   id: "g3",
-  //   title: "Open World Zombie Shooter",
-  //   tags: ["Unity", "C#", "Open World"],
-  //   description:
-  //     "An upcoming open-world 3D zombie survival shooter where players explore a dangerous world, battle endless zombie hordes, gather resources, and fight to survive. Currently in active development.",
-  //   imageSrc: "zombie-zone.png",
-  //   isComingSoon: true,
-  // },
-  // {
-  //   id: "g4",
-  //   title: "Game Coming Soon",
-  //   description: "More games coming soon, stay tuned for the latest updates.",
-  //   imageSrc: "game-coming-soon.png",
-  //   isComingSoon: true,
-  // },
 ];

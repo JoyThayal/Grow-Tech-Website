@@ -7,7 +7,10 @@ export interface AppProject {
   features: string[];
   videoUrl?: string;
   apkUrl?: string;
-  category: "own" | "client"; // 👈 নতুন যোগ করা হলো
+  category: "own" | "client";
+  packageId: "basic-app" | "business-app" | "advanced-app"; // 👈 সার্ভিসের সাথে ১০০% ম্যাচিং প্যাকেজ
+  packageName?: string;
+  packagePrice?: string;
 }
 
 export const completedAppProjects: AppProject[] = [
@@ -28,7 +31,10 @@ export const completedAppProjects: AppProject[] = [
     ],
     apkUrl:
       "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/task-manager.apk",
-    category: "own", // 👈 Grow Tech-এর নিজস্ব
+    category: "own",
+    packageId: "basic-app", // 👈 Basic App / MVP
+    packageName: "Basic App / MVP",
+    packagePrice: "₹8,000 – ₹15,000",
   },
   {
     id: "c2",
@@ -47,7 +53,10 @@ export const completedAppProjects: AppProject[] = [
     ],
     apkUrl:
       "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/vayun.apk",
-    category: "own", // 👈 Grow Tech-এর নিজস্ব
+    category: "own",
+    packageId: "basic-app", // 👈 Basic App / MVP
+    packageName: "Basic App / MVP",
+    packagePrice: "₹8,000 – ₹15,000",
   },
   {
     id: "c3",
@@ -55,9 +64,9 @@ export const completedAppProjects: AppProject[] = [
     highlightTitle: "Roy Biryani",
     highlightColor:
       "bg-gradient-to-r from-red-500 via-amber-500 to-yellow-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(244,63,94,0.3)]",
-    imageSrc: "roy-biryani.png", // 👈 নিচে তোমার জন্য ইমেজটি জেনারেট করে দেওয়া হয়েছে
+    imageSrc: "roy-biryani.png",
     videoUrl:
-      "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1792166887/WhatsApp_Video_2026-10-16_at_9.12.38_PM.mp4", // এখানে তোমার ডেমো ভিডিও লিঙ্ক বসাবে
+      "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1792166887/WhatsApp_Video_2026-10-16_at_9.12.38_PM.mp4",
     features: [
       "Smooth Online Biryani & Side Dishes Ordering",
       "Special Occasions Catering Services Booking",
@@ -65,7 +74,10 @@ export const completedAppProjects: AppProject[] = [
       "Real-time Order Status & On-Time Delivery Tracking",
     ],
     apkUrl:
-      "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/roy-biryani.apk", // তোমাদের ডেপ্লয় করা apk-র লিঙ্ক
-    category: "client", // 👈 Client Works ট্যাবে দেখাবে
+      "https://github.com/JoyThayal/Grow-Tech-Website/releases/download/v1.0.0/roy-biryani.apk",
+    category: "client",
+    packageId: "business-app", // 👈 Business & Cloud App
+    packageName: "Business & Cloud",
+    packagePrice: "₹15,000 – ₹30,000",
   },
 ];
