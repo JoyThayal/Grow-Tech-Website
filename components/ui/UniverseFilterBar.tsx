@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, type PanInfo } from "motion/react";
 import { Filter, Check, X, ChevronDown, type LucideIcon } from "lucide-react";
 
 export interface FilterTabItem<T extends string = string> {
@@ -25,7 +25,7 @@ interface UniverseFilterBarProps<TTab extends string, TOption extends string> {
   selectedOption: TOption;
   onOptionChange: (optionId: TOption) => void;
   filterLabel?: string;
-  layoutId?: string; // আলাদা আলাদা পেজের জন্য ইউনিক অ্যানিমেশন আইডি
+  layoutId?: string;
 }
 
 export default function UniverseFilterBar<
@@ -42,23 +42,64 @@ export default function UniverseFilterBar<
   layoutId = "activeUniverseTabPill",
 }: UniverseFilterBarProps<TTab, TOption>) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const desktopMenuRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // 🖱️ ডেস্কটপে মেনুর বাইরে ক্লিক করলে বন্ধ হবে
+  // 🚫 শুধুমাত্র মোবাইলে (< 640px) বটম ড্রয়ার ওপেন থাকলে বডি স্ক্রোল লক হবে
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    const isMobile = window.innerWidth < 640;
+    if (isMenuOpen && isMobile) {
+      const originalOverflow = document.body.style.overflow;
+      const originalTouchAction = document.body.style.touchAction;
+
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        document.body.style.touchAction = originalTouchAction;
+      };
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    }
+  }, [isMenuOpen]);
+
+  // ⌨️ Escape কী প্রেস, উইন্ডো রিসাইজ এবং ক্লিক-আউটসাইড হ্যান্ডলার
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsMenuOpen(false);
+      }
+    };
+
+    const handleResize = () => {
+      // স্ক্রিন সাইজ মোবাইলের বাইরে গেলে মেনু রিসেট হবে
+      if (window.innerWidth >= 640) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    const handlePointerDown = (e: PointerEvent) => {
+      // ডেস্কটপে ড্রপডাউনের বাইরে ক্লিক করলে বন্ধ হবে কিন্তু ক্লিকে বাধা দেবে না
       if (
-        desktopMenuRef.current &&
-        !desktopMenuRef.current.contains(event.target as Node)
+        window.innerWidth >= 640 &&
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
       ) {
         setIsMenuOpen(false);
       }
-    }
-    if (isMenuOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("resize", handleResize);
+    document.addEventListener("pointerdown", handlePointerDown);
+
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("pointerdown", handlePointerDown);
     };
   }, [isMenuOpen]);
 
@@ -70,10 +111,20 @@ export default function UniverseFilterBar<
     setIsMenuOpen(false);
   };
 
+  // 📱 নিচে টেনে নামানোর হ্যান্ডলার (শুধু মোবাইল)
+  const handleDragEnd = (
+    _: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo,
+  ) => {
+    if (info.offset.y > 80 || info.velocity.y > 300) {
+      setIsMenuOpen(false);
+    }
+  };
+
   return (
     <div className="sticky top-20 z-30 mb-8 sm:mb-12">
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 p-2 rounded-2xl sm:rounded-full bg-[#0a1128]/90 border border-[#1c2d66] backdrop-blur-2xl shadow-2xl">
-        {/* 🏷️ ডায়নামিক ট্যাব গ্রিড (ট্যাব সংখ্যার ওপর ভিত্তি করে অটো সাইজ হবে) */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 p-2 rounded-2xl sm:rounded-full bg-[#0a1128]/95 sm:bg-[#0a1128]/90 border border-[#1c2d66] sm:backdrop-blur-2xl shadow-xl">
+        {/* 🏷️ ডায়নামিক ট্যাব গ্রিড */}
         <div
           className="grid gap-1 w-full sm:w-auto sm:flex sm:items-center"
           style={{
@@ -89,7 +140,7 @@ export default function UniverseFilterBar<
                 key={tab.id}
                 type="button"
                 onClick={() => onTabChange(tab.id)}
-                className={`relative z-10 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2 px-1.5 sm:px-4 rounded-xl sm:rounded-full text-[11px] sm:text-xs font-semibold transition-colors duration-200 cursor-pointer select-none text-center ${
+                className={`relative z-10 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2 px-1.5 sm:px-4 rounded-xl sm:rounded-full text-[11px] sm:text-xs font-semibold transition-colors duration-150 cursor-pointer select-none text-center ${
                   isActive
                     ? "text-slate-950 font-bold"
                     : "text-slate-400 hover:text-white"
@@ -98,12 +149,12 @@ export default function UniverseFilterBar<
                 {isActive && (
                   <motion.div
                     layoutId={layoutId}
-                    className="absolute inset-0 rounded-xl sm:rounded-full bg-linear-to-r from-cyan-400 via-cyan-300 to-blue-400 shadow-[0_0_20px_rgba(34,211,238,0.35)] transform-gpu"
+                    className="absolute inset-0 rounded-xl sm:rounded-full bg-linear-to-r from-cyan-400 via-cyan-300 to-blue-400 shadow-[0_0_15px_rgba(34,211,238,0.35)] transform-gpu will-change-transform"
                     transition={{
                       type: "spring",
-                      stiffness: 500,
-                      damping: 35,
-                      mass: 0.6,
+                      stiffness: 550,
+                      damping: 38,
+                      mass: 0.5,
                     }}
                   />
                 )}
@@ -118,12 +169,12 @@ export default function UniverseFilterBar<
           })}
         </div>
 
-        {/* 📦 ডায়নামিক ফিল্টার ড্রপডাউন/বটম শিট */}
-        <div ref={desktopMenuRef} className="relative w-full sm:w-auto">
+        {/* 📦 ডায়নামিক ফিল্টার ড্রপডাউন বাটন্স */}
+        <div ref={containerRef} className="relative w-full sm:w-auto">
           <button
             type="button"
             onClick={() => setIsMenuOpen((prev) => !prev)}
-            className="flex items-center justify-between sm:justify-start gap-2.5 w-full sm:w-auto px-4 py-2.5 rounded-xl sm:rounded-full bg-[#132247]/70 border border-[#243982] hover:border-cyan-500/50 transition-colors shadow-inner cursor-pointer"
+            className="flex items-center justify-between sm:justify-start gap-2.5 w-full sm:w-auto px-4 py-2.5 rounded-xl sm:rounded-full bg-[#132247]/90 sm:bg-[#132247]/70 border border-[#243982] hover:border-cyan-500/50 transition-colors shadow-inner cursor-pointer"
           >
             <div className="flex items-center gap-2">
               <Filter className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
@@ -150,7 +201,7 @@ export default function UniverseFilterBar<
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 8, scale: 0.96 }}
                 transition={{ duration: 0.15, ease: "easeOut" }}
-                className="hidden sm:block absolute right-0 mt-2 w-64 rounded-2xl bg-[#0a1128]/95 border border-[#1c2d66] p-1.5 shadow-[0_15px_35px_rgba(0,0,0,0.5)] backdrop-blur-2xl z-40 select-none"
+                className="hidden sm:block absolute right-0 mt-2 w-64 rounded-2xl bg-[#0a1128]/95 border border-[#1c2d66] p-1.5 shadow-[0_15px_35px_rgba(0,0,0,0.6)] backdrop-blur-2xl z-40 select-none transform-gpu will-change-transform"
               >
                 <div className="space-y-0.5">
                   {options.map((opt) => {
@@ -180,26 +231,44 @@ export default function UniverseFilterBar<
         </div>
       </div>
 
-      {/* 📱 মোবাইল বটম ড্রয়ার */}
+      {/* 📱 অপ্টিমাইজড মোবাইল বটম ড্রয়ার */}
       <AnimatePresence>
         {isMenuOpen && (
           <div className="sm:hidden fixed inset-0 z-50 flex items-end justify-center">
+            {/* মোবাইলের ব্যাকড্রপ: ক্লিক করলেই ড্রয়ার বন্ধ হবে */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.18 }}
               onClick={() => setIsMenuOpen(false)}
-              className="absolute inset-0 bg-slate-950/75 backdrop-blur-md"
+              className="absolute inset-0 bg-slate-950/80"
             />
 
+            {/* ড্রয়ার কন্টেন্ট */}
             <motion.div
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
-              transition={{ type: "spring", damping: 28, stiffness: 350 }}
-              className="relative w-full rounded-t-3xl bg-[#0a1128] border-t border-[#1c2d66] p-5 shadow-[0_-15px_40px_rgba(0,0,0,0.6)] z-10 select-none max-h-[85vh] overflow-y-auto"
+              drag="y"
+              dragDirectionLock
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={{ top: 0, bottom: 0.7 }}
+              onDragEnd={handleDragEnd}
+              dragTransition={{
+                bounceStiffness: 600,
+                bounceDamping: 35,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 550,
+                damping: 32,
+                mass: 0.45,
+              }}
+              className="relative w-full rounded-t-3xl bg-[#0d1635] border-t border-[#1c2d66] p-5 shadow-[0_-10px_25px_rgba(0,0,0,0.5)] z-10 select-none max-h-[85vh] transform-gpu will-change-transform touch-none"
             >
-              <div className="w-12 h-1.5 rounded-full bg-white/20 mx-auto mb-4" />
+              {/* ড্র্যাগ ইন্ডিকেটর বার */}
+              <div className="w-12 h-1.5 rounded-full bg-white/25 mx-auto mb-4 cursor-grab active:cursor-grabbing" />
 
               <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-white/10">
                 <div className="flex items-center gap-2">
@@ -225,15 +294,17 @@ export default function UniverseFilterBar<
                       key={opt.id}
                       type="button"
                       onClick={() => handleSelectOption(opt.id)}
-                      className={`w-full flex items-center justify-between p-3 rounded-2xl transition-all cursor-pointer text-left ${
+                      className={`w-full flex items-center justify-between p-3 rounded-2xl transition-all cursor-pointer text-left active:scale-[0.98] ${
                         isSelected
-                          ? "bg-cyan-500/10 border border-cyan-400/30 text-white"
+                          ? "bg-cyan-500/15 border border-cyan-400/30 text-white"
                           : "hover:bg-white/5 border border-transparent text-slate-300"
                       }`}
                     >
                       <div>
                         <span
-                          className={`text-xs font-bold ${isSelected ? "text-cyan-300" : "text-white"}`}
+                          className={`text-xs font-bold ${
+                            isSelected ? "text-cyan-300" : "text-white"
+                          }`}
                         >
                           {opt.label}
                         </span>
