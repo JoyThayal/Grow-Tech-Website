@@ -14,10 +14,12 @@ import {
   Star,
   ArrowRight,
   LogIn,
-  AlertTriangle,
+  Edit3,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { useToast } from "@/components/ui/Toast";
+import SignOutModal from "@/app/profile/components/SignOutModal";
+import EditNameModal from "@/app/profile/components/EditNameModal";
 import type { User } from "@supabase/supabase-js";
 
 export default function ProfilePage() {
@@ -27,27 +29,44 @@ export default function ProfilePage() {
   const [user, setUser] = useState<User | null>(null);
   const [isChecking, setIsChecking] = useState(true);
 
-  // 🚪 লগআউট পপআপ ওপেন ও লোডিং স্টেট
+  // মোডাল ও লোডিং স্টেট
   const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [newName, setNewName] = useState("");
+  const [isSavingName, setIsSavingName] = useState(false);
 
   useEffect(() => {
-    // সরাসরি সেশন চেক
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      if (currentUser) {
+        setNewName(
+          currentUser.user_metadata?.full_name ||
+            currentUser.email?.split("@")[0] ||
+            "",
+        );
+      }
       setIsChecking(false);
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_, session) => {
-      setUser(session?.user ?? null);
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      if (currentUser) {
+        setNewName(
+          currentUser.user_metadata?.full_name ||
+            currentUser.email?.split("@")[0] ||
+            "",
+        );
+      }
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  // 🔒 কনফার্ম করার পর আসল লগআউট ফাংশন
   const handleConfirmSignOut = async () => {
     setIsLoggingOut(true);
     await supabase.auth.signOut();
@@ -55,6 +74,36 @@ export default function ProfilePage() {
     setIsSignOutModalOpen(false);
     showToast("Signed Out", "You have been logged out safely.", "info");
     router.push("/");
+  };
+
+  const handleSaveProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = newName.trim();
+
+    if (trimmed.length < 2) {
+      showToast("Invalid Name", "Name must be at least 2 characters.", "error");
+      return;
+    }
+
+    setIsSavingName(true);
+
+    try {
+      const { data, error } = await supabase.auth.updateUser({
+        data: { full_name: trimmed },
+      });
+
+      if (error) throw error;
+
+      setUser(data.user);
+      setIsEditModalOpen(false);
+      showToast("Updated!", "Your profile name has been updated.", "success");
+    } catch (err: unknown) {
+      const msg =
+        err instanceof Error ? err.message : "Failed to update profile";
+      showToast("Error", msg, "error");
+    } finally {
+      setIsSavingName(false);
+    }
   };
 
   const avatar = user?.user_metadata?.avatar_url;
@@ -69,7 +118,6 @@ export default function ProfilePage() {
 
   return (
     <main className="min-h-screen bg-[#0a1128] text-white py-12 px-4 sm:px-8 relative overflow-hidden">
-      {/* 🌌 ব্যাকগ্রাউন্ড গ্লো */}
       <div className="pointer-events-none absolute top-10 left-1/2 -translate-x-1/2 -z-10 h-80 w-full max-w-3xl rounded-full bg-cyan-500/10 blur-[130px]" />
 
       <div className="max-w-2xl mx-auto space-y-6">
@@ -92,12 +140,26 @@ export default function ProfilePage() {
                     )}
                   </div>
                   <div className="space-y-1.5">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-400/10 text-cyan-400 text-[10px] font-mono uppercase tracking-wider">
-                      <Sparkles className="w-3 h-3" /> Client Account
-                    </span>
+                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-400/10 text-cyan-400 text-[10px] font-mono uppercase tracking-wider">
+                        <Sparkles className="w-3 h-3" /> Client Account
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setNewName(name);
+                          setIsEditModalOpen(true);
+                        }}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#132247] hover:bg-[#1c3269] text-slate-300 hover:text-cyan-300 border border-[#273e7d] text-[10px] font-mono transition-all cursor-pointer"
+                      >
+                        <Edit3 className="w-2.5 h-2.5" /> Edit
+                      </button>
+                    </div>
+
                     <h1 className="cabinet text-2xl font-bold text-white">
                       {name}
                     </h1>
+
                     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 text-xs text-slate-400">
                       <span className="flex items-center gap-1.5">
                         <Mail className="w-3.5 h-3.5 text-cyan-400" />{" "}
@@ -112,24 +174,23 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
-                {/* লগআউট বাটন (ক্লিক করলে পপআপ খুলবে) */}
                 <button
                   type="button"
                   onClick={() => setIsSignOutModalOpen(true)}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#132247]/60 hover:bg-rose-500/15 border border-[#273e7d] hover:border-rose-500/40 text-slate-300 hover:text-rose-400 text-xs font-semibold transition-all cursor-pointer"
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-red-950/40 hover:bg-red-900/50 border border-red-500/30 hover:border-red-500/70 text-red-300 hover:text-white text-xs font-semibold shadow-[0_0_12px_rgba(239,68,68,0.15)] hover:shadow-[0_0_20px_rgba(239,68,68,0.3)] transition-all cursor-pointer active:scale-95"
                 >
-                  <LogOut className="w-3.5 h-3.5" /> Sign Out
+                  <LogOut className="w-3.5 h-3.5 text-red-400" />
+                  <span>Sign Out</span>
                 </button>
               </div>
             </div>
 
-            {/* 🚀 কুইক অ্যাকশন হাব (বুকিং ও রেটিং) */}
+            {/* 🚀 কুইক লিঙ্কস */}
             <div className="space-y-3 pt-2">
               <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 pl-1 font-semibold">
                 Account Sections
               </p>
 
-              {/* ১. বুকিং হিস্ট্রি বাটন */}
               <Link
                 href="/profile/orders"
                 className="group flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-[#0c1533]/80 border border-[#1c2d66] hover:border-cyan-400/60 hover:bg-[#0e1838] transition-all shadow-lg"
@@ -152,7 +213,6 @@ export default function ProfilePage() {
                 </div>
               </Link>
 
-              {/* ২. মাই রেটিংস ও রিভিউ বাটন */}
               <Link
                 href="/profile/reviews"
                 className="group flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-[#0c1533]/80 border border-[#1c2d66] hover:border-amber-400/60 hover:bg-[#0e1838] transition-all shadow-lg"
@@ -177,7 +237,6 @@ export default function ProfilePage() {
             </div>
           </>
         ) : !isChecking ? (
-          /* লগইন না থাকলে ক্লিয়ার কার্ড */
           <div className="rounded-3xl border border-[#1c2d66] bg-[#0e1838]/70 p-10 text-center backdrop-blur-xl space-y-5">
             <div className="w-16 h-16 mx-auto rounded-2xl bg-[#121f48] border border-[#243982] flex items-center justify-center text-cyan-400 shadow-[0_0_20px_rgba(0,229,255,0.2)]">
               <UserIcon className="w-8 h-8" />
@@ -206,62 +265,23 @@ export default function ProfilePage() {
         ) : null}
       </div>
 
-      {/* 🛑 লগআউট কনফার্মেশন পপআপ মোডাল */}
-      {isSignOutModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* ব্যাকড্রপ ব্লার লেয়ার */}
-          <div
-            className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity"
-            onClick={() => !isLoggingOut && setIsSignOutModalOpen(false)}
-          />
+      {/* ✏️ এডিট মোডাল */}
+      <EditNameModal
+        isOpen={isEditModalOpen}
+        name={newName}
+        isLoading={isSavingName}
+        onChangeName={setNewName}
+        onClose={() => setIsEditModalOpen(false)}
+        onSave={handleSaveProfile}
+      />
 
-          {/* মোডাল বক্স */}
-          <div className="relative w-full max-w-sm rounded-3xl border border-[#243982] bg-[#0e1838] p-6 shadow-2xl z-10 space-y-5 animate-in fade-in zoom-in-95 duration-200">
-            <div className="flex flex-col items-center text-center space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center shadow-[0_0_20px_rgba(244,63,94,0.15)]">
-                <AlertTriangle className="w-6 h-6" />
-              </div>
-
-              <div className="space-y-1">
-                <h3 className="cabinet text-lg font-bold text-white">
-                  Sign Out Confirmation
-                </h3>
-                <p className="text-xs text-slate-400">
-                  Are you sure you want to log out of your Grow Tech account?
-                </p>
-              </div>
-            </div>
-
-            {/* অ্যাকশন বাটনসমূহ */}
-            <div className="grid grid-cols-2 gap-3 pt-2">
-              <button
-                type="button"
-                disabled={isLoggingOut}
-                onClick={() => setIsSignOutModalOpen(false)}
-                className="w-full py-2.5 rounded-xl border border-[#273e7d] bg-[#132247]/60 hover:bg-[#132247] text-slate-300 text-xs font-semibold transition-all cursor-pointer active:scale-95"
-              >
-                Cancel
-              </button>
-
-              <button
-                type="button"
-                disabled={isLoggingOut}
-                onClick={handleConfirmSignOut}
-                className="w-full py-2.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 hover:text-white text-xs font-semibold shadow-[0_0_15px_rgba(244,63,94,0.2)] transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 disabled:opacity-50"
-              >
-                {isLoggingOut ? (
-                  <span className="w-4 h-4 border-2 border-rose-300 border-t-transparent rounded-full animate-spin" />
-                ) : (
-                  <>
-                    <LogOut className="w-3.5 h-3.5" />
-                    <span>Sign Out</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* 🛑 সাইন আউট মোডাল */}
+      <SignOutModal
+        isOpen={isSignOutModalOpen}
+        isLoading={isLoggingOut}
+        onClose={() => setIsSignOutModalOpen(false)}
+        onConfirm={handleConfirmSignOut}
+      />
     </main>
   );
 }

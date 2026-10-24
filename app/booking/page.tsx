@@ -60,8 +60,8 @@ function BookingForm() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const [touched, setTouched] = useState({
-    name: false,
-    email: false,
+    name: true,
+    email: true,
     phone: false,
   });
 
@@ -85,7 +85,6 @@ function BookingForm() {
       setClientName(initialName);
       setClientEmail(initialEmail);
 
-      // 🟢 ডেটা আগে থেকেই থাকলে সাথে সাথে touched করে দেওয়া (যাতে সাথে সাথে টিকচিহ্ন চলে আসে)
       setTouched((prev) => ({
         ...prev,
         name: Boolean(initialName.trim().length >= 2),
@@ -96,22 +95,11 @@ function BookingForm() {
     });
   }, [router, searchParams]);
 
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const indianPhoneRegex = /^[6-9]\d{9}$/;
 
   const errors = {
-    name:
-      clientName.trim().length === 0
-        ? "Name is required"
-        : clientName.trim().length < 2
-          ? "At least 2 characters"
-          : "",
-    email:
-      clientEmail.trim().length === 0
-        ? "Email is required"
-        : !emailRegex.test(clientEmail.trim().toLowerCase())
-          ? "Invalid email"
-          : "",
+    name: clientName.trim().length === 0 ? "Name is missing" : "",
+    email: clientEmail.trim().length === 0 ? "Email is missing" : "",
     phone:
       phone.length === 0
         ? "Phone number is required"
@@ -128,7 +116,7 @@ function BookingForm() {
     clientEmail.trim().length > 0 &&
     phone.trim().length === 10;
 
-  const handleBlur = (field: "name" | "email" | "phone") =>
+  const handleBlur = (field: "phone") =>
     setTouched((prev) => ({ ...prev, [field]: true }));
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -138,10 +126,12 @@ function BookingForm() {
 
     setSubmitting(true);
     try {
+      // 🛠️ client_email যোগ করা হয়েছে যাতে Supabase-এ কার বুকিং স্পষ্ট রেকর্ড থাকে
       const { error } = await supabase.from("client_bookings").insert([
         {
           user_id: user.id,
           client_name: clientName.trim(),
+          client_email: clientEmail.trim().toLowerCase(), // 👈 এই ফিল্ডটি মিসিং ছিল
           client_phone: `+91${phone.trim()}`,
           service_type: serviceMeta.name,
           package_name: packageName,
@@ -158,7 +148,7 @@ function BookingForm() {
         body: JSON.stringify({
           name: clientName.trim(),
           phone: `+91 ${phone.trim()}`,
-          email: clientEmail.trim(),
+          email: clientEmail.trim().toLowerCase(),
           service: serviceMeta.name,
           packageName,
           price: "Selected Package",
@@ -204,38 +194,30 @@ function BookingForm() {
         className="rounded-3xl border border-[#1c2d66] bg-[#0e1838]/80 p-6 sm:p-8 backdrop-blur-xl space-y-5 shadow-2xl"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* 🔒 নাম (ReadOnly) */}
           <BookingInputField
-            label="Your Name *"
+            label="Account Name (Verified)"
             name="name"
             value={clientName}
-            placeholder="e.g. Rahul Sharma"
+            readOnly={true}
+            showProfileShortcut={true}
             touched={touched.name}
             error={errors.name}
-            onChange={(e) => {
-              setClientName(e.target.value);
-              if (!touched.name)
-                setTouched((prev) => ({ ...prev, name: true }));
-            }}
-            onBlur={() => handleBlur("name")}
           />
 
+          {/* 🔒 ইমেইল (ReadOnly) */}
           <BookingInputField
-            label="Email Address *"
+            label="Email Address (Verified)"
             type="email"
             name="email"
             value={clientEmail}
-            placeholder="name@example.com"
+            readOnly={true}
             touched={touched.email}
             error={errors.email}
-            onChange={(e) => {
-              setClientEmail(e.target.value);
-              if (!touched.email)
-                setTouched((prev) => ({ ...prev, email: true }));
-            }}
-            onBlur={() => handleBlur("email")}
           />
         </div>
 
+        {/* ✍️ শুধু ফোন নম্বর ইউজার নিজে টাইপ করবে */}
         <BookingInputField
           label="WhatsApp Number *"
           type="tel"

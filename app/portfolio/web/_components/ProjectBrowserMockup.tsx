@@ -9,7 +9,6 @@ interface ProjectBrowserMockupProps {
   imageSrc: string;
   videoUrl?: string;
   packageName?: string;
-  packagePrice?: string;
   packageStyle?: string;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,7 +20,6 @@ export default function ProjectBrowserMockup({
   imageSrc,
   videoUrl,
   packageName,
-  packagePrice,
   packageStyle,
   isOpen,
   setIsOpen,
@@ -80,12 +78,6 @@ export default function ProjectBrowserMockup({
           >
             {packageName || "Single Page"}
           </span>
-
-          {packagePrice && (
-            <span className="text-cyan-300 font-bold font-mono text-[10px] shrink-0">
-              {packagePrice}
-            </span>
-          )}
         </div>
       </div>
 

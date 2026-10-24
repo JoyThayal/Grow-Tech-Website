@@ -87,13 +87,12 @@ export default function WebProjectCard({
         onClick={() => setIsOpen((prev) => !prev)}
         className="h-full rounded-2xl bg-[#ffffff08] border border-[#ffffff14] p-3.5 sm:p-4 flex flex-col justify-between transition-all duration-300 hover:border-[#c9a86a]/40 hover:shadow-[0_0_30px_rgba(201,168,106,0.12)] group cursor-pointer"
       >
-        {/* 💻 আলাদা ব্রাউজার মোকআপ কম্পোনেন্ট */}
+        {/* 💻 ব্রাউজার মোকআপ (দাম বাদ দেওয়া হয়েছে) */}
         <ProjectBrowserMockup
           title={project.title}
           imageSrc={project.imageSrc}
           videoUrl={project.videoUrl}
           packageName={project.packageName || currentPackage?.label}
-          packagePrice={project.packagePrice}
           packageStyle={currentPackage?.style}
           isOpen={isOpen}
           setIsOpen={setIsOpen}

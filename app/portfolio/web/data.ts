@@ -13,7 +13,6 @@ export interface WebProject {
     | "dynamic-portal"
     | "redesign-upgrade";
   packageName: string;
-  packagePrice: string;
 }
 
 export const webProjectsData: WebProject[] = [
@@ -29,7 +28,6 @@ export const webProjectsData: WebProject[] = [
     source: "demo",
     packageId: "single-page",
     packageName: "Single Page",
-    packagePrice: "₹9,999",
   },
   {
     id: "02",
@@ -43,7 +41,6 @@ export const webProjectsData: WebProject[] = [
     source: "demo",
     packageId: "single-page",
     packageName: "Single Page",
-    packagePrice: "₹9,999",
   },
   {
     id: "03",
@@ -57,7 +54,6 @@ export const webProjectsData: WebProject[] = [
     source: "demo",
     packageId: "single-page",
     packageName: "Single Page",
-    packagePrice: "₹9,999",
   },
   {
     id: "04",
@@ -71,7 +67,6 @@ export const webProjectsData: WebProject[] = [
     source: "demo",
     packageId: "single-page",
     packageName: "Single Page",
-    packagePrice: "₹9,999",
   },
   {
     id: "05",
@@ -83,9 +78,8 @@ export const webProjectsData: WebProject[] = [
     techStack: ["REACT", "NODE.JS", "TAILWIND"],
     liveUrl: "https://netpro-it.netlify.app/",
     source: "demo",
-    packageId: "single-page",
-    packageName: "Single Page",
-    packagePrice: "₹9,999",
+    packageId: "multi-page",
+    packageName: "Multi Page",
   },
   {
     id: "06",
@@ -99,11 +93,10 @@ export const webProjectsData: WebProject[] = [
     source: "demo",
     packageId: "single-page",
     packageName: "Single Page",
-    packagePrice: "₹9,999",
   },
   {
     id: "07",
-    title: "Grow Tech Computer Services", // 👈 টাইটেল সংশোধন করা হলো
+    title: "Grow Tech Computer Services",
     description:
       "Comprehensive hardware, software diagnostic, and repair service platform with direct client inquiry.",
     imageSrc: "/web-images/growtech-computer.png",
@@ -114,6 +107,5 @@ export const webProjectsData: WebProject[] = [
     source: "own",
     packageId: "dynamic-portal",
     packageName: "Dynamic Portal",
-    packagePrice: "₹19,999",
   },
 ];
