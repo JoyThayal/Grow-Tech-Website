@@ -1,24 +1,14 @@
 "use client";
 
 import React, { useState, useEffect, Suspense } from "react";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  ArrowLeft,
-  Send,
-  ShieldCheck,
-  Clock,
-  Sparkles,
-  Globe,
-  Smartphone,
-  Gamepad2,
-  CheckCircle2,
-  Home,
-  FileText,
-} from "lucide-react";
+import { Globe, Smartphone, Gamepad2, Send, ShieldCheck } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { useToast } from "@/components/ui/Toast";
 import ServiceSelectModal from "@/components/ui/ServiceSelectModal";
+import BookingHeader from "@/app/booking/BookingHeader";
+import BookingSuccessModal from "@/app/booking/BookingSuccessModal";
+import BookingInputField from "@/app/booking/BookingInputField";
 import type { User } from "@supabase/supabase-js";
 
 function BookingForm() {
@@ -29,11 +19,9 @@ function BookingForm() {
   const [user, setUser] = useState<User | null>(null);
   const [checkingAuth, setCheckingAuth] = useState(true);
 
-  // URL থেকে আসা সার্ভিস ও প্যাকেজ
   const packageName = searchParams.get("package") || "";
   const rawService = (searchParams.get("service") || "web").toLowerCase();
 
-  // ডাইনামিক সার্ভিস মেটাডাটা
   const serviceMeta = {
     web: {
       name: "Web Development",
@@ -64,63 +52,97 @@ function BookingForm() {
         : "web"
   ];
 
-  const ServiceIcon = serviceMeta.icon;
-
-  // ফর্মের ফিল্ডগুলো
   const [clientName, setClientName] = useState("");
   const [clientEmail, setClientEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
-
-  // 🚀 বুকিং সাকসেস পপআপ স্টেট
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  const [touched, setTouched] = useState({
+    name: false,
+    email: false,
+    phone: false,
+  });
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session?.user) {
-        const currentUrl = `/booking?${searchParams.toString()}`;
-        router.push(`/auth?next=${encodeURIComponent(currentUrl)}`);
+        router.push(
+          `/auth?next=${encodeURIComponent(`/booking?${searchParams.toString()}`)}`,
+        );
         return;
       }
-
       const currentUser = session.user;
       setUser(currentUser);
-      setClientName(
+
+      const initialName =
         currentUser.user_metadata?.full_name ||
-          currentUser.email?.split("@")[0] ||
-          "",
-      );
-      setClientEmail(currentUser.email || "");
+        currentUser.email?.split("@")[0] ||
+        "";
+      const initialEmail = currentUser.email || "";
+
+      setClientName(initialName);
+      setClientEmail(initialEmail);
+
+      // 🟢 ডেটা আগে থেকেই থাকলে সাথে সাথে touched করে দেওয়া (যাতে সাথে সাথে টিকচিহ্ন চলে আসে)
+      setTouched((prev) => ({
+        ...prev,
+        name: Boolean(initialName.trim().length >= 2),
+        email: Boolean(initialEmail.trim().length > 0),
+      }));
+
       setCheckingAuth(false);
     });
   }, [router, searchParams]);
 
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const indianPhoneRegex = /^[6-9]\d{9}$/;
+
+  const errors = {
+    name:
+      clientName.trim().length === 0
+        ? "Name is required"
+        : clientName.trim().length < 2
+          ? "At least 2 characters"
+          : "",
+    email:
+      clientEmail.trim().length === 0
+        ? "Email is required"
+        : !emailRegex.test(clientEmail.trim().toLowerCase())
+          ? "Invalid email"
+          : "",
+    phone:
+      phone.length === 0
+        ? "Phone number is required"
+        : !indianPhoneRegex.test(phone)
+          ? "10 digits starting 6-9"
+          : "",
+  };
+
+  const isFormValid =
+    !errors.name &&
+    !errors.email &&
+    !errors.phone &&
+    clientName.trim().length > 0 &&
+    clientEmail.trim().length > 0 &&
+    phone.trim().length === 10;
+
+  const handleBlur = (field: "name" | "email" | "phone") =>
+    setTouched((prev) => ({ ...prev, [field]: true }));
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!user) {
-      router.push("/auth?next=/booking");
-      return;
-    }
-
-    if (!phone || phone.trim().length < 10) {
-      showToast(
-        "Phone Number Required",
-        "Please enter a valid WhatsApp contact number.",
-        "error",
-      );
-      return;
-    }
+    setTouched({ name: true, email: true, phone: true });
+    if (!isFormValid || !user) return;
 
     setSubmitting(true);
-
     try {
       const { error } = await supabase.from("client_bookings").insert([
         {
           user_id: user.id,
           client_name: clientName.trim(),
-          client_phone: phone.trim(),
+          client_phone: `+91${phone.trim()}`,
           service_type: serviceMeta.name,
           package_name: packageName,
           price: "Selected Package",
@@ -128,21 +150,33 @@ function BookingForm() {
           status: "pending",
         },
       ]);
-
       if (error) throw error;
+
+      fetch("/api/notify-booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: clientName.trim(),
+          phone: `+91 ${phone.trim()}`,
+          email: clientEmail.trim(),
+          service: serviceMeta.name,
+          packageName,
+          price: "Selected Package",
+        }),
+      }).catch((err) => console.error("Telegram alert failed silently:", err));
 
       showToast(
         "Booking Successful!",
         "Your project request has been submitted.",
         "success",
       );
-
-      // WhatsApp রিডাইরেক্ট বন্ধ করে সাকসেস পপআপ দেখানো হলো
       setShowSuccessModal(true);
     } catch (err: unknown) {
-      const errMsg =
-        err instanceof Error ? err.message : "Failed to register booking.";
-      showToast("Error", errMsg, "error");
+      showToast(
+        "Error",
+        err instanceof Error ? err.message : "Failed to register booking.",
+        "error",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -158,89 +192,68 @@ function BookingForm() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      {/* 🔙 ব্যাক লিঙ্ক */}
-      <div className="flex items-center justify-between">
-        <Link
-          href={rawService === "game" ? "/services/game" : "/services"}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-cyan-400 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Change Package</span>
-        </Link>
-        <span className="golden-tag">GROW TECH CHECKOUT</span>
-      </div>
+      <BookingHeader
+        rawService={rawService}
+        packageName={packageName}
+        serviceMeta={serviceMeta}
+      />
 
-      {/* 📦 সিলেক্ট করা প্যাকেজের ব্যানার */}
-      <div className="rounded-2xl border border-cyan-500/40 bg-linear-to-br from-[#0e1838] to-[#0c1533] p-5 sm:p-6 backdrop-blur-xl">
-        <div className="flex items-center justify-between gap-3 mb-2">
-          <span
-            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider ${serviceMeta.bg} ${serviceMeta.border} ${serviceMeta.color} border`}
-          >
-            <ServiceIcon className="w-3.5 h-3.5" />
-            {serviceMeta.name}
-          </span>
-
-          <span className="text-[10px] font-mono text-[#C9A86A] flex items-center gap-1">
-            <Sparkles className="w-3 h-3" /> Active Plan
-          </span>
-        </div>
-
-        <h2 className="cabinet text-xl sm:text-2xl font-extrabold text-white mt-1">
-          {packageName}
-        </h2>
-
-        <div className="flex items-center gap-2 text-xs text-slate-400 font-mono pt-1.5">
-          <Clock className="w-3.5 h-3.5 text-cyan-400" />
-          <span>40% Advance • 60% on Final Delivery</span>
-        </div>
-      </div>
-
-      {/* 📝 বুকিং ফর্ম */}
       <form
         onSubmit={handleSubmit}
+        noValidate
         className="rounded-3xl border border-[#1c2d66] bg-[#0e1838]/80 p-6 sm:p-8 backdrop-blur-xl space-y-5 shadow-2xl"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs font-mono uppercase text-slate-400 mb-1.5">
-              Your Name *
-            </label>
-            <input
-              type="text"
-              required
-              value={clientName}
-              onChange={(e) => setClientName(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl bg-[#0a1128] border border-[#1c2d66] text-white text-xs focus:outline-none focus:border-cyan-400 transition-all font-medium"
-            />
-          </div>
+          <BookingInputField
+            label="Your Name *"
+            name="name"
+            value={clientName}
+            placeholder="e.g. Rahul Sharma"
+            touched={touched.name}
+            error={errors.name}
+            onChange={(e) => {
+              setClientName(e.target.value);
+              if (!touched.name)
+                setTouched((prev) => ({ ...prev, name: true }));
+            }}
+            onBlur={() => handleBlur("name")}
+          />
 
-          <div>
-            <label className="block text-xs font-mono uppercase text-slate-400 mb-1.5">
-              Email Address *
-            </label>
-            <input
-              type="email"
-              required
-              value={clientEmail}
-              onChange={(e) => setClientEmail(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl bg-[#0a1128] border border-[#1c2d66] text-white text-xs focus:outline-none focus:border-cyan-400 transition-all font-mono"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-xs font-mono uppercase text-slate-400 mb-1.5">
-            WhatsApp Number *
-          </label>
-          <input
-            type="tel"
-            required
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="+91 89027 09631"
-            className="w-full px-4 py-2.5 rounded-xl bg-[#0a1128] border border-[#1c2d66] text-white text-xs focus:outline-none focus:border-cyan-400 transition-all font-mono"
+          <BookingInputField
+            label="Email Address *"
+            type="email"
+            name="email"
+            value={clientEmail}
+            placeholder="name@example.com"
+            touched={touched.email}
+            error={errors.email}
+            onChange={(e) => {
+              setClientEmail(e.target.value);
+              if (!touched.email)
+                setTouched((prev) => ({ ...prev, email: true }));
+            }}
+            onBlur={() => handleBlur("email")}
           />
         </div>
+
+        <BookingInputField
+          label="WhatsApp Number *"
+          type="tel"
+          name="phone"
+          value={phone}
+          placeholder="9876543210"
+          prefix="+91"
+          maxLength={10}
+          touched={touched.phone}
+          error={errors.phone}
+          onChange={(e) => {
+            const cleanDigits = e.target.value.replace(/\D/g, "");
+            if (cleanDigits.length <= 10) setPhone(cleanDigits);
+            if (!touched.phone)
+              setTouched((prev) => ({ ...prev, phone: true }));
+          }}
+          onBlur={() => handleBlur("phone")}
+        />
 
         <div>
           <label className="block text-xs font-mono uppercase text-slate-400 mb-1.5">
@@ -251,7 +264,7 @@ function BookingForm() {
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Tell us about your requirements or reference designs..."
-            className="w-full px-4 py-2.5 rounded-xl bg-[#0a1128] border border-[#1c2d66] text-white text-xs focus:outline-none focus:border-cyan-400 transition-all resize-none"
+            className="w-full px-4 py-2.5 rounded-xl bg-[#0a1128] border border-[#1c2d66] text-white text-xs focus:outline-none focus:border-cyan-400 transition-all resize-none placeholder:text-slate-600"
           />
         </div>
 
@@ -264,69 +277,32 @@ function BookingForm() {
 
         <button
           type="submit"
-          disabled={submitting}
-          className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-cyan-400 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-cyan-300 transition-all shadow-[0_0_15px_rgba(0,229,255,0.3)] disabled:opacity-50 cursor-pointer"
+          disabled={!isFormValid || submitting}
+          className={`w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-200 ${
+            isFormValid && !submitting
+              ? "bg-cyan-400 text-slate-950 hover:bg-cyan-300 shadow-[0_0_20px_rgba(0,229,255,0.35)] cursor-pointer active:scale-[0.99]"
+              : "bg-slate-800/80 text-slate-500 border border-slate-700/50 cursor-not-allowed opacity-60"
+          }`}
         >
           {submitting ? (
             <span>Saving Order...</span>
           ) : (
             <>
               <span>Confirm Booking</span>
-              <Send className="w-3.5 h-3.5" />
+              <Send
+                className={`w-3.5 h-3.5 ${isFormValid ? "text-slate-950" : "text-slate-500"}`}
+              />
             </>
           )}
         </button>
       </form>
 
-      {/* 🚀 সার্ভিসের অপশন না থাকলে সিলেক্ট করার মডাল */}
       <ServiceSelectModal isOpen={!packageName} />
-
-      {/* 🎉 Booking Success Modal */}
       {showSuccessModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-md rounded-3xl border border-cyan-500/40 bg-[#0c1533] p-6 sm:p-8 shadow-2xl text-center space-y-5">
-            {/* সাকসেস আইকন */}
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-cyan-500/30 bg-cyan-950/40 text-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.25)]">
-              <CheckCircle2 className="h-9 w-9 text-cyan-400" />
-            </div>
-
-            <div className="space-y-2">
-              <span className="golden-tag">ORDER CONFIRMED</span>
-              <h3 className="cabinet text-2xl font-extrabold text-white">
-                Booking Successful!
-              </h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Thank you,{" "}
-                <span className="font-semibold text-white">{clientName}</span>!
-                Your project request for{" "}
-                <span className="font-semibold text-cyan-400">
-                  {packageName}
-                </span>{" "}
-                has been received. Our team will review your notes and contact
-                you shortly.
-              </p>
-            </div>
-
-            {/* অ্যাকশন বাটনসমূহ */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <Link
-                href="/profile/orders"
-                className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-400 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-cyan-300 transition-all shadow-[0_0_15px_rgba(0,229,255,0.3)] active:scale-95"
-              >
-                <FileText className="w-4 h-4" />
-                <span>Booking Details</span>
-              </Link>
-
-              <Link
-                href="/"
-                className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-white/10 bg-[#121f48] text-slate-200 font-semibold text-xs uppercase tracking-wider hover:bg-[#1a2d66] hover:text-white transition-all active:scale-95"
-              >
-                <Home className="w-4 h-4 text-cyan-400" />
-                <span>Back to Home</span>
-              </Link>
-            </div>
-          </div>
-        </div>
+        <BookingSuccessModal
+          clientName={clientName}
+          packageName={packageName}
+        />
       )}
     </div>
   );
