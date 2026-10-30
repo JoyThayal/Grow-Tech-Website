@@ -103,7 +103,7 @@ export const webProjectsData: WebProject[] = [
     videoUrl:
       "https://res.cloudinary.com/inwomltf/video/upload/q_auto,f_auto/v1792647900/GrowTech_Computer.mp4",
     techStack: ["NEXT.JS", "TAILWIND CSS", "FRAMER MOTION"],
-    liveUrl: "https://grow-tech.vercel.app/",
+    liveUrl: "https://growtech-computer.vercel.app/",
     source: "own",
     packageId: "dynamic-portal",
     packageName: "Dynamic Portal",

@@ -3,7 +3,12 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ShoppingBag, ArrowLeft, MessageSquare } from "lucide-react";
+import {
+  ShoppingBag,
+  ArrowLeft,
+  MessageSquare,
+  ChevronRight,
+} from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 
 interface OrderItem {
@@ -24,7 +29,6 @@ export default function UserOrdersPage() {
 
     async function loadOrders() {
       try {
-        // সরাসরি মেমরি থেকে সেশন চেক
         const {
           data: { session },
         } = await supabase.auth.getSession();
@@ -34,10 +38,9 @@ export default function UserOrdersPage() {
           return;
         }
 
-        // বুকিং ডেটা আনা
         const { data, error } = await supabase
           .from("client_bookings")
-          .select("*")
+          .select("id, package_name, price, status, created_at")
           .eq("user_id", session.user.id)
           .order("created_at", { ascending: false });
 
@@ -52,7 +55,7 @@ export default function UserOrdersPage() {
         console.error("Order load error:", err);
       } finally {
         if (isMounted) {
-          setLoading(false); // ⚡ যে কোনো অবস্থাতেই লোডার থেমে যাবে!
+          setLoading(false);
         }
       }
     }
@@ -85,7 +88,9 @@ export default function UserOrdersPage() {
             <span>Back to Profile</span>
           </Link>
 
-          <span className="golden-tag">ORDER HISTORY</span>
+          <span className="text-[11px] font-mono tracking-wider px-3 py-1 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20 font-bold uppercase">
+            ORDER HISTORY
+          </span>
         </div>
 
         <div className="space-y-1">
@@ -93,8 +98,8 @@ export default function UserOrdersPage() {
             Your Booked Packages & Services
           </h1>
           <p className="garet text-xs sm:text-sm text-slate-400">
-            Real-time status updates of your websites and custom portals under
-            development.
+            Click on any project to view complete milestone tracking and
+            details.
           </p>
         </div>
 
@@ -135,15 +140,16 @@ export default function UserOrdersPage() {
               </div>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {orders.map((order) => (
-                <div
+                <Link
                   key={order.id}
-                  className="p-4 sm:p-5 rounded-2xl bg-[#0a1128]/80 border border-[#1c2d66] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                  href={`/profile/orders/${order.id}`}
+                  className="group p-4 sm:p-5 rounded-2xl bg-[#0a1128]/80 border border-[#1c2d66] hover:border-cyan-400/50 hover:bg-[#0d163a] transition-all flex items-center justify-between gap-4 cursor-pointer shadow-md hover:shadow-[0_0_20px_rgba(0,229,255,0.1)]"
                 >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <h4 className="text-sm font-bold text-white">
+                  <div className="space-y-1.5">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h4 className="text-sm sm:text-base font-bold text-white group-hover:text-cyan-300 transition-colors">
                         {order.package_name}
                       </h4>
                       <span className="text-xs font-mono text-cyan-400 font-bold">
@@ -158,7 +164,7 @@ export default function UserOrdersPage() {
 
                   <div className="flex items-center gap-3">
                     <span
-                      className={`text-[11px] font-mono px-3 py-1 rounded-full uppercase tracking-wider font-semibold border ${
+                      className={`text-[10px] sm:text-[11px] font-mono px-3 py-1 rounded-full uppercase tracking-wider font-semibold border ${
                         order.status === "completed"
                           ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
                           : order.status === "in_development"
@@ -168,8 +174,11 @@ export default function UserOrdersPage() {
                     >
                       {order.status.replace("_", " ")}
                     </span>
+                    <div className="p-1.5 rounded-lg bg-white/5 text-slate-400 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all">
+                      <ChevronRight className="w-4 h-4" />
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}
